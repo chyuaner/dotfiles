@@ -1,0 +1,186 @@
+# Source manjaro-zsh-configuration
+if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
+  source /usr/share/zsh/manjaro-zsh-config
+fi
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+### End of Zinit's installer chunk
+
+# zsh 套件四天王
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-history-substring-search
+zinit light zdharma-continuum/fast-syntax-highlighting
+
+# Oh My Zsh 功能
+zinit snippet OMZ::lib/clipboard.zsh
+zinit snippet OMZ::lib/history.zsh
+zinit snippet OMZP::vscode
+zinit snippet OMZ::lib/key-bindings.zsh
+zinit snippet OMZ::lib/completion.zsh
+zinit snippet OMZ::plugins/sudo/sudo.plugin.zsh
+zinit snippet OMZ::lib/theme-and-appearance.zsh
+
+#zinit wait="1" lucid for \
+#    OMZL::clipboard.zsh \
+#    OMZL::history.zsh \
+#    OMZL::key-bindings.zsh \
+#    OMZL::completion.zsh \
+#    OMZP::sudo/sudo.plugin.zsh
+#    # OMZL::git.zsh \
+#    # OMZP::systemd/systemd.plugin.zsh \
+#    # OMZP::git/git.plugin.zsh \
+#    # OMZP::mvn/mvn.plugin.zsh \
+#    # OMZP::colored-man-pages/colored-man-pages.plugin.zsh
+
+# Powerlevel10k
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# 開啟自動補全
+setopt AUTO_LIST
+setopt AUTO_MENU
+setopt MENU_COMPLETE
+
+autoload -U compinit
+compinit
+
+# Completion caching
+#zstyle ':completion::complete:*' use-cache on
+#zstyle ':completion::complete:*' cache-path .zcache
+#zstyle ':completion:*:cd:*' ignore-parents parent pwd
+#
+##Completion Options
+#zstyle ':completion:*:match:*' original only
+#zstyle ':completion::prefix-1:*' completer _complete
+#zstyle ':completion:predict:*' completer _complete
+#zstyle ':completion:incremental:*' completer _complete _correct
+#zstyle ':completion:*' completer _complete _prefix _correct _prefix _match _approximate
+#
+## Path Expansion
+#zstyle ':completion:*' expand 'yes'
+#zstyle ':completion:*' squeeze-shlashes 'yes'
+#zstyle ':completion::complete:*' '\\'
+#
+#zstyle ':completion:*:*:*:default' menu yes select
+#zstyle ':completion:*:*:default' force-list always
+
+# Binary release in archive, from GitHub-releases page.
+# After automatic unpacking it provides program "fzf".
+zi ice from"gh-r" as"program"
+zi light junegunn/fzf
+# zsh-fzf-history-search
+zinit ice lucid wait'0'
+zinit light joshskidmore/zsh-fzf-history-search
+#bindkey '^T' fzf-completion
+#zinit light Aloxaf/fzf-tab
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --preview 'bat --color=always {}' --preview-window '~3'"
+
+# 給自動補齊上色
+# Standard style used by default for 'list-colors'
+LS_COLORS=${LS_COLORS:-'di=34:ln=35:so=32:pi=33:ex=31:bd=36;01:cd=33;01:su=31;40;07:sg=36;40;07:tw=32;40;07:ow=33;40;07:'}
+
+# apply ls colors
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+
+# pretty cd [tab] stuffs
+zstyle ':completion:*:directory-stack' list-colors '=(#b) #([0-9]#)*( *)==95=38;5;12'
+
+# highlight case in select
+zstyle ':completion:*' menu select
+
+## Alias section
+alias cp="cp -i"                                                # Confirm before overwriting something
+alias df='df -h'                                                # Human-readable sizes
+alias free='free -m'                                            # Show sizes in MB
+alias gitu='git add . && git commit && git push'
+
+# overwrite ls
+if command -v colorls &> /dev/null; then
+    alias ls='colorls'
+    compdef colorls='ls'
+    source $(dirname $(gem which colorls))/tab_complete.sh
+elif  command -v eza &> /dev/null; then
+    zinit ice as"completion"
+    zinit snippet https://github.com/eza-community/eza/blob/main/completions/zsh/_eza
+    alias ls='eza --color=always --icons=always'
+    #zinit light 'eza-community/eza'
+fi
+
+# Floorp 支援 Firefox參數補齊
+compdef floorp='firefox'
+
+# 開啟檔案總管快速鍵 alt+e
+if  command -v xdg-open &> /dev/null; then
+    bindkey -s '^[e' 'xdg-open "$PWD"  2> /dev/null\n'
+elif [ "$(uname -s)" = 'Darwin' ]; then
+     bindkey -s '^[e' 'open "$PWD"  2> /dev/null\n'
+fi
+# bindkey -s '^E' 'gnome-terminal --working-directory="$PWD" -- zsh\n'
+
+# Install ruby¬
+# Based on "`brew --prefix ruby`/bin"¬
+export PATH="/usr/local/opt/ruby/bin:$PATH"¬
+# Based on "`gem environment gemdir`/bin"¬
+export PATH="/usr/local/lib/ruby/gems/3.3.0/bin:$PATH"¬
+export PATH="$HOME/.local/share/gem/ruby/3.3.0/bin:$PATH"
+
+# Fix ython3 to python Path on macOS
+if [ "$(uname -s)" = 'Darwin' ]; then
+     export PATH=/usr/local/opt/python/libexec/bin:$PATH
+fi
+
+# Created by `pipx` on 2023-01-30 19:57:14
+export PATH="$PATH:/Users/yuan/.local/bin"
+
+# GoLang Path
+export PATH="$PATH:$HOME/go/bin"
+
+# iterm2
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# 通用顏色文字輸出
+[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+
+# 圖片顯示
+imgcat() {
+  if [[ -z "$1" ]]; then
+    echo "❌ 請指定圖片檔案，例如：imgcat ~/Pictures/foo.png"
+    return 1
+  fi
+
+  magick "$1" -geometry 800x480 sixel:-
+}
+
+zinit light mass8326/zsh-chezmoi

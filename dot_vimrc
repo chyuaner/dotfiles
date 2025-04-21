@@ -1,0 +1,234 @@
+" 第一次使用，請先安裝go，然後再下以下該行指令
+" brew install vim cmake python go nodejs java
+" sudo ln -sfn $(brew --prefix java)/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" vim +PlugInstall  +qall
+"
+" winget install -e GoLang.Go OpenJS.NodeJS
+" mkdir -p vimfiles\autoload
+" Invoke-WebRequest -Uri "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" -OutFile "vimfiles\autoload\plug.vim"
+" =============================================================================
+
+"vim-scripts/php.vim-html-enhanced' 檔案編碼
+set encoding=utf-8
+set fileencodings=utf-8,cp950
+set enc=utf8
+
+" 佈景主題
+syntax on                    " 語法上色
+set synmaxcol=0
+
+" 界面顯示
+set mouse=a                 " 啟用滑鼠
+set confirm                    " 操作過程有衝突時，以明確的文字來詢問
+"set ruler                          " 顯示右下角設定值
+set cursorline                " 顯示目前的游標位置
+set cursorcolumn        " 顯示目前的游標位置
+set number                    " 顯示行號
+set colorcolumn=80    " 顯示編輯器建議寬度
+set scrolloff=3               " 捲動時保留n行彈性
+set laststatus=2
+"set statusline=%4*%<\%m%<[%f\%r%h%w]\ [%{&ff},%{&fileencoding},%Y]%=\[Position=%l,%v,%p%%]
+
+" 縮排設定
+set smartindent
+set shiftwidth=4             " 設定縮排寬度
+set tabstop=4                " tab 的字元數
+set softtabstop=4
+set expandtab                " 用 space 代替 tab
+
+" 編輯設定
+set backspace=2              " 在 insert 也可用 backspace
+set history=1000             " 保留 1000 個使用過的指令
+
+" 搜尋設定
+set ic                               " 搜尋不分大小寫。
+set hlsearch                 " 設定高亮度顯示搜尋結果
+set incsearch               " 在關鍵字還沒完全輸入完畢前就顯示結果
+
+" Ctrl+J Ctrl+k 整行移動
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+inoremap <C-j> <Esc>:m .+1<CR>==gi
+inoremap <C-k> <Esc>:m .-2<CR>==gi
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
+
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+" 啟用Tab縮牌
+nmap <TAB> v>
+nmap <S-TAB> v<
+vmap <TAB> >gv
+vmap <S-TAB> <gv
+
+" 透過v選取整行縮排後，不取消選取整行
+vnoremap < <gv
+vnoremap > >gv
+
+
+" 顯示行尾
+set listchars=eol:¬,tab:→→,trail:.,extends:>,precedes:<
+set list
+
+" =============================================================================
+" 安裝指令：vim +PlugInstall  +qall
+
+call plug#begin()
+
+Plug 'vim-airline/vim-airline'
+Plug 'joshdick/onedark.vim'
+
+" On-demand loading: loaded when the specified command is executed
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'ryanoasis/vim-devicons'
+Plug 'bryanmylee/vim-colorscheme-icons'
+
+Plug 'ctrlpvim/ctrlp.vim' " 模糊搜尋 Ctrl+P
+
+" YCM自動補齊
+function! BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py
+  endif
+endfunction
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --all' }
+
+Plug 'ervandew/supertab'
+
+" Track the engine.
+Plug 'SirVer/ultisnips'
+
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+
+" Trigger configuration. You need to change this to something other than <tab> if you use one of the following:
+" - https://github.com/Valloric/YouCompleteMe
+" - https://github.com/nvim-lua/completion-nvim
+
+" https://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+Plug 'mattn/emmet-vim' "Ctrl+Y ,
+
+Plug 'jiangmiao/auto-pairs' " 自動補全對稱符
+" 這是自訂括號的寫法
+au FileType ejs let b:AutoPairs = AutoPairsDefine({'<%': '%>', '<!--': '-->'})
+au FileType html let b:AutoPairs = AutoPairsDefine({'<!--': '-->'})
+
+Plug 'editorconfig/editorconfig-vim'
+
+" 按 <F6> 可以回朔到開啟檔案以來的任何歷史，還會標出修改的地方，很酷
+Plug 'mbbill/undotree'
+nnoremap <F6> :UndotreeToggle<CR>
+
+" <F8> 看看你設定了哪些變數、函數，也可以快速跳轉
+Plug 'majutsushi/tagbar'
+nmap <F8> :TagbarToggle<CR>
+
+" 可以在文档中显示 git 信息
+Plug 'airblade/vim-gitgutter'
+
+" 終端機
+Plug 'pakutoma/toggle-terminal'
+let g:toggle_terminal#command = 'zsh'
+tnoremap <silent> <C-@> <C-w>:ToggleTerminal<CR>
+nnoremap <silent> <C-@> :ToggleTerminal<CR>
+let g:toggle_terminal#position = 'rightbelow'
+
+" Ranger檔案總管
+if !has("gui_running") "在GVim無法使用，直接排除
+  Plug 'rafaqz/ranger.vim'
+  nnoremap <leader>fr :FloatermNew --height=0.9 --width=0.9 --title=Ranger ranger %:p:h<CR>
+endif
+
+Plug 'voldikss/vim-floaterm'
+nnoremap <leader>lg :FloatermNew --height=0.9 --width=0.9 --title=Lazygit lazygit<CR>
+
+call plug#end()
+
+" =============================================================================
+
+" Theme
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
+syntax on
+colorscheme onedark
+
+let g:airline_theme='onedark'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+
+" -----------------------------------------------------------------------------
+
+" NERDTree
+nnoremap <C-t> :NERDTreeToggle<CR>
+nmap <F9> :NERDTreeToggle<CR>
+
+
+" 啟動時自動開啟 NERDTree，且只在沒有指定檔案時開啟
+autocmd VimEnter * NERDTree | wincmd p
+"autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" 如果關掉最後一個 buffer，並且只剩下 NERDTree，則關閉 Vim
+autocmd BufEnter * if winnr('$') == 1 && getbufvar('%', '&filetype') == 'nerdtree' | quit | endif
+let NERDTreeShowHidden=1
+"let g:nerdtree_tabs_open_on_console_startup=1
+let NERDTreeQuitOnOpen=0
+
+"" 沒有文件開啟的時候關閉nerdtree
+autocmd QuitPre * if empty(&bt) | lclose | endif
+
+"" Start NERDTree
+"autocmd VimEnter * NERDTree
+"" Go to previous (last accessed) window.
+"autocmd VimEnter * wincmd p
+
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+"autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" Start NERDTree and put the cursor back in the other window.
+autocmd VimEnter * NERDTree | wincmd p
+
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if winnr() == winnr('h') && bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
+" Mirror the NERDTree before showing it. This makes it the same on all tabs.
+nnoremap <C-n> :NERDTreeMirror<CR>:NERDTreeFocus<CR>
