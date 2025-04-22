@@ -1,0 +1,46 @@
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+[user]
+	name = {{ .name | quote }}
+	email = {{ .email | quote }}
+[core]
+	editor = vim
+	excludesfile = {{ joinPath .chezmoi.homeDir ".gitignore_global" }}
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[color]
+	ui = true
+	diff = auto
+	status = auto
+	branch = auto
+[alias]
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+	today = log --since=midnight --author='Roberto Bonvallet' --oneline
+	s = status
+	a = add --all
+	cm = commit -m
+	acm = "!f() { \
+        git add --all && git commit -m \"$1\"; \
+      }; f"
+	c = checkout
+	ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
+[filter "lfs"]
+	required = true
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	clean = git-lfs clean -- %f
+[filesystem "Oracle Corporation|1.8.0_77|/dev/disk1s1"]
+	timestampResolution = 1011 milliseconds
+	minRacyThreshold = 0 nanoseconds
+[filesystem "N/A|15.0.1|/dev/mapper/luks-24b4856c-0168-404d-bb9b-64946da29b0b"]
+	timestampResolution = 5710 nanoseconds
+	minRacyThreshold = 3791 microseconds
+[pull]
+	rebase = false
+[init]
+	defaultBranch = master
