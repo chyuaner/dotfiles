@@ -1,0 +1,8 @@
+set guifont=MesloLGS\ NF\ 10
+set toolbariconsize=small
+aunmenu ToolBar.Help
+"set guioptions-=m  "menu bar
+"set guioptions-=T  "toolbar
+"set guioptions-=r  "scrollbar
+set guioptions-=L "left scrollbar
+let g:ranger_terminal = 'kitty -e'
