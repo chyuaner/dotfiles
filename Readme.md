@@ -1,7 +1,15 @@
 Yuan dotfile
 ===
-安裝
+安裝 (Manjaro Arch Linux環境)
 ---
+```
+sudo pacman -S chezmoi
+chezmoi init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git
+```
+
+安裝 (依照chezmoi官方教學)
+---
+### Quick start
 With chezmoi, pronounced /ʃeɪ mwa/ (shay-mwa), you can install chezmoi and your dotfiles from your GitHub dotfiles repo on a new, empty machine with a single command:
 ```
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git
@@ -22,6 +30,16 @@ You can install your dotfiles on new machine with a single command:
 
 ```
 chezmoi init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git
+```
+
+### To force a refresh the downloaded archives
+use the --refresh-externals flag to chezmoi apply:
+```
+chezmoi --refresh-externals apply
+```
+`--refresh-externals` can be shortened to `-R`:
+```
+chezmoi -R apply
 ```
 
 zsh
