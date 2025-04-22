@@ -6,6 +6,7 @@ Yuan dotfile
 ```
 sudo pacman -S chezmoi
 chezmoi init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git
+chezmoi update
 ```
 
 安裝 (依照chezmoi官方教學)
