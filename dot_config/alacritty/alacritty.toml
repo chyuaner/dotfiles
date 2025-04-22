@@ -1,0 +1,44 @@
+[general]
+import = [
+    "~/.config/alacritty/themes/themes/nord.toml"
+]
+
+[window]
+opacity =  0.95
+blur = true
+decorations_theme_variant = "Dark"
+
+[font]
+size = 10.0
+
+[font.bold]
+family = "MesloLGS NF"
+style = "Bold"
+
+[font.bold_italic]
+family = "MesloLGS NF"
+style = "Bold Italic"
+
+[font.italic]
+family = "MesloLGS NF"
+style = "Italic"
+
+[font.normal]
+family = "MesloLGS NF"
+style = "Regular"
+
+[scrolling]
+history = 100000
+multiplier = 3
+
+[cursor.style]
+shape = "Block"
+blinking = "Always"
+
+[[hints.enabled]]
+regex = "[^ ]+\\.rs:\\d+:\\d+"
+command = { program = "code", args = [ "--goto" ] }
+mouse = { enabled = true }
+
+[terminal]
+shell = "zellij"
