@@ -1,7 +1,8 @@
 Yuan dotfile
 ===
-安裝 (Manjaro Arch Linux環境)
+安裝 (個人用途)
 ---
+### Manjaro (Arch Linux)
 ```
 sudo pacman -S chezmoi
 chezmoi init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git
