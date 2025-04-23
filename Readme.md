@@ -66,7 +66,7 @@ rm -rf ~/.config/alacritty ~/.config/zellij
 
 <details>
   <summary>依照chezmoi官方教學</summary>
-  
+
   #### Quick start
   With chezmoi, pronounced /ʃeɪ mwa/ (shay-mwa), you can install chezmoi and your dotfiles from your GitHub dotfiles repo on a new, empty machine with asingle command:
 
@@ -161,6 +161,16 @@ Konsole
 
 * dot_config/private_konsolerc
 * dot_local/share/konsole
+
+Alacritty
+--------------------------------------------------------------------------------
+
+官方的程式不支援sixel在命令列直接顯示圖片，所以在Manjaro Linux中的套件安裝，是直接使用非官方修改版的AUR套件 alacritty-sixel-git 。
+在macOS中，並沒有homebrew套件，建議手動[去Github Release頁面](https://github.com/ayosec/alacritty/releases/)下載dmg檔自行安裝。
+
+![](Readme/Screenshot_20250424_024759.png)
+
+因為此程式性質非常單一，重視效能而精簡，本身並沒有tab的功能。因為我的使用習慣會一直用到，所以找了純命令列又可以做到Tab功能的環境程式zellij，並將Alacritty設定成預設使用zellij開。也順便把佈景主題調好了。
 
 
 chezmoi維護基本用法
