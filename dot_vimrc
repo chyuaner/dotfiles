@@ -184,7 +184,10 @@ if (empty($TMUX))
 endif
 
 syntax on
-colorscheme onedark
+" 加入這段在 .vimrc 中，避免色彩主題未安裝導致錯誤
+if (empty(glob("~/.vim/plugged/onedark.vim")) == 0)
+    colorscheme onedark
+endif
 
 let g:airline_theme='onedark'
 let g:airline_powerline_fonts = 1
