@@ -37,7 +37,7 @@ wait_for_pacman_unlock
 if [[ ${#to_install_pacmanForce[@]} -gt 0 ]]; then
   echo "  - Installing missing packages via pacman: ${to_install_pacmanForce[@]}"
   sudo pacman -S --needed --noconfirm "${to_install_pacmanForce[@]}"
-fis
+fi
 
 # 等待鎖定檔案被移除
 wait_for_pacman_unlock
