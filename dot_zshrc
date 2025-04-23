@@ -162,7 +162,7 @@ if [ "$(uname -s)" = 'Darwin' ]; then
 fi
 
 # Created by `pipx` on 2023-01-30 19:57:14
-export PATH="$PATH:/Users/yuan/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 
 # GoLang Path
 export PATH="$PATH:$HOME/go/bin"
