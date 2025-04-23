@@ -89,6 +89,7 @@ chezmoi apply
 
 zsh
 --------------------------------------------------------------------------------
+
 ### 有用到的套件
 * colorls
 * eza
@@ -110,4 +111,22 @@ zinit self-update
 
 # Plugin update
 zinit update
+```
+
+vim
+--------------------------------------------------------------------------------
+
+### 第一次啟動請先下以下指令
+
+#### macOS
+```
+sudo ln -sfn $(brew --prefix java)/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+vim +PlugInstall  +qall
+```
+
+#### Windows (PowerShell)
+```
+winget install -e GoLang.Go OpenJS.NodeJS
+mkdir -p vimfiles\autoload
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" -OutFile "vimfiles\autoload\plug.vim"
 ```
