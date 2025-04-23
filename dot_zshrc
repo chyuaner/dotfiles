@@ -127,7 +127,7 @@ alias free='free -m'                                            # Show sizes in 
 alias gitu='git add . && git commit && git push'
 
 # overwrite ls
-if command -v colorls &> /dev/null; then
+if  command -v colorls &> /dev/null; then
     alias ls='colorls'
     compdef colorls='ls'
     source $(dirname $(gem which colorls))/tab_complete.sh
