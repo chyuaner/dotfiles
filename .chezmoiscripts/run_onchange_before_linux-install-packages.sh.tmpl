@@ -2,17 +2,46 @@
 
 
 {{ if eq .chezmoi.osRelease.id "manjaro" -}}
+{{- /* https://github.com/mriehl/dotfiles/blob/master/run_onchange_packages.sh.tmpl */ -}}
 #!/usr/bin/env bash
 
+pacman_packages=( {{.packages.linux.manjaro.pacman | quoteList | join " " }})
+aur_packages=( {{.packages.linux.manjaro.aur | quoteList | join " " }})
 
-{{ range .packages.linux.manjaro.pacman -}}
-sudo pacman -S --needed --noconfirm {{ . | quote }}
-{{ end -}}
+installed_packages=($(pacman -Qq))
 
-{{ range .packages.linux.manjaro.aur -}}
-yay -S --needed --noconfirm {{ . | quote }}
-{{ end -}}
+is_installed() {
+  [[ " ${installed_packages[*]} " =~ " $1 " ]]
+}
 
+to_install_pacman=()
+for package in "${pacman_packages[@]}"; do
+  if ! is_installed "$package"; then
+    to_install_pacman+=("$package")
+  fi
+done
+
+if [[ ${#to_install_pacman[@]} -gt 0 ]]; then
+  echo "  - Installing missing packages via pacman: ${to_install_pacman[@]}"
+  sudo pacman -S --noconfirm "${to_install_pacman[@]}"
+fi
+
+if ! is_installed "yay"; then
+  echo "  - Installing yay"
+  sudo pacman -S --noconfirm yay
+fi
+
+to_install_aur=()
+for package in "${aur_packages[@]}"; do
+  if ! is_installed "$package"; then
+    to_install_aur+=("$package")
+  fi
+done
+
+if [[ ${#to_install_aur[@]} -gt 0 ]]; then
+  echo "  - Installing missing AUR packages via yay: ${to_install_aur[@]}"
+  yay -S --noconfirm "${to_install_aur[@]}"
+fi
 {{ end -}}
 
 
