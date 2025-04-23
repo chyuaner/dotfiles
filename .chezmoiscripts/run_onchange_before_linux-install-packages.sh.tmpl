@@ -6,14 +6,32 @@
 #!/usr/bin/env bash
 
 wait_for_pacman_unlock() {
-  echo "檢查 pacman 鎖..."
-  while \
-    [ -e /var/lib/pacman/db.lck ] || \
-    pgrep -x pacman >/dev/null || \
-    pgrep -x packagekitd >/dev/null || \
-    pgrep -x packagekit >/dev/null; do
-      sleep 1
+  local LOCKFILE="/var/lib/pacman/db.lck"
+  local MAX_IDLE=10    # 如果沒有 pacman process，最多等這麼久再自動移除殘留
+  local WAITED=0
+
+  echo "⏳ 檢查 pacman 鎖定中..."
+
+  while [ -e "$LOCKFILE" ]; do
+    if ! pgrep -x pacman >/dev/null && \
+       ! pgrep -x packagekitd >/dev/null && \
+       ! pgrep -x packagekit >/dev/null; then
+       
+       echo "🔍 找不到 pacman 或 PackageKit，疑似殘留鎖檔。"
+
+       if [ "$WAITED" -ge "$MAX_IDLE" ]; then
+         echo "🧹 自動移除殘留鎖檔（已閒置 $MAX_IDLE 秒）"
+         sudo rm -f "$LOCKFILE"
+         break
+       fi
+
+       WAITED=$((WAITED + 1))
+    fi
+
+    sleep 1
   done
+
+  echo "✅ 鎖定解除，繼續執行。"
 }
 
 pacmanForce_packages=( {{.packages.linux.manjaro.pacman_force | quoteList | join " " }})
@@ -68,9 +86,6 @@ for package in "${aur_packages[@]}"; do
     to_install_aur+=("$package")
   fi
 done
-
-# 等待鎖定檔案被移除
-wait_for_pacman_unlock
 
 if [[ ${#to_install_aur[@]} -gt 0 ]]; then
   echo "  - Installing missing AUR packages via yay: ${to_install_aur[@]}"
