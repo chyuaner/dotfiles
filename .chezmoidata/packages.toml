@@ -23,7 +23,7 @@ casks = [
 ]
 
 [packages.linux.manjaro]
-pacman_first = [
+pacman_force = [
   'archlinux-keyring',
   'libpamac',
   'llvm',
