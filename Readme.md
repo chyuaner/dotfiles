@@ -4,21 +4,27 @@ Yuan dotfile
 安裝 (個人用途)
 --------------------------------------------------------------------------------
 ### Linux / macOS
-#### 1. 放置自己的金鑰（若是其他人要用，請直接跳過）
+#### 安裝主dotfiles包
+```
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init https://git.yuaner.tw/yuan/dotfiles-private.git --apply
+```
+
+<details>
+  <summary>私人用安裝方式</summary>
+##### 1. 放置自己的金鑰（若是其他人要用，請直接跳過）
 將 `id_rsa` sshkey金鑰檔放到 `~/.ssh/id_rsa`
 
-#### 2. 安裝主dotfiles包
+##### 2. 安裝主dotfiles包
 ```
-#sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git #私人用
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git
-vim +PlugInstall  +qall
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git --apply
 ```
 
-#### 3. 安裝私人用的dotfiles包（若是其他人要用，請直接跳過）
+##### 3. 安裝私人用的dotfiles包（若是其他人要用，請直接跳過）
 ```
 chezmoi init --source ~/.local/share/chezmoi-private --config ~/.config/chezmoi-private/chezmoi.toml ssh://git@git.yuaner.tw:10022/yuan/dotfiles-private.git --apply
 chezmoi apply
 ```
+</details>
 
 #### 若需要刪掉重來
 ```

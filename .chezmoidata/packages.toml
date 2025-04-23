@@ -23,10 +23,15 @@ casks = [
 ]
 
 [packages.linux.manjaro]
-pacman = [
+pacman_first = [
   'archlinux-keyring',
-  'chezmoi',
   'libpamac',
+  'llvm',
+  'llvm-libs',
+]
+
+pacman = [
+  'chezmoi',
   'yay',
   'base-devel',
   'fakeroot',
@@ -42,8 +47,6 @@ pacman = [
   'go',
   'nodejs',
   'jdk-openjdk',
-  'llvm',
-  'llvm-libs',
 ]
 
 aur = [
