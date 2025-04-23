@@ -45,7 +45,7 @@
 [init]
 	defaultBranch = master
 
-{{- if (include "../chezmoi-private/private_dot_gitconfig_private" | trim) }}
+{{- if stat (joinPath ".." "chezmoi-private" "private_dot_gitconfig_private") }}
 
-{{ include "../chezmoi-private/private_dot_gitconfig_private" }}
+{{ include "../chezmoi-private/private_dot_gitconfig_private" | trim }}
 {{- end }}
