@@ -174,13 +174,15 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
 
 # 圖片顯示
-imgcat() {
-  if [[ -z "$1" ]]; then
-    echo "❌ 請指定圖片檔案，例如：imgcat ~/Pictures/foo.png"
-    return 1
-  fi
+if ! type imgcat &>/dev/null && command -v magick &>/dev/null; then
+  imgcat() {
+    if [[ -z "$1" ]]; then
+      echo "❌ 請指定圖片檔案，例如：imgcat ~/Pictures/foo.png"
+      return 1
+    fi
 
-  magick "$1" -geometry 800x480 sixel:-
-}
+    magick "$1" -geometry 800x480 sixel:-
+  }
+fi
 
 zinit light mass8326/zsh-chezmoi
