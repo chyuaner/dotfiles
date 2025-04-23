@@ -1,7 +1,7 @@
 packages:
   darwin:
     brews:
-    - 'chozmoi'
+    - 'chezmoi'
     - 'git'
     - 'vim'
     - 'lsix'
