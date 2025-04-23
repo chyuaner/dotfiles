@@ -11,6 +11,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init https://git.yuaner.tw/yuan/dotfiles
 
 <details>
   <summary>私人用安裝方式</summary>
+
 ##### 1. 放置自己的金鑰（若是其他人要用，請直接跳過）
 將 `id_rsa` sshkey金鑰檔放到 `~/.ssh/id_rsa`
 
@@ -42,6 +43,7 @@ rm -rf ~/.config/alacritty ~/.config/zellij
 
 <details>
   <summary>依照chezmoi官方教學</summary>
+  
   #### Quick start
   With chezmoi, pronounced /ʃeɪ mwa/ (shay-mwa), you can install chezmoi and your dotfiles from your GitHub dotfiles repo on a new, empty machine with asingle command:
 
