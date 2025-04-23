@@ -1,0 +1,16 @@
+packages:
+  darwin:
+    brews:
+    - 'chozmoi'
+    - 'git'
+    - 'vim'
+    - 'lsix'
+    - 'eza'
+    - 'grc'
+    - 'cmake'
+    - 'python'
+    - 'go'
+    - 'nodejs'
+    - 'java'
+    casks:
+    - 'iterm2'
