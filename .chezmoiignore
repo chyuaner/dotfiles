@@ -1,4 +1,5 @@
 Readme.md
+chezmoi.code-workspace
 {{- if ne .chezmoi.hostname "work-laptop" }}
 .work # only manage .work on work-laptop
 {{- end }}
