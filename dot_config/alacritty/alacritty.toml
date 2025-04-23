@@ -45,4 +45,4 @@ command = { program = "code", args = [ "--goto" ] }
 mouse = { enabled = true }
 
 [terminal]
-shell = "zellij"
+shell = "/usr/local/bin/zellij"
