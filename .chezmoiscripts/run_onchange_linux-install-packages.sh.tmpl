@@ -1,0 +1,19 @@
+{{ if eq .chezmoi.os "linux" -}}
+
+
+{{ if eq .chezmoi.osRelease.id "manjaro" -}}
+#!/usr/bin/env bash
+
+
+{{ range .packages.linux.manjaro.pacman -}}
+sudo pacman -S --needed --noconfirm {{ . | quote }}
+{{ end -}}
+
+{{ range .packages.linux.manjaro.aur -}}
+yay -S --needed --noconfirm {{ . | quote }}
+{{ end -}}
+
+{{ end -}}
+
+
+{{ end -}}

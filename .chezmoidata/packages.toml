@@ -2,11 +2,13 @@
 brews = [
   'chezmoi',
   'git',
+  'zsh',
   'vim',
   'lsix',
   'eza',
   'grc',
   'zellij',
+  'ranger',
   'cmake',
   'python',
   'go',
@@ -18,4 +20,28 @@ casks = [
   'iterm2',
   'alacritty',
   'macvim',
+]
+
+[packages.linux.manjaro]
+pacman = [
+  'chezmoi',
+  'yay',
+  'base-devel',
+  'fakeroot',
+  'gcc',
+  'cmake',
+  'lsix',
+  'eza',
+  'grc',
+  'zellij',
+  'ranger',
+  'gvim',
+  'python',
+  'go',
+  'nodejs',
+  'jdk-openjdk',
+]
+
+aur = [
+  'alacritty-sixel-git',
 ]
