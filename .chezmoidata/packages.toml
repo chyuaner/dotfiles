@@ -18,8 +18,8 @@ brews = [
 
 casks = [
   'iterm2',
-  'alacritty',
-  'macvim',
+#  'alacritty',
+#  'macvim',
 ]
 
 [packages.linux.manjaro]
