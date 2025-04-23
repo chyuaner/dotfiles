@@ -10,15 +10,20 @@ Yuan dotfile
 #### 2. 安裝主dotfiles包
 ```
 sudo pacman -S chezmoi
-#chezmoi init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git #私人用
-chezmoi init --apply https://git.yuaner.tw/yuan/dotfiles.git
-chezmoi update
+#sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git私人用
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git
 ```
 
 #### 3. 安裝私人用的dotfiles包
 ```
-chezmoi init --source ~/.local/share/chezmoi-private --config ~/.config/chezmoi-private/chezmoi.toml --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles-private.git
+chezmoi init --source ~/.local/share/chezmoi-private --config ~/.config/chezmoi-private/chezmoi.toml ssh://git@git.yuaner.tw:10022/yuan/dotfiles-private.git --apply
 chezmoi apply
+```
+
+#### 若需要刪掉重來
+```
+rm -rf ~/.local/share/chezmoi
+rm -rf ~/.local/share/chezmoi-private
 ```
 
 <details>
