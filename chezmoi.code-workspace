@@ -11,6 +11,10 @@
 		{
 			"name": "chezmoi-config",
 			"path": "../../../.config/chezmoi"
+		},
+		{
+			"name": "chezmoi-config-private",
+			"path": "../../../.config/chezmoi-private"
 		}
 	],
 	"settings": {}
