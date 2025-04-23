@@ -21,6 +21,7 @@
 [alias]
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 	today = log --since=midnight --author='Roberto Bonvallet' --oneline
+	pushall = !git remote | xargs -L1 git push --all
 	s = status
 	a = add --all
 	cm = commit -m
