@@ -9,7 +9,7 @@ Yuan dotfile
 
 #### 2. 安裝主dotfiles包
 ```
-#sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git私人用
+#sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git #私人用
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git
 vim +PlugInstall  +qall
 ```
