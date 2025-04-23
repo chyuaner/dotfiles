@@ -4,10 +4,21 @@ Yuan dotfile
 安裝 (個人用途)
 --------------------------------------------------------------------------------
 ### Manjaro (Arch Linux)
+#### 1. 放置自己的金鑰（若）
+將 `id_rsa` sshkey金鑰檔放到 `~/.ssh/id_rsa`
+
+#### 2. 安裝主dotfiles包
 ```
 sudo pacman -S chezmoi
-chezmoi init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git
+#chezmoi init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git #私人用
+chezmoi init --apply https://git.yuaner.tw/yuan/dotfiles.git
 chezmoi update
+```
+
+#### 3. 安裝私人用的dotfiles包
+```
+chezmoi init --source ~/.local/share/chezmoi-private --config ~/.config/chezmoi-private/chezmoi.toml --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles-private.git
+chezmoi apply
 ```
 
 <details>
