@@ -44,3 +44,8 @@
 	rebase = false
 [init]
 	defaultBranch = master
+
+{{- if (include "../chezmoi-private/private_dot_gitconfig_private" | trim) }}
+
+{{ include "../chezmoi-private/private_dot_gitconfig_private" }}
+{{- end }}
