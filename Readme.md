@@ -3,18 +3,18 @@ Yuan dotfile
 
 安裝 (個人用途)
 --------------------------------------------------------------------------------
-### Manjaro (Arch Linux)
-#### 1. 放置自己的金鑰（若）
+### Linux / macOS
+#### 1. 放置自己的金鑰（若是其他人要用，請直接跳過）
 將 `id_rsa` sshkey金鑰檔放到 `~/.ssh/id_rsa`
 
 #### 2. 安裝主dotfiles包
 ```
-sudo pacman -S chezmoi
 #sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git私人用
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git
+vim +PlugInstall  +qall
 ```
 
-#### 3. 安裝私人用的dotfiles包
+#### 3. 安裝私人用的dotfiles包（若是其他人要用，請直接跳過）
 ```
 chezmoi init --source ~/.local/share/chezmoi-private --config ~/.config/chezmoi-private/chezmoi.toml ssh://git@git.yuaner.tw:10022/yuan/dotfiles-private.git --apply
 chezmoi apply
@@ -24,6 +24,14 @@ chezmoi apply
 ```
 rm -rf ~/.local/share/chezmoi
 rm -rf ~/.local/share/chezmoi-private
+```
+
+可能會需要刪掉相關設定
+```
+rm ~/.ssh/known_hosts
+rm -rf ~/.vimrc ~/.vim ~/.gvimrc
+rm ~/.zshrc
+rm -rf ~/.config/alacritty ~/.config/zellij 
 ```
 
 <details>
