@@ -1,9 +1,10 @@
-{{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $name := promptStringOnce . "name" "請輸入您的姓名" -}}
+{{- $email := promptStringOnce . "email" "輸入您的Email地址" -}}
 sourceDir = "~/.local/share/chezmoi"
 
 [edit]
     command = "vim"
 
 [data]
+    name = {{ $name | quote }}
     email = {{ $email | quote }}
-    name = {{ promptStringOnce . "name" "Name for git commits" | quote }}
