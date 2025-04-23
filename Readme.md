@@ -23,10 +23,19 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply chyuaner
 
 這一行指令將會把我的設定載下來複製到相對應的位置以外，還會自動安裝需要的相關軟體、套件，基本上盡量簡化到開箱即用。（不過我只有親測Manjaro Linux與macOS，其他作業系統請自行看 `.chezmoidata/packages.toml` 套件名單自行手動處理。）
 
+日後要更新的話，用這一行指令吧：
+
+```
+chezmoi update --apply
+```
+
+之後我會陸陸續續再添加我其他需求用途會調的東西，就看裝況看能不能順便整理到這裡來～ （可能之後會整理管伺服器用的輕量微調吧，這才是我想整理成懶人包的目的，把習慣帶到所有我會接觸的主機和自用雲端容器上吧）
+
+
 <details>
   <summary>我自己自用的安裝方式</summary>
 
-##### 1. 放置自己的金鑰（若是其他人要用，請直接跳過）
+##### 1. 放置自己的金鑰
 將 `id_rsa` sshkey金鑰檔放到 `~/.ssh/id_rsa`
 
 ##### 2. 安裝主dotfiles包
@@ -34,7 +43,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply chyuaner
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git --apply
 ```
 
-##### 3. 安裝私人用的dotfiles包（若是其他人要用，請直接跳過）
+##### 3. 安裝私人用的dotfiles包
 ```
 chezmoi init --source ~/.local/share/chezmoi-private --config ~/.config/chezmoi-private/chezmoi.toml ssh://git@git.yuaner.tw:10022/yuan/dotfiles-private.git --apply
 chezmoi apply
@@ -99,29 +108,6 @@ rm -rf ~/.config/alacritty ~/.config/zellij
 </details>
 
 
-chezmoi基本用法
---------------------------------------------------------------------------------
-### 進入資料夾
-```
-chezmoi cd
-```
-
-### 加入檔案 (或從家目錄裡實際運作檔案內容更新)
-```
-chezmoi add ~/.zshrc
-```
-
-### 編輯檔案
-```
-EDITOR="code" chezmoi edit ~/.zshrc
-chezmoi apply ~/.zshrc
-```
-
-#### 套用全部
-```
-chezmoi apply
-```
-
 zsh
 --------------------------------------------------------------------------------
 
@@ -138,6 +124,7 @@ zsh
 
 
 ### zinit 套件管理程式
+基本上是以zinit作為zsh主要的套件管理程式，不直接全部引入on-my-zsh，只擷取其中我會用到的部份。看看是不是有望可以兼顧到舒適和效能。
 
 #### 更新所有套件
 ```
@@ -168,7 +155,35 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/junegunn/vim-plug/mast
 
 Konsole
 --------------------------------------------------------------------------------
-相關檔案位置：
+會直接套用Nordic主題，搭配調好的配色使用
+
+檔案位置：
 
 * dot_config/private_konsolerc
 * dot_local/share/konsole
+
+
+chezmoi維護基本用法
+--------------------------------------------------------------------------------
+這是寫給自己避免忘記，還有懶人到複製貼上的小筆記。如果只是要用我的配置，這部份可以直接跳過XD
+
+### 進入資料夾
+```
+chezmoi cd
+```
+
+### 加入檔案 (或從家目錄裡實際運作檔案內容更新)
+```
+chezmoi add ~/.zshrc
+```
+
+### 編輯檔案
+```
+EDITOR="code" chezmoi edit ~/.zshrc
+chezmoi apply ~/.zshrc
+```
+
+#### 套用全部
+```
+chezmoi apply
+```
