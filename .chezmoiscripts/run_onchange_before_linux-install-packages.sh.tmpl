@@ -5,7 +5,16 @@
 {{- /* https://github.com/mriehl/dotfiles/blob/master/run_onchange_packages.sh.tmpl */ -}}
 #!/usr/bin/env bash
 
-LOCKFILE="/var/lib/pacman/db.lck"
+wait_for_pacman_unlock() {
+  echo "檢查 pacman 鎖..."
+  while \
+    [ -e /var/lib/pacman/db.lck ] || \
+    pgrep -x pacman >/dev/null || \
+    pgrep -x packagekitd >/dev/null || \
+    pgrep -x packagekit >/dev/null; do
+      sleep 1
+  done
+}
 
 pacmanForce_packages=( {{.packages.linux.manjaro.pacman_force | quoteList | join " " }})
 pacman_packages=( {{.packages.linux.manjaro.pacman | quoteList | join " " }})
@@ -23,21 +32,15 @@ for package in "${pacmanForce_packages[@]}"; do
 done
 
 # 等待鎖定檔案被移除
-echo "等待 pacman 鎖定檔案被移除..."
-while [ -e "$LOCKFILE" ]; do
-    sleep 1
-done
+wait_for_pacman_unlock
 
 if [[ ${#to_install_pacmanForce[@]} -gt 0 ]]; then
   echo "  - Installing missing packages via pacman: ${to_install_pacmanForce[@]}"
   sudo pacman -S --needed --noconfirm "${to_install_pacmanForce[@]}"
-fi
+fis
 
 # 等待鎖定檔案被移除
-echo "等待 pacman 鎖定檔案被移除..."
-while [ -e "$LOCKFILE" ]; do
-    sleep 1
-done
+wait_for_pacman_unlock
 
 to_install_pacman=()
 for package in "${pacman_packages[@]}"; do
@@ -51,6 +54,9 @@ if [[ ${#to_install_pacman[@]} -gt 0 ]]; then
   sudo pacman -S --needed --noconfirm "${to_install_pacman[@]}"
 fi
 
+# 等待鎖定檔案被移除
+wait_for_pacman_unlock
+
 if ! is_installed "yay"; then
   echo "  - Installing yay"
   sudo pacman -S --needed --noconfirm yay
@@ -62,6 +68,9 @@ for package in "${aur_packages[@]}"; do
     to_install_aur+=("$package")
   fi
 done
+
+# 等待鎖定檔案被移除
+wait_for_pacman_unlock
 
 if [[ ${#to_install_aur[@]} -gt 0 ]]; then
   echo "  - Installing missing AUR packages via yay: ${to_install_aur[@]}"
