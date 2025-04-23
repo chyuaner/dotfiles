@@ -1,0 +1,22 @@
+[Desktop Entry]
+DefaultProfile=Breath2.profile
+
+[General]
+ConfigVersion=1
+
+[MainWindow]
+MenuBar=Enabled
+StatusBar=Disabled
+
+[PrintOptions]
+PrinterFriendly=true
+ScaleOutput=true
+
+[SaveHistory Settings]
+Recent URLs[$e]=file:$HOME/Documents/output
+
+[TabBar]
+NewTabButton=true
+
+[UiSettings]
+ColorScheme=Breath Dark

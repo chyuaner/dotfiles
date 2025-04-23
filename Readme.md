@@ -151,3 +151,10 @@ winget install -e GoLang.Go OpenJS.NodeJS
 mkdir -p vimfiles\autoload
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" -OutFile "vimfiles\autoload\plug.vim"
 ```
+
+Konsole
+--------------------------------------------------------------------------------
+相關檔案位置：
+
+* dot_config/private_konsolerc
+* dot_local/share/konsole
