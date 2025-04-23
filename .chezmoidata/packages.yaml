@@ -7,6 +7,7 @@ packages:
     - 'lsix'
     - 'eza'
     - 'grc'
+    - 'zellij'
     - 'cmake'
     - 'python'
     - 'go'
@@ -14,3 +15,5 @@ packages:
     - 'java'
     casks:
     - 'iterm2'
+    - 'alacritty'
+    - 'macvim'
