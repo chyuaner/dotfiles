@@ -1,4 +1,4 @@
-Yuan dotfile
+Yuan dotfile 自用環境設定檔
 ================================================================================
 來放個調了很久的做事環境... 其實是最近有轉移多臺電腦的需求😅，想說就把我的設定整理起來，之後換電腦換機器的時候，我習慣的環境可以方便一點這樣帶著走🚗。
 ![](Readme/Screenshot_20250424_013628.png)
@@ -18,11 +18,13 @@ Yuan dotfile
 ### Linux / macOS
 #### 安裝主dotfiles包
 ```
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init https://git.yuaner.tw/yuan/dotfiles-private.git --apply
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply chyuaner
 ```
 
+這一行指令將會把我的設定載下來複製到相對應的位置以外，還會自動安裝需要的相關軟體、套件，基本上盡量簡化到開箱即用。（不過我只有親測Manjaro Linux與macOS，其他作業系統請自行看 `.chezmoidata/packages.toml` 套件名單自行手動處理。）
+
 <details>
-  <summary>私人用安裝方式</summary>
+  <summary>我自己自用的安裝方式</summary>
 
 ##### 1. 放置自己的金鑰（若是其他人要用，請直接跳過）
 將 `id_rsa` sshkey金鑰檔放到 `~/.ssh/id_rsa`
