@@ -46,6 +46,7 @@ pacman = [
   'python',
   'go',
   'nodejs',
+  'npm',
   'jdk-openjdk',
 ]
 
