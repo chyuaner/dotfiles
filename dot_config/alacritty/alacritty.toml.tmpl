@@ -45,4 +45,4 @@ command = { program = "code", args = [ "--goto" ] }
 mouse = { enabled = true }
 
 [terminal]
-shell = "/usr/local/bin/zellij"
+shell = {{ if lookPath "zellij" }}"{{ lookPath "zellij" }}"{{else}}"{{ lookPath "bash" }}"{{ end }}
