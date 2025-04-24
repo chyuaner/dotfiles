@@ -11,3 +11,9 @@ chezmoi.code-workspace
 .local/share/konsole
 .config/konsolerc
 {{ end }}
+
+{{ if ne .chezmoi.os "windows" }}
+*.ps1
+{{ else }}
+*.sh
+{{ end }}
