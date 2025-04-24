@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# --------------------------
+# 擷取 remote list
+# --------------------------
+extract_list() {
+    local input="$1"
+    input="${input//[()]/}"     # 去掉括號
+    IFS=',' read -ra result <<< "$input"
+    echo "${result[@]}"
+}
+
+# --------------------------
+# 主邏輯
+# --------------------------
+
+# 預設值
+remotes=()
+branches=()
+
+# 取出第一個參數：應該是 (remote1,remote2)
+if [[ "$1" =~ ^\(.+\)$ ]]; then
+    remotes=($(extract_list "$1"))
+    shift
+else
+    echo "❌ 請使用 (remote1,remote2) 的格式作為第一個參數"
+    exit 1
+fi
+
+# 剩下的參數是 branches（若為空就抓當前 branch）
+if [[ $# -gt 0 ]]; then
+    branches=("$@")
+else
+    current_branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+    if [[ -z "$current_branch" ]]; then
+        echo "❌ 無法偵測目前所在 branch，請指定"
+        exit 1
+    fi
+    branches=("$current_branch")
+fi
+
+# --------------------------
+# 執行 git push
+# --------------------------
+for remote in "${remotes[@]}"; do
+    for branch in "${branches[@]}"; do
+        echo "🚀 Pushing to '$remote' (branch: '$branch')..."
+        git push "$remote" "$branch"
+        if [[ $? -ne 0 ]]; then
+            echo "❌ Push to '$remote' 失敗"
+        fi
+    done
+done

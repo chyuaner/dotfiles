@@ -191,3 +191,17 @@ if ! alias imgcat &>/dev/null && ! functions imgcat &>/dev/null && command -v ma
 fi
 
 zinit light mass8326/zsh-chezmoi
+
+# 自動補上 noglob 並禁用 Zsh 的 globbing 解析
+function git_pushmulti() {
+    # 手動處理方括號或括號內容，並進行推送
+    local remotes="$1"
+    local branches="$2"
+    remotes="${remotes//\[/\"[\"}"
+    remotes="${remotes//\]/\"]\"}"
+    branches="${branches//\[/\"[\"}"
+    branches="${branches//\]/\"]\"}"
+
+    # 執行 git pushmulti
+    noglob git pushmulti "$remotes" "$branches"
+}
