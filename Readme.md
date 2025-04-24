@@ -193,6 +193,11 @@ EDITOR="code" chezmoi edit ~/.zshrc
 chezmoi apply ~/.zshrc
 ```
 
+將單一檔案轉換成tmpl範本
+```
+chezmoi chattr +template ~/.config/iterm2/com.googlecode.iterm2.plist
+```
+
 #### 套用全部
 ```
 chezmoi apply
