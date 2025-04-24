@@ -1,5 +1,5 @@
 Readme.md
-Readme/
+.readme/
 chezmoi.code-workspace
 
 {{ if ne .chezmoi.os "darwin" }}

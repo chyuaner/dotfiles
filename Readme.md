@@ -1,9 +1,9 @@
 Yuan dotfile 自用環境設定檔
 ================================================================================
 來放個調了很久的做事環境... 其實是最近有轉移多臺電腦的需求😅，想說就把我的設定整理起來，之後換電腦換機器的時候，我習慣的環境可以方便一點這樣帶著走🚗。
-![](Readme/Screenshot_20250424_013628.png)
+![](.readme/Screenshot_20250424_013628.png)
 
-![](Readme/Screenshot_20250424_012703.png)
+![](.readme/Screenshot_20250424_012703.png)
 
 主要是chezmoi用來統整這些dotfiles檔案，常用作業系統是Manjaro (Arch Linux) 和 macOS，有針對這兩個作業系統調整過了，也寫好Script盡量可以一兩行指令直接懶人安裝到好。
 
@@ -168,7 +168,7 @@ Alacritty
 官方的程式不支援sixel在命令列直接顯示圖片，所以在Manjaro Linux中的套件安裝，是直接使用非官方修改版的AUR套件 alacritty-sixel-git 。
 在macOS中，並沒有homebrew套件，建議手動[去Github Release頁面](https://github.com/ayosec/alacritty/releases/)下載dmg檔自行安裝。
 
-![](Readme/Screenshot_20250424_024759.png)
+![](.readme/Screenshot_20250424_024759.png)
 
 因為此程式性質非常單一，重視效能而精簡，本身並沒有tab的功能。因為我的使用習慣會一直用到，所以找了純命令列又可以做到Tab功能的環境程式zellij，並將Alacritty設定成預設使用zellij開。也順便把佈景主題調好了。
 
