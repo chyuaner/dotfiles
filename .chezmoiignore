@@ -7,6 +7,6 @@ chezmoi.code-workspace
 {{ end }}
 {{ if ne .chezmoi.os "linux" }}
 .chezmoiscripts/run_onchange_before_linux-install-packages.sh.tmpl
-dot_local/share/konsole
-dot_config/private_konsolerc
+.local/share/konsole
+.config/konsolerc
 {{ end }}
