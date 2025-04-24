@@ -2,3 +2,8 @@
 
 zsh -i -c 'zinit update'
 vim +PlugInstall  +qall
+
+{{ if eq .chezmoi.os "darwin" -}}
+defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/.config/iterm2"
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+{{ end -}}
