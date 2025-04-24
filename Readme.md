@@ -207,7 +207,6 @@ chezmoi apply
 相關工具參考連結
 --------------------------------------------------------------------------------
 * <https://www.ditig.com/256-colors-cheat-sheet>
-https://github.com/zdharma-continuum/zinit
 工具官網
 * <https://www.chezmoi.io/>
 * <https://github.com/zdharma-continuum/zinit>
