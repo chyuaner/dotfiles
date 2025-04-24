@@ -184,9 +184,16 @@
   typeset -g POWERLEVEL9K_EMPTY_LINE_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=
 
   #################################[ os_icon: os identifier ]##################################
-  # OS identifier color.
-  typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=232
-  typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND=7
+  # 判斷是否是 SSH 連線
+  if [[ -n "$SSH_CONNECTION" ]]; then
+    # OS identifier color.
+    typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=232
+    typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND=227
+  else
+    # OS identifier color.s
+    typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=232
+    typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND=7
+  fi
   # Custom icon.
   # typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='⭐'
 
