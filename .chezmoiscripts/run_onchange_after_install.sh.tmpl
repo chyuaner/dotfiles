@@ -3,7 +3,7 @@
 zsh -i -c 'zinit update'
 vim +PlugInstall  +qall
 
-{{ if eq .chezmoi.os "linux" -}}
+{{ if and (eq .chezmoi.os "linux") (not (stat (print .chezmoi.homeDir "/.winscp"))) -}}
 {{ if or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch") -}}
 mkdir -p ~/.winscp
 mkdir -p ~/.winscp/drive_c/users/{{ .chezmoi.username }}/.ssh
