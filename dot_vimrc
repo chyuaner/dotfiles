@@ -28,6 +28,9 @@ set number                    " 顯示行號
 set colorcolumn=80    " 顯示編輯器建議寬度
 set scrolloff=3               " 捲動時保留n行彈性
 set laststatus=2
+
+" 使用作業系統剪貼簿
+set clipboard=unnamedplus " 共用系統剪貼簿 (Wayland有額外用套件處理，請見下方plug)
 "set statusline=%4*%<\%m%<[%f\%r%h%w]\ [%{&ff},%{&fileencoding},%Y]%=\[Position=%l,%v,%p%%]
 
 " 縮排設定
@@ -80,6 +83,8 @@ set list
 " 安裝指令：vim +PlugInstall  +qall
 
 call plug#begin()
+
+Plug 'jasonccox/vim-wayland-clipboard'
 
 Plug 'vim-airline/vim-airline'
 Plug 'joshdick/onedark.vim'
