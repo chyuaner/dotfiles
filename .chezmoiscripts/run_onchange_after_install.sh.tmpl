@@ -5,14 +5,16 @@ vim +PlugInstall  +qall
 
 {{ if eq .chezmoi.os "linux" -}}
 {{ if or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch") -}}
-
+mkdir ~/.winscp
 {{ if and (stat (print .chezmoi.homeDir "/.ssh/config")) (not (stat (print .chezmoi.homeDir "/.winscp/drive_c/users/" .chezmoi.username "/.ssh/config"))) -}}
+mkdir -p ~/.winscp/drive_c/users/{{ .chezmoi.username }}/.ssh
 ln -s ~/.ssh/config ~/.winscp/drive_c/users/{{ .chezmoi.username }}/.ssh/config
 {{ end -}}
 {{ if and (stat (print .chezmoi.homeDir "/.ssh/known_hosts")) (not (stat (print .chezmoi.homeDir "/.winscp/drive_c/users/" .chezmoi.username "/.ssh/known_hosts"))) -}}
 ln -s ~/.ssh/known_hosts ~/.winscp/drive_c/users/{{ .chezmoi.username }}/.ssh/known_hosts
 {{ end -}}
 {{ if and (stat (print .chezmoi.homeDir "/.config/filezilla/sitemanager.xml")) (not (stat (print .chezmoi.homeDir "/.winscp/drive_c/users/" .chezmoi.username "/AppData/Roaming/FileZilla/sitemanager.xml"))) -}}
+mkdir -p ~/.winscp/drive_c/users/{{ .chezmoi.username }}/AppData/Roaming/FileZilla
 ln -s ~/.config/filezilla/sitemanager.xml ~/.winscp/drive_c/users/{{ .chezmoi.username }}/AppData/Roaming/FileZilla/sitemanager.xml
 {{ end -}}
 
