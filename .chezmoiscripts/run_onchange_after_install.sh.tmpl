@@ -2,3 +2,19 @@
 
 zsh -i -c 'zinit update'
 vim +PlugInstall  +qall
+
+{{ if eq .chezmoi.os "linux" -}}
+{{ if or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch") -}}
+
+{{ if and (stat (print .chezmoi.homeDir "/.ssh/config")) (not (stat (print .chezmoi.homeDir "/.winscp/drive_c/users/" .chezmoi.username "/.ssh/config"))) -}}
+ln -s ~/.ssh/config ~/.winscp/drive_c/users/{{ .chezmoi.username }}/.ssh/config
+{{ end -}}
+{{ if and (stat (print .chezmoi.homeDir "/.ssh/known_hosts")) (not (stat (print .chezmoi.homeDir "/.winscp/drive_c/users/" .chezmoi.username "/.ssh/known_hosts"))) -}}
+ln -s ~/.ssh/known_hosts ~/.winscp/drive_c/users/{{ .chezmoi.username }}/.ssh/known_hosts
+{{ end -}}
+{{ if and (stat (print .chezmoi.homeDir "/.config/filezilla/sitemanager.xml")) (not (stat (print .chezmoi.homeDir "/.winscp/drive_c/users/" .chezmoi.username "/AppData/Roaming/FileZilla/sitemanager.xml"))) -}}
+ln -s ~/.config/filezilla/sitemanager.xml ~/.winscp/drive_c/users/{{ .chezmoi.username }}/AppData/Roaming/FileZilla/sitemanager.xml
+{{ end -}}
+
+{{ end -}}
+{{ end -}}
