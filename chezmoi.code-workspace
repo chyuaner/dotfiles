@@ -17,5 +17,20 @@
 			"path": "../../../.config/chezmoi-private"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"terminal.integrated.profiles.linux": {
+			"chezmoi": {
+				"path": "chezmoi",
+				"args": ["cd"]
+			},
+			"chezmoi-private": {
+				"path": "chezmoi",
+				"args": [
+					"--source",
+					"~/.local/share/chezmoi-private",
+					"cd"
+				]
+			}
+		}
+	}
 }
