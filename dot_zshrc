@@ -3,6 +3,9 @@ if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
   source /usr/share/zsh/manjaro-zsh-config
 fi
 
+# 通用顏色文字輸出（要在最前面執行，不然會失效）
+[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -169,9 +172,6 @@ export PATH="$PATH:$HOME/go/bin"
 
 # iterm2
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-# 通用顏色文字輸出
-[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
 
 # 圖片顯示
 # 既然即使加入判斷後還是「進入函數定義段落且噴錯」，那就代表：zsh 在解析 .zshrc 時，在到達 if 邏輯前，就已經知道 imgcat 是 alias，並因此直接報錯，這是因為：
