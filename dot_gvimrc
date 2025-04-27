@@ -6,3 +6,7 @@ aunmenu ToolBar.Help
 "set guioptions-=r  "scrollbar
 set guioptions-=L "left scrollbar
 let g:ranger_terminal = 'kitty -e'
+
+" 調整固定視窗大小
+set lines=46
+set columns=170
