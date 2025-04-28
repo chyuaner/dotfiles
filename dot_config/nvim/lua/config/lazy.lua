@@ -24,8 +24,11 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
-    -- import your plugins
+    -- 自動載入 plugins 資料夾中的所有插件
     { import = "plugins" },
+
+    -- 手動引入 o-plugins 資料夾中的插件
+    -- require("o-plugins.nvim-listchars"),
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.

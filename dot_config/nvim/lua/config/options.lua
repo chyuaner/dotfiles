@@ -19,12 +19,7 @@ vim.opt.expandtab      = true -- 使用空格代替tab
 vim.opt.termguicolors  = true -- 支持真彩色
 vim.opt.colorcolumn = "80,120"  -- 顯示編輯器建議寬度
 vim.opt.scrolloff = 3       -- 捲動時保留 n 行彈性
-vim.opt.listchars = {
-    eol = "¬",
-    tab = "→→",
-    trail = ".",
-    extends = ">",
-    precedes = "<" }
+require("config.listchars") -- 顯示行尾符號
 vim.opt.list = true
 
 -- 整行移動的快速鍵
