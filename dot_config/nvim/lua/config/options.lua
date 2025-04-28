@@ -2,6 +2,8 @@
 vim.api.nvim_set_option("clipboard", "unnamedplus") -- 使用系統剪貼簿（Wayland有直接支援，不須依賴vim-wayland-clipboard）
 vim.opt.confirm = true      -- 操作過程有衝突時，以明確的文字來詢問
 vim.opt.history = 10000 -- 設定命令歷史記錄數量為 10000
+-- vim.opt.directory = "." -- 將暫存檔存放在當前資料夾中
+require("config.swap") -- 將暫存檔存放置位置另外做邏輯
 
 -- 編碼設定
 vim.opt.encoding = "utf-8"
