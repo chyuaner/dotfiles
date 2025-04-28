@@ -40,9 +40,10 @@ return {
           cmdline_popup = {
             border = {
               style = "rounded", -- 邊框樣式，可選 "none", "single", "double", "rounded", "solid", "shadow"
-              padding = { 1, 1 }, -- 邊框內的填充（上、右、下、左）
+              padding = { 1, 4 }, -- 邊框內的填充（上、右、下、左）
             },
             win_options = {
+              winblend = 10, -- 增加透明度，模擬陰影效果
               winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder", -- 高亮設定
             },
           },
@@ -60,14 +61,6 @@ return {
             },
           },
         },
-        win_options = {
-          winhighlight = {
-            Normal = "NormalFloat",
-            FloatBorder = "FloatBorder",
-            winblend = 10, -- 增加透明度，模擬陰影效果
-            winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-          },
-        }
       })
     end,
   },

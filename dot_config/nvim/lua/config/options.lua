@@ -4,6 +4,7 @@ vim.opt.confirm = true      -- 操作過程有衝突時，以明確的文字來�
 vim.opt.history = 10000 -- 設定命令歷史記錄數量為 10000
 -- vim.opt.directory = "." -- 將暫存檔存放在當前資料夾中
 require("config.swap") -- 將暫存檔存放置位置另外做邏輯
+vim.opt.mouse = "a" -- 啟用滑鼠支援
 
 -- 編碼設定
 vim.opt.encoding = "utf-8"
