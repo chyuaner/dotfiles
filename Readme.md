@@ -203,6 +203,19 @@ chezmoi chattr +template ~/.config/iterm2/com.googlecode.iterm2.plist
 chezmoi apply
 ```
 
+### 開啟watchman Live Apply
+```
+CHEZMOI_SOURCE_PATH="$(chezmoi source-path)"
+watchman watch "${CHEZMOI_SOURCE_PATH}"
+
+watchman -j <<EOT
+["trigger", "${CHEZMOI_SOURCE_PATH}", {
+  "name": "chezmoi-apply",
+  "command": ["chezmoi", "apply", "--force"]
+}]
+EOT
+```
+
 
 相關工具參考連結
 --------------------------------------------------------------------------------
