@@ -1,6 +1,7 @@
--- 編輯器系統設定
+-- 編輯器行為設定
 vim.api.nvim_set_option("clipboard", "unnamedplus") -- 使用系統剪貼簿（Wayland有直接支援，不須依賴vim-wayland-clipboard）
 vim.opt.confirm = true      -- 操作過程有衝突時，以明確的文字來詢問
+vim.opt.history = 10000 -- 設定命令歷史記錄數量為 10000
 
 -- 編碼設定
 vim.opt.encoding = "utf-8"
@@ -16,7 +17,13 @@ vim.opt.expandtab      = true -- 使用空格代替tab
 vim.opt.termguicolors  = true -- 支持真彩色
 vim.opt.colorcolumn = "80,120"  -- 顯示編輯器建議寬度
 vim.opt.scrolloff = 3       -- 捲動時保留 n 行彈性
-vim.opt.history = 10000 -- 設定命令歷史記錄數量為 10000
+vim.opt.listchars = {
+    eol = "¬",
+    tab = "→→",
+    trail = ".",
+    extends = ">",
+    precedes = "<" }
+vim.opt.list = true
 
 -- 整行移動的快速鍵
 vim.api.nvim_set_keymap('n', '<A-j>', ':m .+1<CR>==', { noremap = true, silent = true })
