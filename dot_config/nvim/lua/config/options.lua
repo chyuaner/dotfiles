@@ -18,6 +18,30 @@ vim.opt.colorcolumn = "80,120"  -- 顯示編輯器建議寬度
 vim.opt.scrolloff = 3       -- 捲動時保留 n 行彈性
 vim.opt.history = 10000 -- 設定命令歷史記錄數量為 10000
 
+-- 整行移動的快速鍵
+vim.api.nvim_set_keymap('n', '<A-j>', ':m .+1<CR>==', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-k>', ':m .-2<CR>==', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-j>', '<Esc>:m .+1<CR>==gi', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-k>', '<Esc>:m .-2<CR>==gi', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<A-j>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<A-k>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+-- 使用 Alt+方向鍵 移動整行
+vim.api.nvim_set_keymap('n', '<A-Down>', ':m .+1<CR>==', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-Up>', ':m .-2<CR>==', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-Down>', '<Esc>:m .+1<CR>==gi', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-Up>', '<Esc>:m .-2<CR>==gi', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<A-Down>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<A-Up>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+-- Ctrl+Alt+Shift+j/k 複製整行並向下/向上貼上
+vim.api.nvim_set_keymap('n', '<C-A-S-j>', 'yyp', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-A-S-k>', 'yyP', { noremap = true, silent = true })
+-- Ctrl+Alt+Shift+方向鍵 複製整行並向下/向上貼上
+vim.api.nvim_set_keymap('n', '<C-A-S-Down>', 'yyp', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-A-S-Up>', 'yyP', { noremap = true, silent = true })
+-- Insert Mode 下的 Ctrl+Alt+Shift+方向鍵 複製整行並向下/向上貼上
+vim.api.nvim_set_keymap('i', '<C-A-S-Down>', '<Esc>yypgi', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-A-S-Up>', '<Esc>yyPgi', { noremap = true, silent = true })
+
 -- 處理剪貼簿習慣對應（在Insert模式可使用慣用的快速鍵）
 vim.opt.keymodel = "startsel" -- 啟用 Shift + 方向鍵選取功能
 vim.api.nvim_set_keymap('i', '<C-v>', '<Esc>"+pa', { noremap = true, silent = true }) -- Insert Mode 下的 Ctrl+V 貼上
