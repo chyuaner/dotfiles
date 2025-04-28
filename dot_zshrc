@@ -148,7 +148,7 @@ compdef floorp='firefox'
 if  command -v xdg-open &> /dev/null; then
     bindkey -s '^[e' 'xdg-open "$PWD"  2> /dev/null\n'
 elif [ "$(uname -s)" = 'Darwin' ]; then
-     bindkey -s '^[e' 'open "$PWD"  2> /dev/null\n'
+    bindkey -s '^[e' 'open "$PWD"  2> /dev/null\n'
 fi
 # bindkey -s '^E' 'gnome-terminal --working-directory="$PWD" -- zsh\n'
 
@@ -161,7 +161,7 @@ export PATH="$HOME/.local/share/gem/ruby/3.3.0/bin:$PATH"
 
 # Fix ython3 to python Path on macOS
 if [ "$(uname -s)" = 'Darwin' ]; then
-     export PATH=/usr/local/opt/python/libexec/bin:$PATH
+    export PATH=/usr/local/opt/python/libexec/bin:$PATH
 fi
 
 # Created by `pipx` on 2023-01-30 19:57:14

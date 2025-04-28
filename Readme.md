@@ -61,7 +61,7 @@ rm -rf ~/.local/share/chezmoi-private
 rm ~/.ssh/known_hosts
 rm -rf ~/.vimrc ~/.vim ~/.gvimrc
 rm ~/.zshrc
-rm -rf ~/.config/alacritty ~/.config/zellij 
+rm -rf ~/.config/alacritty ~/.config/zellij
 ```
 
 <details>

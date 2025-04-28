@@ -16,7 +16,7 @@ wait_for_pacman_unlock() {
     if ! pgrep -x pacman >/dev/null && \
        ! pgrep -x packagekitd >/dev/null && \
        ! pgrep -x packagekit >/dev/null; then
-       
+
        echo "🔍 找不到 pacman 或 PackageKit，疑似殘留鎖檔。"
 
        if [ "$WAITED" -ge "$MAX_IDLE" ]; then

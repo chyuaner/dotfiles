@@ -8,6 +8,16 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+# 排除特定檔案類型的規則
+[*.code-workspace]
+# 不套用任何規則，覆蓋全域設定
+indent_size = unset
+indent_style = unset
+charset = unset
+end_of_line = unset
+insert_final_newline = unset
+trim_trailing_whitespace = unset
+
 [*.ps1]
 charset = utf-8
 end_of_line = crlf

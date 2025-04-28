@@ -9,15 +9,15 @@ dot_config/nvim
 ├── lua
 │   ├── init.lua #主要設定進入點 新式給nvim專用設定
 │   ├── config
-│   │   ├── gui.lua 
+│   │   ├── gui.lua
 │   │   ├── lazy.lua
 │   │   └── options.lua
 │   └── plugins
 │       └── example.lua #LazyNvim給的範例，已經被第一段截斷掉，所以此腳本將不會執行
 └── Readme.md
- ```
+```
 
 
- ## 代找外掛
+## 代找外掛
  * Align
- * 
+ *
