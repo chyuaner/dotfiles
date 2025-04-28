@@ -2,6 +2,8 @@ Readme.md
 .readme/
 chezmoi.code-workspace
 
+dconf.ini
+
 {{ if ne .chezmoi.os "darwin" }}
 .chezmoiscripts/run_onchange_before_darwin-install-packages.sh.tmpl
 .config/iterm2/com.googlecode.iterm2.plist
