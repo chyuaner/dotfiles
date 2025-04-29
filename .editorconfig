@@ -8,6 +8,10 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+[*.md]
+indent_size = 4
+indent_style = space
+
 # 排除特定檔案類型的規則
 [*.code-workspace]
 # 不套用任何規則，覆蓋全域設定
