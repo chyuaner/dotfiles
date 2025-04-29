@@ -35,8 +35,10 @@ return {
 
       -- 設定快速鍵
       -- vim.api.nvim_set_keymap('t', '<A-Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<C-]>', '<cmd>BufferNext<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<C-[>', '<cmd>BufferPrevious<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<A-l>', '<cmd>BufferNext<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<A-h>', '<cmd>BufferPrevious<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<A-RIGHT>', '<cmd>BufferNext<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<A-LEFT>', '<cmd>BufferPrevious<CR>', { noremap = true, silent = true })
     end,
   },
 }
