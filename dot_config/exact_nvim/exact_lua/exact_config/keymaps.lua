@@ -1,3 +1,6 @@
+vim.api.nvim_set_keymap('n', '<C-]>', '<cmd>tabnext<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-[>', '<cmd>tabprevious<CR>', { noremap = true, silent = true })
+
 -- 處理剪貼簿習慣對應（在Insert模式可使用慣用的快速鍵）
 vim.opt.keymodel = "startsel" -- 啟用 Shift + 方向鍵選取功能
 vim.api.nvim_set_keymap('i', '<C-v>', '<Esc>"+pa', { noremap = true, silent = true }) -- Insert Mode 下的 Ctrl+V 貼上

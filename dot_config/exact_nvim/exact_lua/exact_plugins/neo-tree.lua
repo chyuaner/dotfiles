@@ -52,7 +52,18 @@ return {
       },
     },
     keys = {
-      { "<F9>", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
+      { "<F9>", function()
+          vim.cmd("Neotree toggle")
+          vim.cmd("wincmd p")
+        end,
+        desc = "NeoTree"
+      },
+      { "<C-b>", function()
+          vim.cmd("Neotree toggle")
+          vim.cmd("wincmd p")
+        end,
+        desc = "NeoTree"
+      },
       { "<leader>e", "<Cmd>Neotree reveal<CR>" },
       { "<leader>ft", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
       { "<leader>fT", "<cmd>Neotree float<cr>", desc = "NeoTree Float" },
