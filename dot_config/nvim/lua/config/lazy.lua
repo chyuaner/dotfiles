@@ -23,7 +23,20 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
+  rocks = {
+    hererocks = true,  -- recommended if you do not have global installation of Lua 5.1.
+  },
   spec = {
+    {
+      "3rd/image.nvim",
+      opts = {},
+      config = function()
+        require("image").setup({
+          backend = "ueberzug", -- or "ueberzug"
+          processor = "magick_rock", -- or "magick_rock"
+        })
+      end,
+    },
     -- 自動載入 plugins 資料夾中的所有插件
     { import = "plugins" },
 
