@@ -22,11 +22,21 @@ return {
         },
       }
 
+      -- 重定義 :q 命令為僅關閉當前 Buffer
+      vim.api.nvim_create_user_command('Q', function()
+        vim.cmd('BufferClose') -- 使用 barbar.nvim 的 BufferClose 呀命
+      end, {})
+
+      -- 重定義 :wq 命令為保存後僅關閉當前 Buffer
+      vim.api.nvim_create_user_command('WQ', function()
+        vim.cmd('write') -- 保存文件
+        vim.cmd('BufferClose') -- 使用 barbar.nvim 的 BufferClose 命令
+      end, {})
+
       -- 設定快速鍵
       -- vim.api.nvim_set_keymap('t', '<A-Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<C-]>', '<cmd>BufferNext<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<C-[>', '<cmd>BufferPrevious<CR>', { noremap = true, silent = true })
-
     end,
   },
 }
