@@ -10,7 +10,9 @@ Yuan Neovim 備忘
 
 ### 擴充自行設定的快速鍵
 * `<F9>`: NeoTree
-* `<leader>fT`: 叫出git status
+* `<F10>`: git status
+* `<leader>fT`: 浮動NeoTree
+* `<leader>fB`: 已開啟的檔案
 
 #### 預計設定
 * <F8> 看看你設定了哪些變數、函數，也可以快速跳轉
