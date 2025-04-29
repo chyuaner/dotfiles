@@ -1,7 +1,13 @@
 -- 這個檔案是用來設定 Neovim 的鍵盤快捷鍵
 local map = vim.keymap.set
+-- konsole終端限制：
+-- Esc 會送成 Ctrl+[
+-- Ctrl+Enter 鍵會被視為 Ctrl+M (對策: 多增加相同功能的Ctrl+Alt+Enter)
+-- <A-S-CR>
+
 
 -- Tab切換
+-- 現在由barbar控制，先停用
 -- vim.api.nvim_set_keymap('n', '<A-l>', '<cmd>tabnext<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<A-h>', '<cmd>tabprevious<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<A-RIGHT>', '<cmd>tabnext<CR>', { noremap = true, silent = true })
