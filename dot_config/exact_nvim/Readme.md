@@ -42,6 +42,7 @@ Yuan Neovim 備忘
 ## 基本Command
 
 * :Neotree float git_status git_base=main
+* :verbose map <C-,>
 
 ## 資料夾結構
 
