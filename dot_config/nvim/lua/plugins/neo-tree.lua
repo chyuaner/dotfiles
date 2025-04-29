@@ -422,31 +422,32 @@ return {
         end,
       })
 
-      -- 自動命令：當進入緩衝區(開啟文件)時自動顯示 Neo-tree
-      vim.api.nvim_create_autocmd("BufEnter", {
-        callback = function()
-          -- 檢查是否為普通文件類型，避免在特殊緩衝區（如 terminal 或 quickfix）中啟動
-          local buf_ft = vim.bo.filetype
-          if buf_ft ~= "neo-tree" and buf_ft ~= "terminal" and buf_ft ~= "quickfix" then
-            -- 確保當前分頁是否已經有 Neo-tree
-            local neo_tree_open = false
-            for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-              local buf = vim.api.nvim_win_get_buf(win)
-              if vim.api.nvim_buf_get_option(buf, "filetype") == "neo-tree" then
-                neo_tree_open = true
-                break
-              end
-            end
+      -- -- 自動命令：當進入緩衝區(開啟文件)時自動顯示 Neo-tree
+      -- -- PS. 在neo-tree做`:q`關閉時，會報錯crash。先關閉此功能
+      -- vim.api.nvim_create_autocmd("BufEnter", {
+      --   callback = function()
+      --     -- 檢查是否為普通文件類型，避免在特殊緩衝區（如 terminal 或 quickfix）中啟動
+      --     local buf_ft = vim.bo.filetype
+      --     if buf_ft ~= "neo-tree" and buf_ft ~= "terminal" and buf_ft ~= "quickfix" then
+      --       -- 確保當前分頁是否已經有 Neo-tree
+      --       local neo_tree_open = false
+      --       for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+      --         local buf = vim.api.nvim_win_get_buf(win)
+      --         if vim.api.nvim_buf_get_option(buf, "filetype") == "neo-tree" then
+      --           neo_tree_open = true
+      --           break
+      --         end
+      --       end
 
-            -- 如果當前分頁沒有 Neo-tree，則打開
-            if not neo_tree_open then
-              vim.cmd("Neotree show")
-              vim.cmd("Neotree reveal")
-              vim.cmd("wincmd p") -- 將焦點切回到之前的窗口
-            end
-          end
-        end,
-      })
+      --       -- 如果當前分頁沒有 Neo-tree，則打開
+      --       if not neo_tree_open then
+      --         vim.cmd("Neotree show")
+      --         vim.cmd("Neotree reveal")
+      --         vim.cmd("wincmd p") -- 將焦點切回到之前的窗口
+      --       end
+      --     end
+      --   end,
+      -- })
     end,
   },
 }
