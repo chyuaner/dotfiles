@@ -35,6 +35,7 @@ return {
         direction = 'horizontal',
         close_on_exit = true,
         shell = vim.o.shell,
+
       }
 
       -- 添加第二個快捷鍵映射

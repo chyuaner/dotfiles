@@ -1,3 +1,5 @@
+if true then return {} end -- 因為barbar會與tabby衝突，停用
+
 return {
   {
     'nanozuki/tabby.nvim',

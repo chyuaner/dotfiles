@@ -40,6 +40,7 @@ require("lazy").setup({
     -- },
     -- 自動載入 plugins 資料夾中的所有插件
     { import = "plugins" },
+    { import = "plugins.tab" },
 
     -- 手動引入 o-plugins 資料夾中的插件
     -- require("o-plugins.nvim-listchars"),

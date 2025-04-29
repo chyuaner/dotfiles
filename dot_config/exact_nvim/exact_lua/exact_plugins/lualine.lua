@@ -45,7 +45,7 @@ return {
         tabline = {},
         winbar = {},
         inactive_winbar = {},
-        extensions = {}
+        extensions = {'neo-tree', 'toggleterm'}
       }
     end,
     -- config = function(_, opts)
