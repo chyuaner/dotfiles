@@ -1,5 +1,11 @@
 Yuan Neovim 備忘
 ===
+## 依賴的套件
+* tree-sitter
+* tree-sitter-bash
+* tree-sitter-cli
+* imagemagick
+* ueberzugpp
 
 ## 基本快速鍵
 
