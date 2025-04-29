@@ -3,16 +3,33 @@ Yuan Neovim 備忘
 
 ## 基本快速鍵
 
-重要鍵
+### 重要鍵
 * leader key: `\`
 * window key: `ctrl+w`
     * move cursor: <window>(方向鍵)
 
-擴充自行設定的快速鍵
-* `F9`: NeoTree
+### 擴充自行設定的快速鍵
+* `<F9>`: NeoTree
+* `<leader>fT`: 叫出git status
 
-編輯習慣（已經覆寫）
-*
+#### 預計設定
+* <F8> 看看你設定了哪些變數、函數，也可以快速跳轉
+* <F6> 可以回朔到開啟檔案以來的任何歷史，還會標出修改的地方
+
+### 編輯習慣（已經覆寫）
+* shift+方向鍵(傳統): 選取文字（傳統習慣）
+    * PS. 不能用jk是因為 shift+j shift+k有被其他功能綁定，不覆寫是想順便習慣vim用法
+* alt+方向鍵(傳統/jk)：移動整行
+* ctrl+alt+shaft+方向鍵(傳統/jk)：向上/向下複製整行
+* tab縮排(含輸入模式的shift+tab傳統習慣對應)
+
+#### 剪貼簿
+* 輸入模式
+    * ctrl+v: 貼上
+* 選取模式
+    * ctrl+x: 剪下
+    * ctrl+c: 複製
+    * ctrl+v: 取代貼上
 
 ## 基本Command
 

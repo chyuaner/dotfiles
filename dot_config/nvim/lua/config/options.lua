@@ -23,6 +23,13 @@ vim.opt.scrolloff = 3       -- 捲動時保留 n 行彈性
 require("config.listchars") -- 顯示行尾符號
 vim.opt.list = true
 
+-- 處理剪貼簿習慣對應（在Insert模式可使用慣用的快速鍵）
+vim.opt.keymodel = "startsel" -- 啟用 Shift + 方向鍵選取功能
+vim.api.nvim_set_keymap('i', '<C-v>', '<Esc>"+pa', { noremap = true, silent = true }) -- Insert Mode 下的 Ctrl+V 貼上
+vim.api.nvim_set_keymap('v', '<C-c>', '"+y', { noremap = true, silent = true }) -- Visual Mode 下的 Ctrl+C 複製
+vim.api.nvim_set_keymap('v', '<C-x>', '"+d', { noremap = true, silent = true }) -- Visual Mode 下的 Ctrl+X 剪下
+vim.api.nvim_set_keymap('v', '<C-v>', '"+p', { noremap = true, silent = true }) -- Visual Mode 下的 Ctrl+V 貼上
+
 -- 整行移動的快速鍵
 vim.api.nvim_set_keymap('n', '<A-j>', ':m .+1<CR>==', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<A-k>', ':m .-2<CR>==', { noremap = true, silent = true })
@@ -43,7 +50,6 @@ vim.api.nvim_set_keymap('n', '<C-A-S-k>', 'yyP', { noremap = true, silent = true
 -- Ctrl+Alt+Shift+方向鍵 複製整行並向下/向上貼上
 vim.api.nvim_set_keymap('n', '<C-A-S-Down>', 'yyp', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-A-S-Up>', 'yyP', { noremap = true, silent = true })
--- Insert Mode 下的 Ctrl+Alt+Shift+方向鍵 複製整行並向下/向上貼上
 vim.api.nvim_set_keymap('i', '<C-A-S-Down>', '<Esc>yypgi', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<C-A-S-Up>', '<Esc>yyPgi', { noremap = true, silent = true })
 
@@ -75,13 +81,6 @@ vim.api.nvim_set_keymap('i', '<C-S-CR>', '<Esc>O', { noremap = true, silent = tr
 -- 使用Alt+Enter 在下一行插入新行並保持 Insert 模式
 vim.api.nvim_set_keymap('i', '<A-CR>', '<Esc>o', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-S-CR>', '<Esc>O', { noremap = true, silent = true }) -- xterm-256color 吃不到shift
-
--- 處理剪貼簿習慣對應（在Insert模式可使用慣用的快速鍵）
-vim.opt.keymodel = "startsel" -- 啟用 Shift + 方向鍵選取功能
-vim.api.nvim_set_keymap('i', '<C-v>', '<Esc>"+pa', { noremap = true, silent = true }) -- Insert Mode 下的 Ctrl+V 貼上
-vim.api.nvim_set_keymap('v', '<C-c>', '"+y', { noremap = true, silent = true }) -- Visual Mode 下的 Ctrl+C 複製
-vim.api.nvim_set_keymap('v', '<C-x>', '"+d', { noremap = true, silent = true }) -- Visual Mode 下的 Ctrl+X 剪下
-vim.api.nvim_set_keymap('v', '<C-v>', '"+p', { noremap = true, silent = true }) -- Visual Mode 下的 Ctrl+V 貼上
 
 -- 啟用 Tab 縮排
 vim.api.nvim_set_keymap('n', '<TAB>', 'v>', { noremap = true, silent = true })
