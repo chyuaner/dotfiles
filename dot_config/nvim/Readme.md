@@ -1,6 +1,23 @@
 Yuan Neovim 備忘
 ===
 
+## 基本快速鍵
+
+重要鍵
+* leader key: `\`
+* window key: `ctrl+w`
+    * move cursor: <window>(方向鍵)
+
+擴充自行設定的快速鍵
+* `F9`: NeoTree
+
+編輯習慣（已經覆寫）
+*
+
+## 基本Command
+
+* :Neotree float git_status git_base=main
+
 ## 資料夾結構
 
 ```
@@ -17,7 +34,21 @@ dot_config/nvim
 └── Readme.md
 ```
 
-
 ## 代找外掛
  * Align
  *
+
+## neo-tree
+
+```
+{ "<F9>", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
+{ "<leader>e", "<Cmd>Neotree reveal<CR>" },
+{ "<leader>ft", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
+{ "<leader>fT", "<cmd>Neotree float<cr>", desc = "NeoTree Float" },
+{ "<leader>fF", "<cmd>Neotree filesystem float<cr>", desc = "NeoTree Filesystem Float" },
+{ "<leader>fG", "<cmd>Neotree git_status float<cr>", desc = "NeoTree Git Status Float" },
+{ "<leader>fB", "<cmd>Neotree buffers float<cr>", desc = "NeoTree Buffers Float" }
+```
+
+在當前NeoTree視窗
+* `P`: 預覽開關
