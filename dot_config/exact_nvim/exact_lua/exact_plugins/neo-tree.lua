@@ -58,7 +58,7 @@ return {
         end,
         desc = "NeoTree"
       },
-      { "<C-b>", function()
+      { "<A-b>", function()
           vim.cmd("Neotree toggle")
           vim.cmd("wincmd p")
         end,
