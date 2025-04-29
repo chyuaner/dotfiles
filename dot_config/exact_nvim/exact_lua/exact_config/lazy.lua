@@ -40,7 +40,8 @@ require("lazy").setup({
     -- },
     -- 自動載入 plugins 資料夾中的所有插件
     { import = "plugins" },
-    { import = "plugins.tab" },
+    { import = "plugins.colorscheme.nightfox" }, -- 自訂配色
+    { import = "plugins.tab.barbar" }, -- 目前只有barbar處理Buffer是最好的
 
     -- 手動引入 o-plugins 資料夾中的插件
     -- require("o-plugins.nvim-listchars"),
@@ -49,5 +50,23 @@ require("lazy").setup({
   -- colorscheme that will be used when installing plugins.
   install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
-  checker = { enabled = true },
+  checker = {
+    enabled = true,
+    notify = false, -- notify on update
+  }, -- automatically check for plugin updates
+  performance = {
+    rtp = {
+      -- disable some rtp plugins
+      disabled_plugins = {
+        -- "gzip",
+        -- "matchit",
+        -- "matchparen",
+        -- "netrwPlugin",
+        -- "tarPlugin",
+        -- "tohtml",
+        -- "tutor",
+        -- "zipPlugin",
+      },
+    },
+  },
 })

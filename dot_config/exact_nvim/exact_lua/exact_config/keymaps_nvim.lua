@@ -5,3 +5,4 @@
 -- vim.api.nvim_set_keymap('n', '<A-h>', '<cmd>tabprevious<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<A-RIGHT>', '<cmd>tabnext<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<A-LEFT>', '<cmd>tabprevious<CR>', { noremap = true, silent = true })
+

@@ -1,5 +1,3 @@
-if true then return {} end -- 停用
-
 -- 查看說明：
 -- nvim +"help bufferline" +only
 
