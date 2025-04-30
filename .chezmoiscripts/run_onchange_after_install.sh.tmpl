@@ -2,6 +2,7 @@
 
 zsh -i -c 'zinit update'
 vim +PlugInstall  +qall
+nvim --headless "+Lazy! update" +qa
 
 {{ if and (eq .chezmoi.os "linux") (stat (print .chezmoi.homeDir "/.winscp")) }}
 {{ if or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch") }}
