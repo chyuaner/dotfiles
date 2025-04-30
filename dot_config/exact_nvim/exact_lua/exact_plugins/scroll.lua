@@ -36,14 +36,15 @@ return {
       },
     },
     config = function(_, opts)
-      local neoscroll = require("neoscroll")
+      -- 傳遞 opts 給插件的 setup 函數
+      require("neoscroll").setup(opts)
 
       -- 增加對<PageUp>與<PageDown>的支持
       local scroll_up = function()
-        neoscroll.scroll(-vim.wo.scroll, { move_cursor = true, duration = 100 })
+        require("neoscroll").scroll(-vim.wo.scroll, { move_cursor = true, duration = 100 })
       end
       local scroll_down = function()
-        neoscroll.scroll(vim.wo.scroll, { move_cursor = true, duration = 100 })
+        require("neoscroll").scroll(vim.wo.scroll, { move_cursor = true, duration = 100 })
       end
       -- Normal 模式
       vim.keymap.set("n", "<PageUp>", scroll_up, { silent = true })
