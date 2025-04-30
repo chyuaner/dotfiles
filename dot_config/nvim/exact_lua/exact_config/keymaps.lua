@@ -10,6 +10,12 @@ nmap('v', '<C-c>', '"+y', { noremap = true, silent = true }) -- Visual Mode 下�
 nmap('v', '<C-x>', '"+d', { noremap = true, silent = true }) -- Visual Mode 下的 Ctrl+X 剪下
 nmap('v', '<C-v>', '"+p', { noremap = true, silent = true }) -- Visual Mode 下的 Ctrl+V 貼上
 
+-- 單字的左右移動
+nmap('n', '<C-Right>', 'w', { noremap = true, silent = true })
+nmap('n', '<C-Left>', 'b', { noremap = true, silent = true })
+nmap('n', '<C-S-Right>', 'W', { noremap = true, silent = true })
+nmap('n', '<C-S-Left>', 'B', { noremap = true, silent = true })
+
 -- 整行移動的快速鍵
 nmap('n', '<A-j>', ':m .+1<CR>==', { noremap = true, silent = true })
 nmap('n', '<A-k>', ':m .-2<CR>==', { noremap = true, silent = true })
