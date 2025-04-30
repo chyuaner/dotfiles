@@ -64,6 +64,8 @@ return {
         end,
         desc = "NeoTree"
       },
+      { "<F8>", "<cmd>Neotree toggle buffers<cr>", desc = "NeoTree Buffers" },
+
       { "<leader>e", "<Cmd>Neotree reveal<CR>" },
       { "<leader>ft", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
       { "<leader>fT", "<cmd>Neotree float<cr>", desc = "NeoTree Float" },

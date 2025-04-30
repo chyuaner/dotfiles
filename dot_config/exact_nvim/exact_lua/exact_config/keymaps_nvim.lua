@@ -5,6 +5,9 @@ local map = vim.keymap.set
 -- Ctrl+Enter 鍵會被視為 Ctrl+M (對策: 多增加相同功能的Ctrl+Alt+Enter)
 -- <A-S-CR>
 
+-- Ctrl+s 儲存
+map("n", "<C-s>", "<cmd>write<CR>", { noremap = true, silent = true, desc = "Save file" })
+map("i", "<C-s>", "<Esc><cmd>write<CR>a", { noremap = true, silent = true, desc = "Save file in insert mode" })
 
 -- Tab切換
 -- 現在由barbar控制，先停用
