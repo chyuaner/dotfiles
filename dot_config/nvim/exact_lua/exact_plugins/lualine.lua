@@ -6,6 +6,24 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = "VeryLazy",
     opts = function()
+
+      -- 選擇計數格式
+      local function selectionCount()
+        local mode = vim.fn.mode()
+        if not mode:find("[Vv]") then return "" end -- 僅在 Visual 模式下顯示
+        local starts = vim.fn.line("v")
+        local ends = vim.fn.line(".")
+        local lines = math.abs(ends - starts) + 1
+        local chars = vim.fn.wordcount().visual_chars or 0
+        return string.format("📏 %dL %dC", lines, chars)
+      end
+
+      -- 自定義 location 格式
+      local function customLocation()
+        local location = vim.api.nvim_eval_statusline("%l:%c", {}).str -- 獲取行和列
+        return "📍 " .. location -- 在字首添加 emoji
+      end
+
       return {
         options = {
           icons_enabled = true,
@@ -32,13 +50,13 @@ return {
           lualine_c = {'filename'},
           lualine_x = {'encoding', 'fileformat', 'filetype'},
           lualine_y = {'progress'},
-          lualine_z = {'location'}
+          lualine_z = {{ selectionCount }, { customLocation },}
         },
         inactive_sections = {
           lualine_a = {},
           lualine_b = {},
           lualine_c = {'filename'},
-          lualine_x = {'location'},
+          lualine_x = {{ customLocation }},
           lualine_y = {},
           lualine_z = {}
         },
