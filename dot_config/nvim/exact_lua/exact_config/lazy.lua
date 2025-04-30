@@ -40,10 +40,13 @@ require("lazy").setup({
     -- },
     -- 自動載入 plugins 資料夾中的所有插件
     { import = "plugins" },
-    { import = "plugins.colorscheme.nightfox" }, -- 自訂配色
-    -- { import = "plugins.colorscheme.github-theme" }, -- 自訂配色
-    -- { import = "plugins.colorscheme.onedark" }, -- 自訂配色
-    { import = "plugins.tab.barbar" }, -- 目前只有barbar處理Buffer是最好的
+    { import = "plugins.themes.nightfox" }, -- 自訂配色
+    -- { import = "plugins.themes.github-theme" }, -- 自訂配色
+    -- { import = "plugins.themes.onedark" }, -- 自訂配色
+
+    { import = "plugins.components.buffer.barbar" }, -- 目前只有barbar處理Buffer是最好的
+    { import = "plugins.components" },
+    { import = "plugins.ui" },
 
     -- 手動引入 o-plugins 資料夾中的插件
     -- require("o-plugins.nvim-listchars"),
