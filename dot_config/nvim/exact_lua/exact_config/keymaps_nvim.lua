@@ -17,14 +17,14 @@ map("i", "<C-s>", "<Esc><cmd>write<CR>a", { noremap = true, silent = true, desc 
 -- vim.api.nvim_set_keymap('n', '<A-LEFT>', '<cmd>tabprevious<CR>', { noremap = true, silent = true })
 
 -- Move to window using the <ctrl> hjkl keys
-map("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
-map("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
-map("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
-map("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
-map("n", "<C-Left>", "<C-w>h", { desc = "Go to Left Window", remap = true })
-map("n", "<C-Down>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
-map("n", "<C-Up>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
-map("n", "<C-Right>", "<C-w>l", { desc = "Go to Right Window", remap = true })
+map("n", "<C-A-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
+map("n", "<C-A-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
+map("n", "<C-A-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
+map("n", "<C-A-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
+map("n", "<C-A-Left>", "<C-w>h", { desc = "Go to Left Window", remap = true })
+map("n", "<C-A-Down>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
+map("n", "<C-A-Up>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
+map("n", "<C-A-Right>", "<C-w>l", { desc = "Go to Right Window", remap = true })
 
 -- Clear search, diff update and redraw
 -- taken from runtime/lua/_editor.lua
