@@ -40,7 +40,7 @@ require("lazy").setup({
     -- },
     -- 自動載入 plugins 資料夾中的所有插件
     { import = "plugins" },
-    { import = "plugins.colorscheme.onedark" }, -- 自訂配色
+    { import = "plugins.colorscheme.nightfox" }, -- 自訂配色
     { import = "plugins.tab.barbar" }, -- 目前只有barbar處理Buffer是最好的
 
     -- 手動引入 o-plugins 資料夾中的插件
