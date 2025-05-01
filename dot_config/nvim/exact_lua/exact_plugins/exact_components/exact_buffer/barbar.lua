@@ -41,6 +41,8 @@ return {
       vim.api.nvim_set_keymap('n', '<A-h>', '<cmd>BufferPrevious<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<A-RIGHT>', '<cmd>BufferNext<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<A-LEFT>', '<cmd>BufferPrevious<CR>', { noremap = true, silent = true })
+
+      vim.api.nvim_set_keymap('n', '<C-n>', '<cmd>enew<CR>', { noremap = true, silent = true })
     end,
   },
 }
