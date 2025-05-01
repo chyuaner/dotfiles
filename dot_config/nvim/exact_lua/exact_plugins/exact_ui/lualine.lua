@@ -24,6 +24,21 @@ return {
         return "📍 " .. location -- 在字首添加 emoji
       end
 
+      -- Function to determine file permissions and appropriate background color
+      local function get_permissions_color()
+        local file = vim.fn.expand("%:p")
+
+        if file == "" or file == nil then
+          return "No File", "#3B4252" -- Default blue for no or non-existing file
+        else
+          local permissions = vim.fn.getfperm(file)
+          -- Check only the first three characters for 'rwx' to determine owner permissions
+          local owner_permissions = permissions:sub(1, 3)
+          -- Green for owner 'rwx', blue otherwise
+          return permissions, owner_permissions == "rwx" and "#97C378" or "#3B4252"
+        end
+      end
+
       return {
         options = {
           icons_enabled = true,
@@ -49,7 +64,28 @@ return {
           lualine_a = {'mode'},
           lualine_b = {'branch', 'diff', 'diagnostics'},
           lualine_c = {'filename'},
-          lualine_x = {'encoding', 'fileformat', 'filetype'},
+          lualine_x = {
+            {
+              function()
+                local permissions, _ = get_permissions_color() -- Ignore bg_color here if unused
+                return permissions
+              end,
+              color = function()
+                local _, bg_color = get_permissions_color() -- Use bg_color for dynamic coloring
+                return { fg = fg_color, bg = bg_color, gui = "bold" }
+              end,
+              -- separator = { left = "", right = "" },
+              -- separator = { left = "", right = "" },
+              -- separator = { left = "", right = "" },
+              -- separator = { left = "", right = "" },
+              -- separator = { left = "", right = "" },
+              separator = { left = "", right = "" },
+              -- separator = { left = "", right = "" },
+              -- separator = { left = "", right = "" },
+              padding = 1,
+            },
+            'encoding', 'fileformat', 'filetype'
+          },
           lualine_y = {'progress'},
           lualine_z = {{ selectionCount }, { customLocation },}
         },
