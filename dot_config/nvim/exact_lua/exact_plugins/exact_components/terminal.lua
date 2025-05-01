@@ -39,7 +39,10 @@ return {
       }
 
       -- 添加第二個快捷鍵映射
+      vim.api.nvim_set_keymap('n', '<A-\\>', '<cmd>ToggleTerm<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<C-`>', '<cmd>ToggleTerm<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('t', '<A-\\>', '<cmd>ToggleTerm<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('t', '<C-`>', '<cmd>ToggleTerm<CR>', { noremap = true, silent = true })
 
       -- 添加Alt+Esc鍵離開終端模式，回到Normal Mode
       vim.api.nvim_set_keymap('t', '<A-Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
