@@ -10,6 +10,8 @@ return {
           tab = "> ",
           trail = "-",
           nbsp = "+",
+          eol = "↲",
+          space = "·",
         },
         notifications = true,   -- Enable or disable listchars notifications
         exclude_filetypes = {}, -- List of filetypes where `listchars` is disabled

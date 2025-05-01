@@ -8,7 +8,7 @@
 
 vim.opt.listchars = {
   trail = "-",
-  eol = "↲",
+  -- eol = "↲",
   tab = "» ",
-  space = "·",
+  -- space = "·",
 }
