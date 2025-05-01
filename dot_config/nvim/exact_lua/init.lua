@@ -1,3 +1,4 @@
+vim.g.suda_smart_edit = 1
 require("config.options")
 require("config.keymaps_nvim")
 require("config.keymaps")
