@@ -15,6 +15,7 @@ return {
       delete = { text = "" },
       topdelete = { text = "" },
       changedelete = { text = "▎" },
+      untracked = { text = "▎" },
     },
     signs_staged_enable = true,
     signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
@@ -48,6 +49,17 @@ return {
       col = 1
     },
     on_attach = function(buffer)
+      -- 處理無狀態時的佔位符號
+      vim.wo.signcolumn = "yes"
+      -- 添加一個空白占位符
+      vim.fn.sign_define("GitSignsPlaceholder", { text = " ", texthl = "NonText" })
+      -- 在沒有 Git 變更時手動放置占位符
+      local line_count = vim.api.nvim_buf_line_count(buffer)
+      for lnum = 1, line_count do
+        vim.fn.sign_place(0, "GitSignsPlaceholderGroup", "GitSignsPlaceholder", buffer, { lnum = lnum })
+      end
+
+      -- 其他預設動作
       local gs = package.loaded.gitsigns
 
       local function map(mode, l, r, desc)
