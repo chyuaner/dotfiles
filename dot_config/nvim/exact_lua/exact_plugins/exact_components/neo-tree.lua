@@ -72,7 +72,7 @@ return {
       { "<leader>fT", "<cmd>Neotree float<cr>", desc = "NeoTree Float" },
       { "<leader>fF", "<cmd>Neotree filesystem float<cr>", desc = "NeoTree Filesystem Float" },
       { "<leader>fG", "<cmd>Neotree git_status float<cr>", desc = "NeoTree Git Status Float" },
-      { "<F10>", "<cmd>Neotree git_status float<cr>", desc = "NeoTree Git Status Float" },
+      { "<S-F9>", "<cmd>Neotree git_status float<cr>", desc = "NeoTree Git Status Float" }, --警告!在標準終端無法使用
       { "<leader>fB", "<cmd>Neotree buffers float<cr>", desc = "NeoTree Buffers Float" },
     },
     lazy = false,
