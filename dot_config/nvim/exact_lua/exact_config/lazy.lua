@@ -44,10 +44,10 @@ require("lazy").setup({
     -- { import = "plugins.themes.github-theme" }, -- 自訂配色
     -- { import = "plugins.themes.onedark" }, -- 自訂配色
 
+    { import = "plugins.editor" },
     { import = "plugins.components" },
     { import = "plugins.components.buffer.barbar" }, -- 目前只有barbar處理Buffer是最好的
     { import = "plugins.ui" },
-    { import = "plugins.editor" },
 
     -- 手動引入 o-plugins 資料夾中的插件
     -- require("o-plugins.nvim-listchars"),
