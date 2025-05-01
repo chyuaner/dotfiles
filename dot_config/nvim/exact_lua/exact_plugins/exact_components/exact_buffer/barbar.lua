@@ -17,6 +17,10 @@ return {
         -- animation = false, -- 禁用動畫效果
         sidebar_filetypes = {
           ['neo-tree'] = {event = 'BufWipeout'},
+          undotree = {
+            text = 'undotree',
+            align = 'center', -- *optionally* specify an alignment (either 'left', 'center', or 'right')
+          },
         },
       }
 
