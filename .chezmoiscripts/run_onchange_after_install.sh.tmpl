@@ -4,6 +4,7 @@ zsh -i -c 'zinit update'
 vim +PlugInstall  +qall
 nvim --headless "+Lazy! update" +qa
 
+{{ if not .noGUI }}
 {{ if and (eq .chezmoi.os "linux") (stat (print .chezmoi.homeDir "/.winscp")) }}
 {{ if or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch") }}
 mkdir -p ~/.winscp
@@ -17,6 +18,7 @@ ln -s ~/.ssh/known_hosts ~/.winscp/drive_c/users/{{ .chezmoi.username }}/.ssh/kn
 {{ if and (stat (print .chezmoi.homeDir "/.config/filezilla/sitemanager.xml")) (not (stat (print .chezmoi.homeDir "/.winscp/drive_c/users/" .chezmoi.username "/AppData/Roaming/FileZilla/sitemanager.xml"))) }}
 mkdir -p ~/.winscp/drive_c/users/{{ .chezmoi.username }}/AppData/Roaming/FileZilla
 ln -s ~/.config/filezilla/sitemanager.xml ~/.winscp/drive_c/users/{{ .chezmoi.username }}/AppData/Roaming/FileZilla/sitemanager.xml
+{{ end }}
 {{ end }}
 {{ end }}
 {{ end }}

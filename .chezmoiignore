@@ -13,6 +13,7 @@ dconf.ini
 .local/share/konsole
 dconf.ini
 .gvimrc
+.chezmoiscripts/run_onchange_linux-dconf-load.sh.tmpl
 
 {{/* ---- 有視窗應用程式 -------------------------------------------------- */ -}}
 {{ else }}
@@ -24,6 +25,7 @@ dconf.ini
 {{ end }}
 {{ if ne .chezmoi.os "linux" }}
 .chezmoiscripts/run_onchange_before_linux-install-packages.sh.tmpl
+.chezmoiscripts/run_onchange_linux-dconf-load.sh.tmpl
 .local/share/konsole
 .config/konsolerc
 {{ end }}
