@@ -22,6 +22,7 @@
 {{- $pacmanInstall := concat .packages.linux.manjaro.pacman .packages.linux.manjaro.pacman_gui -}}
 {{- $aurInstall := concat .packages.linux.manjaro.aur .packages.linux.manjaro.aur_gui -}}
 {{- end -}}
+{{ end -}}
 
 {{/* ---- 安裝腳本 ------------------------------------------------------- */ -}}
 {{- /* https://github.com/mriehl/dotfiles/blob/master/run_onchange_packages.sh.tmpl */ -}}
