@@ -25,7 +25,7 @@ else
 fi
 
 {{/* 手動安裝 neovim 0.11.1 */ -}}
-{{ if and (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.arch "amd64") (le .chezmoi.osRelease.versionID 12) }}
+{{ if and (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.arch "amd64") (hasKey .chezmoi.osRelease "versionID") (le .chezmoi.osRelease.versionID 12) }}
 curl -LO https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.appimage
 chmod u+x nvim-linux-x86_64.appimage
 ./nvim-linux-x86_64.appimage --appimage-extract
