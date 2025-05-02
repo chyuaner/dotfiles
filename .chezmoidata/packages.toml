@@ -36,11 +36,13 @@ pacman_force = [
 
 pacman = [
   'chezmoi',
+  'sudo',
   'git',
   'base-devel',
   'fakeroot',
   'gcc',
   'cmake',
+  'zsh',
   'lsix',
   'ueberzugpp',
   'eza',
@@ -73,6 +75,7 @@ pacman = [
   'fakeroot',
   'gcc',
   'cmake',
+  'zsh',
   'lsix',
   'ueberzugpp',
   'eza',

@@ -5,10 +5,19 @@
 {{ if eq .chezmoi.osRelease.id "manjaro" -}}
 
 {{/* ---- 整理待安裝清單 -------------------------------------------------- */ -}}
+
+{{- $pacman_force := .packages.linux.arch.pacman_force -}}
+{{- $pacmanInstall := .packages.linux.arch.pacman -}}
+{{- $aurInstall := .packages.linux.arch.aur -}}
+{{- if not .noGUI -}}
+{{- $pacmanInstall := concat .packages.linux.arch.pacman .packages.linux.arch.pacman_gui -}}
+{{- $aurInstall := concat .packages.linux.arch.aur .packages.linux.arch.aur_gui -}}
+{{- end -}}
+
+{{ if eq .chezmoi.osRelease.id "manjaro" -}}
 {{- $pacman_force := .packages.linux.manjaro.pacman_force -}}
 {{- $pacmanInstall := .packages.linux.manjaro.pacman -}}
 {{- $aurInstall := .packages.linux.manjaro.aur -}}
-
 {{- if not .noGUI -}}
 {{- $pacmanInstall := concat .packages.linux.manjaro.pacman .packages.linux.manjaro.pacman_gui -}}
 {{- $aurInstall := concat .packages.linux.manjaro.aur .packages.linux.manjaro.aur_gui -}}
@@ -62,6 +71,8 @@ for package in "${pacmanForce_packages[@]}"; do
   to_install_pacmanForce+=("$package")
 done
 
+sudo pacman -Sy
+
 # 等待鎖定檔案被移除
 wait_for_pacman_unlock
 
@@ -88,10 +99,16 @@ fi
 # 等待鎖定檔案被移除
 wait_for_pacman_unlock
 
+{{ if eq .chezmoi.osRelease.id "manjaro" -}}
 if ! is_installed "yay"; then
   echo "  - Installing yay"
   sudo pacman -S --needed --noconfirm yay
 fi
+{{ else -}}
+if ! command -v yay &> /dev/null; then
+    git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin && makepkg -si
+fi
+{{ end -}}
 
 to_install_aur=()
 for package in "${aur_packages[@]}"; do
