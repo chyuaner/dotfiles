@@ -58,6 +58,19 @@ pacman = [
   'jdk-openjdk',
 ]
 
+pacman_gui = [
+  'gvim',
+  'neovide',
+]
+
+aur = [
+]
+
+aur_gui = [
+  'alacritty-sixel-git',
+  'winscp',
+]
+
 # Manjaro Linux ----------------------------------------------------------------
 [packages.linux.manjaro]
 pacman_force = [
