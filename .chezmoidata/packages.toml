@@ -58,11 +58,11 @@ pacman_force = [
   'llvm',
   'llvm-libs',
   'sudo',
+  'git',
 ]
 
 pacman = [
   'chezmoi',
-  'git',
   'lazygit',
   'base-devel',
   'fakeroot',

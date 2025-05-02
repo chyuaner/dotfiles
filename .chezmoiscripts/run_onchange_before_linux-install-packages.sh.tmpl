@@ -130,7 +130,7 @@ wait_for_pacman_unlock
 
 if [[ ${#to_install_pacmanForce[@]} -gt 0 ]]; then
   echo "  - Installing missing packages via pacman: ${to_install_pacmanForce[@]}"
-  sudo pacman -Sy --needed --noconfirm "${to_install_pacmanForce[@]}"
+  sudo pacman -Sy --needed --noconfirm --overwrite \* "${to_install_pacmanForce[@]}"
 else
   sudo pacman -Sy
 fi
@@ -147,7 +147,7 @@ done
 
 if [[ ${#to_install_pacman[@]} -gt 0 ]]; then
   echo "  - Installing missing packages via pacman: ${to_install_pacman[@]}"
-  sudo pacman -S --needed --noconfirm "${to_install_pacman[@]}"
+  sudo pacman -S --needed --noconfirm --overwrite \* "${to_install_pacman[@]}"
 fi
 
 # 等待鎖定檔案被移除
