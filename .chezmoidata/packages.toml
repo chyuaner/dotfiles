@@ -33,6 +33,7 @@ casks = [
 #   Debain 12 (bookworm) neovim版本太舊 0.7，lazy無法用，故在shell腳本特殊處理
 [packages.linux.debian]
 apt = [
+  'sudo',
   'zsh',
   'vim',
   'git',
