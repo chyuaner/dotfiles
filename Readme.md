@@ -253,7 +253,6 @@ To shutdown the Watchman server, run:
 
 ```
 watchman shutdown-server
-
 ```
 
 相關工具參考連結
