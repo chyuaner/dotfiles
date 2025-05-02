@@ -1,7 +1,20 @@
 {{ if eq .chezmoi.os "linux" -}}
 
 
+{{/* ==== Arch Linux / Manjaro ========================================== */ -}}
 {{ if eq .chezmoi.osRelease.id "manjaro" -}}
+
+{{/* ---- 整理待安裝清單 -------------------------------------------------- */ -}}
+{{- $pacman_force := .packages.linux.manjaro.pacman_force -}}
+{{- $pacmanInstall := .packages.linux.manjaro.pacman -}}
+{{- $aurInstall := .packages.linux.manjaro.aur -}}
+
+{{- if not .noGUI -}}
+{{- $pacmanInstall := concat .packages.linux.manjaro.pacman .packages.linux.manjaro.pacman_gui -}}
+{{- $aurInstall := concat .packages.linux.manjaro.aur .packages.linux.manjaro.aur_gui -}}
+{{- end -}}
+
+{{/* ---- 安裝腳本 ------------------------------------------------------- */ -}}
 {{- /* https://github.com/mriehl/dotfiles/blob/master/run_onchange_packages.sh.tmpl */ -}}
 #!/usr/bin/env bash
 
@@ -34,15 +47,7 @@ wait_for_pacman_unlock() {
   echo "✅ 鎖定解除，繼續執行。"
 }
 
-pacmanForce_packages=( {{.packages.linux.manjaro.pacman_force | quoteList | join " " }})
-
-{{- $pacmanInstall := .packages.linux.manjaro.pacman -}}
-{{- $aurInstall := .packages.linux.manjaro.aur -}}
-{{ if not .noGUI }}
-{{- $pacmanInstall := concat .packages.linux.manjaro.pacman .packages.linux.manjaro.pacman_gui -}}
-{{- $aurInstall := concat .packages.linux.manjaro.aur .packages.linux.manjaro.aur_gui -}}
-{{ end }}
-
+pacmanForce_packages=( {{ $pacman_force | quoteList | join " " }})
 pacman_packages=( {{ $pacmanInstall | quoteList | join " " }} )
 aur_packages=( {{ $aurInstall | quoteList | join " " }})
 
@@ -100,6 +105,5 @@ if [[ ${#to_install_aur[@]} -gt 0 ]]; then
   yay -S --noconfirm "${to_install_aur[@]}"
 fi
 {{ end -}}
-
 
 {{ end -}}
