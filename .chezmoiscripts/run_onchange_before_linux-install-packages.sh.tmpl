@@ -7,7 +7,7 @@
 
 {{/* ---- 整理待安裝清單 -------------------------------------------------- */ -}}
 {{- $aptInstall := .packages.linux.debian.apt -}}
-{{- if or (eq .chezmoi.osRelease.versionCodename "trixie") (ge .chezmoi.osRelease.versionID 13) -}}
+{{- if eq .chezmoi.osRelease.versionCodename "trixie" -}}
 {{- $aptInstall := concat .packages.linux.debian.apt .packages.linux.debian.apt_13 -}}
 {{- end -}}
 apt_packages=( {{ $aptInstall | quoteList | join " " }} )
