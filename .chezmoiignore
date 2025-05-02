@@ -4,9 +4,23 @@ chezmoi.code-workspace
 
 dconf.ini
 
+{{/* ---- 沒有圖形界面 ---------------------------------------------------- */ -}}
+{{ if .noGUI }}
+.config/iterm2/
+.config/alacritty
+.config/neovide
+.config/konsolerc
+.local/share/konsole
+dconf.ini
+.gvimrc
+
+{{/* ---- 有視窗應用程式 -------------------------------------------------- */ -}}
+{{ else}}
+
+{{/* ---- 處理特定os專用  */ -}}
 {{ if ne .chezmoi.os "darwin" }}
 .chezmoiscripts/run_onchange_before_darwin-install-packages.sh.tmpl
-.config/iterm2/com.googlecode.iterm2.plist
+.config/iterm2
 {{ end }}
 {{ if ne .chezmoi.os "linux" }}
 .chezmoiscripts/run_onchange_before_linux-install-packages.sh.tmpl
@@ -18,4 +32,6 @@ dconf.ini
 *.ps1
 {{ else }}
 *.sh
+{{ end }}
+
 {{ end }}

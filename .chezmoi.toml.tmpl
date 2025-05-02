@@ -1,7 +1,9 @@
 {{- $name := promptStringOnce . "name" "請輸入您的姓名" -}}
 {{- $email := promptStringOnce . "email" "輸入您的Email地址" -}}
+{{- $hasGUI := promptBoolOnce . "hasGUI" "Does this machine have a GUI" -}}
 sourceDir = "~/.local/share/chezmoi"
 
 [data]
     name = {{ $name | quote }}
     email = {{ $email | quote }}
+    noGUI = {{ not $hasGUI }}
