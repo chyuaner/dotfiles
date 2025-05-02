@@ -46,17 +46,22 @@ pacman = [
   'zellij',
   'ranger',
   'vim',
-  'gvim',
   'neovim',
-  'neovide',
   'python',
   'go',
   'nodejs',
   'npm',
   'jdk-openjdk',
 ]
+pacman_gui = [
+  'gvim',
+  'neovide',
+]
 
 aur = [
+]
+
+aur_gui = [
   'alacritty-sixel-git',
   'winscp',
 ]

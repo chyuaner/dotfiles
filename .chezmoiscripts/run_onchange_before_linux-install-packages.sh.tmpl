@@ -35,8 +35,16 @@ wait_for_pacman_unlock() {
 }
 
 pacmanForce_packages=( {{.packages.linux.manjaro.pacman_force | quoteList | join " " }})
-pacman_packages=( {{.packages.linux.manjaro.pacman | quoteList | join " " }})
-aur_packages=( {{.packages.linux.manjaro.aur | quoteList | join " " }})
+
+{{- $pacmanInstall := .packages.linux.manjaro.pacman -}}
+{{- $aurInstall := .packages.linux.manjaro.aur -}}
+{{ if not .noGUI }}
+{{- $pacmanInstall := concat .packages.linux.manjaro.pacman .packages.linux.manjaro.pacman_gui -}}
+{{- $aurInstall := concat .packages.linux.manjaro.aur .packages.linux.manjaro.aur_gui -}}
+{{ end }}
+
+pacman_packages=( {{ $pacmanInstall | quoteList | join " " }} )
+aur_packages=( {{ $aurInstall | quoteList | join " " }})
 
 installed_packages=($(pacman -Qq))
 
