@@ -57,11 +57,11 @@ pacman_force = [
   'archlinux-keyring',
   'llvm',
   'llvm-libs',
+  'sudo',
+  'git',
 ]
 
 pacman = [
-  'sudo',
-  'git',
   'chezmoi',
   'lazygit',
   'base-devel',
