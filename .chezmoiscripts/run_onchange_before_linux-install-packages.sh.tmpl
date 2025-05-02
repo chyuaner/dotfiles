@@ -2,7 +2,7 @@
 
 
 {{/* ==== Arch Linux / Manjaro ========================================== */ -}}
-{{ if eq .chezmoi.osRelease.id "manjaro" -}}
+{{ if or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch") -}}
 
 {{/* ---- 整理待安裝清單 -------------------------------------------------- */ -}}
 
