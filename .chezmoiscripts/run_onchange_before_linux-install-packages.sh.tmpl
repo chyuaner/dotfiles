@@ -161,6 +161,8 @@ fi
 {{ else -}}
 if ! command -v yay &> /dev/null; then
     if [ "$EUID" -ne 0 ]; then
+      git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin && makepkg -si
+    else
       mkdir -p /tmp/yay-build
       useradd -m -G wheel builder && passwd -d builder
       chown -R builder:builder /tmp/yay-build
@@ -168,8 +170,6 @@ if ! command -v yay &> /dev/null; then
       su - builder -c "git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-build/yay"
       su - builder -c "cd /tmp/yay-build/yay && makepkg -si --noconfirm"
       rm -rf /tmp/yay-build
-    else
-      git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin && makepkg -si
     fi
 fi
 {{ end -}}
