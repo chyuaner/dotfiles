@@ -13,19 +13,19 @@ dconf.ini
 .local/share/konsole
 dconf.ini
 .gvimrc
-.chezmoiscripts/run_onchange_linux-dconf-load.sh
+.chezmoiscripts/linux-dconf-load.sh
 
 {{/* ---- 有視窗應用程式 -------------------------------------------------- */ -}}
 {{ else }}
 
 {{/* ---- 處理特定os專用  */ -}}
 {{ if ne .chezmoi.os "darwin" }}
-.chezmoiscripts/run_onchange_before_darwin-install-packages.sh
+.chezmoiscripts/before_darwin-install-packages.sh
 .config/iterm2
 {{ end }}
 {{ if ne .chezmoi.os "linux" }}
-.chezmoiscripts/run_onchange_before_linux-install-packages.sh
-.chezmoiscripts/run_onchange_linux-dconf-load.sh
+.chezmoiscripts/before_linux-install-packages.sh
+.chezmoiscripts/linux-dconf-load.sh
 .local/share/konsole
 .config/konsolerc
 {{ end }}
