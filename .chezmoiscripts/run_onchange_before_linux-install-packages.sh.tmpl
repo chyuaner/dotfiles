@@ -26,9 +26,12 @@ fi
 curl -LO https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.appimage
 chmod u+x nvim-linux-x86_64.appimage
 ./nvim-linux-x86_64.appimage --appimage-extract
-./squashfs-root/usr/bin/nvim
-cp -rf squashfs-root/usr/* /usr/
-rm -r nvim-linux-x86_64.appimage squashfs-root
+if [ "$EUID" -ne 0 ]; then
+  sudo cp -rf squashfs-root/usr/* /usr/
+else
+  cp -rf squashfs-root/usr/* /usr/
+fi
+  rm -r nvim-linux-x86_64.appimage squashfs-root
 {{ end }}
 
 {{ end -}}
