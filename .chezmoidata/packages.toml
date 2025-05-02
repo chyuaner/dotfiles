@@ -3,6 +3,7 @@
 brews = [
   'chezmoi',
   'git',
+  'lazygit',
   'zsh',
   'vim',
   'neovim',
@@ -41,6 +42,11 @@ apt = [
   'gcc',
 ]
 
+apt_13 = [
+  'neovim',
+  'lazygit',
+]
+
 # Arch Linux -------------------------------------------------------------------
 [packages.linux.arch]
 pacman_force = [
@@ -53,6 +59,7 @@ pacman = [
   'chezmoi',
   'sudo',
   'git',
+  'lazygit',
   'base-devel',
   'fakeroot',
   'gcc',
@@ -99,6 +106,7 @@ pacman = [
   'chezmoi',
   'yay',
   'git',
+  'lazygit',
   'base-devel',
   'fakeroot',
   'gcc',

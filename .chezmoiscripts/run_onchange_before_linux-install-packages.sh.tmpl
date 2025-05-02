@@ -7,6 +7,9 @@
 
 {{/* ---- 整理待安裝清單 -------------------------------------------------- */ -}}
 {{- $aptInstall := .packages.linux.debian.apt -}}
+{{- if ge .chezmoi.osRelease.versionID 13 -}}
+{{- $aptInstall := concat .packages.linux.debian.apt .packages.linux.debian.apt_13 -}}
+{{- end -}}
 apt_packages=( {{ $aptInstall | quoteList | join " " }} )
 
 to_install_apt=()
@@ -22,7 +25,7 @@ else
 fi
 
 {{/* 手動安裝 neovim 0.11.1 */ -}}
-{{ if and (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.arch "amd64") }}
+{{ if and (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.arch "amd64") (le .chezmoi.osRelease.versionID 12) }}
 curl -LO https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.appimage
 chmod u+x nvim-linux-x86_64.appimage
 ./nvim-linux-x86_64.appimage --appimage-extract
@@ -34,7 +37,20 @@ fi
   rm -r nvim-linux-x86_64.appimage squashfs-root
 {{ end }}
 
+{{/* 手動安裝 lazygit */ -}}
+{{ if and (eq .chezmoi.osRelease.id "debian") (le .chezmoi.osRelease.versionID 12) }}
+LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+tar xf lazygit.tar.gz lazygit
+if [ "$EUID" -ne 0 ]; then
+  sudo install lazygit -D -t /usr/local/bin/
+else
+  install lazygit -D -t /usr/local/bin/
+fi
+rm -rf lazygit.tar.gz lazygit
 {{ end -}}
+
+{{ end }}
 
 {{/* ==== Arch Linux / Manjaro ========================================== */ -}}
 {{ if or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch") -}}
