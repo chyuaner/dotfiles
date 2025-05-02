@@ -24,8 +24,7 @@ Yuan dotfile 自用環境設定檔
 目前已經測試過確定可用的環境組合與主要用途如下：
 * macOS 15 Sequoia -主要桌面電腦工作開發用 -2025/5/2 測試過
 * Manjaro Linux -主要桌面電腦工作開發用 -2025/5/2 測試過
-* Debian -伺服器主機與Container執行環境用
-* Debian （無Root模式）
+* Debian (無GUI) -伺服器主機與Container執行環境用 -2025/5/2 測試過
 * Manjaro Linux (無GUI) - 2025/5/2 測試過
 * Arch Linux (無GUI) -2025/5/2 測試過
 
@@ -38,7 +37,7 @@ Yuan dotfile 自用環境設定檔
 #### 安裝主dotfiles包
 <details>
   <summary>PS. 若是用Debian Slim 精簡版作業系統，要先安裝 curl</summary>
-    
+
   ```
   apt update && apt install curl -y
   ```
