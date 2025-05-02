@@ -16,6 +16,7 @@ brews = [
   'go',
   'nodejs',
   'java',
+  'jstkdng/programs/ueberzugpp',
 ]
 
 casks = [

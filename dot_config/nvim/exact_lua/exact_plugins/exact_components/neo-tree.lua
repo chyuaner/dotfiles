@@ -20,18 +20,7 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
-      -- "3rd/image.nvim",
-      -- {"3rd/image.nvim",
-      --   build = false,
-      --   opts = {
-      --     processor = "magick_cli",
-      --   },
-      --   config = function()
-      --     require("image").setup({
-      --       backend = "ueberzug",
-      --     })
-      --   end,
-      -- }, -- Optional image support in preview window: See `# Preview Mode` for more information
+      -- "3rd/image.nvim", -- 先註解，因為已經由 nvim/lua/plugins/components/image.lua 處理了
       {
         "s1n7ax/nvim-window-picker", -- for open_with_window_picker keymaps
         version = "2.*",

@@ -50,6 +50,15 @@ chezmoi apply
 ```
 </details>
 
+#### macOS可能會遇到的狀況
+##### 若無法安裝 jstkdng/programs/ueberzugpp
+<https://github.com/jstkdng/homebrew-programs/issues/2>
+
+```
+$ sudo rm -rf /Library/Developer/CommandLineTools
+$ xcode-select --install
+```
+
 #### 若需要刪掉重來
 ```
 rm -rf ~/.local/share/chezmoi
