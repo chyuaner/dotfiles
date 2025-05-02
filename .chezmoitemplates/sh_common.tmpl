@@ -1,5 +1,7 @@
+{{/* 以下是套用到 ~/.zshrc ~/.bashrc 用的共通內容 */}}
 
-{{- /* ---- 設定環境變數 -------------------------------------------------- */ -}}
+
+{{/* ---- 設定環境變數 ---------------------------------------------------- */}}
 
 {{- /* 設定預設編輯器 */ -}}
 {{ if eq .chezmoi.os "linux" }}
@@ -12,10 +14,24 @@ export EDITOR=nvim
 
 export VISUAL=nvim
 
-{{- /* ---- 設定ailas ---------------------------------------------------- */ -}}
-
-## Alias section
-alias cp="cp -i"                          # Confirm before overwriting something
-alias df='df -h'                          # Human-readable sizes
-alias free='free -m'                      # Show sizes in MB
+{{/* ---- 設定ailas ---------------------------------------------------- */}}
+# alias
 alias gitu='git add . && git commit && git push'
+
+{{/* ---- 擴充功能 ---------------------------------------------------- */}}
+# 圖片顯示
+# 既然即使加入判斷後還是「進入函數定義段落且噴錯」，那就代表：zsh 在解析 .zshrc 時，在到達 if 邏輯前，就已經知道 imgcat 是 alias，並因此直接報錯，這是因為：
+# ⚠️ 在 zsh 中，如果你寫 function_name() 這種形式，然後這個名稱之前被定義為 alias，會在 parse 階段直接錯誤，不會等到 if 判斷。
+# 解決方式：延遲定義（用 eval 避開 parser）
+# 你需要避免 zsh 在 parse 階段就看到 imgcat() 的寫法。可以這樣寫，透過 eval 延遲定義函數內容：
+if ! alias imgcat &>/dev/null && ! functions imgcat &>/dev/null && command -v magick &>/dev/null; then
+  eval '
+  imgcat() {
+    if [[ -z "$1" ]]; then
+      echo "❌ 請指定圖片檔案，例如：imgcat ~/Pictures/foo.png"
+      return 1
+    fi
+
+    magick "$1" -geometry 800x480 sixel:-
+  }'
+fi

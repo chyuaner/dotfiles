@@ -195,6 +195,7 @@ chezmoi apply ~/.zshrc
 
 將單一檔案轉換成tmpl範本
 ```
+chezmoi add --template ~/.bashrc
 chezmoi chattr +template ~/.config/iterm2/com.googlecode.iterm2.plist
 ```
 
