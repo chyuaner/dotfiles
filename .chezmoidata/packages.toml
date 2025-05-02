@@ -77,11 +77,6 @@ pacman = [
   'ranger',
   'vim',
   'neovim',
-  'python',
-  'go',
-  'nodejs',
-  'npm',
-  'jdk-openjdk',
 ]
 
 pacman_gui = [
