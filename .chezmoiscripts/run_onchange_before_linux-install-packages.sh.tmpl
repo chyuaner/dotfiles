@@ -15,7 +15,7 @@ for package in "${apt_packages[@]}"; do
 done
 
 echo "  - Installing packages via apt: ${to_install_apt[@]}"
-if [ "$EUID" -ne 0 ]
+if [ "$EUID" -ne 0 ]; then
   sudo apt install -y "${to_install_apt[@]}"
 else
   apt install -y "${to_install_apt[@]}"
