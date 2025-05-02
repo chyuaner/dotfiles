@@ -1,3 +1,4 @@
+# macOS ------------------------------------------------------------------------
 [packages.darwin]
 brews = [
   'chezmoi',
@@ -25,6 +26,37 @@ casks = [
 #  'macvim',
 ]
 
+# Arch Linux -------------------------------------------------------------------
+[packages.linux.arch]
+pacman_force = [
+  'archlinux-keyring',
+  'llvm',
+  'llvm-libs',
+]
+
+pacman = [
+  'chezmoi',
+  'git',
+  'base-devel',
+  'fakeroot',
+  'gcc',
+  'cmake',
+  'lsix',
+  'ueberzugpp',
+  'eza',
+  'grc',
+  'zellij',
+  'ranger',
+  'vim',
+  'neovim',
+  'python',
+  'go',
+  'nodejs',
+  'npm',
+  'jdk-openjdk',
+]
+
+# Manjaro Linux ----------------------------------------------------------------
 [packages.linux.manjaro]
 pacman_force = [
   'archlinux-keyring',
@@ -36,11 +68,13 @@ pacman_force = [
 pacman = [
   'chezmoi',
   'yay',
+  'git',
   'base-devel',
   'fakeroot',
   'gcc',
   'cmake',
   'lsix',
+  'ueberzugpp',
   'eza',
   'grc',
   'zellij',
