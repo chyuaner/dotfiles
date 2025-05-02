@@ -151,26 +151,10 @@ elif [ "$(uname -s)" = 'Darwin' ]; then
 fi
 # bindkey -s '^E' 'gnome-terminal --working-directory="$PWD" -- zsh\n'
 
-# Install ruby¬
-# Based on "`brew --prefix ruby`/bin"¬
-export PATH="/usr/local/opt/ruby/bin:$PATH"¬
-# Based on "`gem environment gemdir`/bin"¬
-export PATH="/usr/local/lib/ruby/gems/3.3.0/bin:$PATH"¬
-export PATH="$HOME/.local/share/gem/ruby/3.3.0/bin:$PATH"
-
-# Fix ython3 to python Path on macOS
-if [ "$(uname -s)" = 'Darwin' ]; then
-    export PATH=/usr/local/opt/python/libexec/bin:$PATH
-fi
-
-# Created by `pipx` on 2023-01-30 19:57:14
-export PATH="$PATH:$HOME/.local/bin"
-
-# GoLang Path
-export PATH="$PATH:$HOME/go/bin"
-
+{{ if eq .chezmoi.os "darwin" -}}
 # iterm2
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+{{ end -}}
 
 zinit light mass8326/zsh-chezmoi
 

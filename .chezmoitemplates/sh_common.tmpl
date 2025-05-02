@@ -1,8 +1,27 @@
-{{/* 以下是套用到 ~/.zshrc ~/.bashrc 用的共通內容 */}}
+{{/* 以下是套用到 ~/.zshrc ~/.bashrc 用的共通內容 */ -}}
 
 
-{{/* ---- 設定環境變數 ---------------------------------------------------- */}}
+{{/* ---- 設定與修復PATH路徑對應 ------------------------------------------- */ -}}
 
+# Created by `pipx` on 2023-01-30 19:57:14
+export PATH="$PATH:$HOME/.local/bin"
+
+# GoLang Path
+export PATH="$PATH:$HOME/go/bin"
+
+# Fix Python3 to python Path on macOS
+if [ "$(uname -s)" = 'Darwin' ]; then
+    export PATH=/usr/local/opt/python/libexec/bin:$PATH
+fi
+
+# Install ruby¬
+# Based on "`brew --prefix ruby`/bin"¬
+export PATH="/usr/local/opt/ruby/bin:$PATH"¬
+# Based on "`gem environment gemdir`/bin"¬
+export PATH="/usr/local/lib/ruby/gems/3.3.0/bin:$PATH"¬
+export PATH="$HOME/.local/share/gem/ruby/3.3.0/bin:$PATH"
+
+{{/* ---- 設定環境變數 ---------------------------------------------------- */ -}}
 {{- /* 設定預設編輯器 */ -}}
 {{ if eq .chezmoi.os "linux" }}
 # linux config
@@ -14,11 +33,11 @@ export EDITOR=nvim
 
 export VISUAL=nvim
 
-{{/* ---- 設定ailas ---------------------------------------------------- */}}
+{{/* ---- 設定ailas ------------------------------------------------------ */ -}}
 # alias
 alias gitu='git add . && git commit && git push'
 
-{{/* ---- 擴充功能 ---------------------------------------------------- */}}
+{{/* ---- 擴充功能 ------------------------------------------------------- */ -}}
 # 圖片顯示
 # 既然即使加入判斷後還是「進入函數定義段落且噴錯」，那就代表：zsh 在解析 .zshrc 時，在到達 if 邏輯前，就已經知道 imgcat 是 alias，並因此直接報錯，這是因為：
 # ⚠️ 在 zsh 中，如果你寫 function_name() 這種形式，然後這個名稱之前被定義為 alias，會在 parse 階段直接錯誤，不會等到 if 判斷。
