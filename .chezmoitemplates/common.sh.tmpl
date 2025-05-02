@@ -22,15 +22,16 @@ export PATH="/usr/local/lib/ruby/gems/3.3.0/bin:$PATH"¬
 export PATH="$HOME/.local/share/gem/ruby/3.3.0/bin:$PATH"
 
 {{/* ---- 設定環境變數 ---------------------------------------------------- */ -}}
-{{- /* 設定預設編輯器 */ -}}
+# 設定預設編輯器
+{{ if false -}} {{/* 不執行 */}}
 {{ if eq .chezmoi.os "linux" }}
-# linux config
 [ -n "$DISPLAY" ] && export EDITOR=kate|| export EDITOR=nvim
 {{ else }}
 export EDITOR=nvim
-# non-linux config
 {{ end }}
+{{ end -}}
 
+export EDITOR=nvim
 export VISUAL=nvim
 
 {{/* ---- 設定ailas ------------------------------------------------------ */ -}}

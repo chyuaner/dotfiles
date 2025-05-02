@@ -27,17 +27,6 @@ require("lazy").setup({
     hererocks = true,  -- recommended if you do not have global installation of Lua 5.1.
   },
   spec = {
-    -- 先關閉此功能（目前在neo-tree無法work，而且會造成neovide出問題）
-    -- {
-    --   "3rd/image.nvim",
-    --   opts = {},
-    --   config = function()
-    --     require("image").setup({
-    --       backend = "ueberzug", -- or "ueberzug"
-    --       processor = "magick_rock", -- or "magick_rock"
-    --     })
-    --   end,
-    -- },
     -- 自動載入 plugins 資料夾中的所有插件
     { import = "plugins" },
     { import = "plugins.themes.nightfox" }, -- 自訂配色
