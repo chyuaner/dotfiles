@@ -38,9 +38,11 @@ Yuan dotfile 自用環境設定檔
 #### 安裝主dotfiles包
 <details>
   <summary>PS. 若是用Debian Slim 精簡版作業系統，要先安裝 curl</summary>
+    
   ```
   apt update && apt install curl -y
   ```
+
 </details>
 
 安裝整包設定擋與執行相關腳本
