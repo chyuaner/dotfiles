@@ -21,11 +21,13 @@ Yuan dotfile 自用環境設定檔
 * Manjaro Linux
 * Arch Linux
 
-目前已經測試過確定可用的環境組合如下：
-* macOS 15 Sequoia - 2025/5/2 測試過
-* Manjaro Linux - 2025/5/2 測試過
+目前已經測試過確定可用的環境組合與主要用途如下：
+* macOS 15 Sequoia -主要桌面電腦工作開發用 -2025/5/2 測試過
+* Manjaro Linux -主要桌面電腦工作開發用 -2025/5/2 測試過
+* Debian -伺服器主機與Container執行環境用
+* Debian （無Root模式）
 * Manjaro Linux (無GUI) - 2025/5/2 測試過
-* Arch Linux (無GUI) - 2025/5/2 測試過
+* Arch Linux (無GUI) -2025/5/2 測試過
 
 都是使用一般使用者有sudo權限的帳號，目前測試直接用root帳號可能會有問題。
 （尤其是Arch Linux，安裝yay無法使用root帳號）
@@ -34,6 +36,14 @@ Yuan dotfile 自用環境設定檔
 --------------------------------------------------------------------------------
 ### Linux / macOS
 #### 安裝主dotfiles包
+<details>
+  <summary>PS. 若是用Debian Slim 精簡版作業系統，要先安裝 curl</summary>
+  ```
+  apt update && apt install curl -y
+  ```
+</details>
+
+安裝整包設定擋與執行相關腳本
 ```
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply chyuaner
 ```

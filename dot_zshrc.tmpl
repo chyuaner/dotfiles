@@ -138,6 +138,9 @@ elif  command -v eza &> /dev/null; then
     zinit snippet https://github.com/eza-community/eza/blob/main/completions/zsh/_eza
     alias ls='eza --color=always --icons=always'
     #zinit light 'eza-community/eza'
+elif  command -v exa &> /dev/null; then
+    compdef exa='ls'
+    alias ls='exa --color=always --icons'
 fi
 
 # Floorp 支援 Firefox參數補齊

@@ -1,4 +1,25 @@
 {{ if eq .chezmoi.os "linux" -}}
+{{/* ---- 安裝腳本 ------------------------------------------------------- */ -}}
+
+{{/* ==== Debian ======================================================== */ -}}
+{{ if eq .chezmoi.osRelease.id "debian" -}}
+
+{{/* ---- 整理待安裝清單 -------------------------------------------------- */ -}}
+{{- $aptInstall := .packages.linux.debian.apt -}}
+apt_packages=( {{ $aptInstall | quoteList | join " " }} )
+
+to_install_apt=()
+for package in "${apt_packages[@]}"; do
+  to_install_apt+=("$package")
+done
+
+echo "  - Installing packages via apt: ${to_install_apt[@]}"
+if [ "$EUID" -ne 0 ]
+  sudo apt install -y "${to_install_apt[@]}"
+else
+  apt install -y "${to_install_apt[@]}"
+fi
+{{ end -}}
 
 
 {{/* ==== Arch Linux / Manjaro ========================================== */ -}}

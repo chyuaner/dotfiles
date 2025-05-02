@@ -26,6 +26,20 @@ casks = [
 #  'macvim',
 ]
 
+# Debian -----------------------------------------------------------------------
+# 特別備註:
+#   Debain 12 (bookworm) 沒有eza，但是有exa
+#   Debain 12 (bookworm) 沒有ueberzugpp，但是有ueberzug
+#   Debain 12 (bookworm) neovim版本太舊 0.7，lazy無法用
+[packages.linux.debian]
+apt = [
+  'zsh',
+  'vim',
+  'neovim',
+  'git',
+  'exa',
+]
+
 # Arch Linux -------------------------------------------------------------------
 [packages.linux.arch]
 pacman_force = [

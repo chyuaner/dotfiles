@@ -1,8 +1,14 @@
 #!/bin/sh
 
-zsh -i -c 'zinit update'
-vim +PlugInstall  +qall
-nvim --headless "+Lazy! update" +qa
+if  command -v zsh &> /dev/null; then
+    zsh -i -c 'zinit update'
+fi
+if  command -v vim &> /dev/null; then
+    vim +PlugInstall  +qall
+fi
+if  command -v nvim &> /dev/null; then
+    nvim --headless "+Lazy! update" +qa
+fi
 
 {{ if not .noGUI }}
 {{ if and (eq .chezmoi.os "linux") (stat (print .chezmoi.homeDir "/.winscp")) }}
