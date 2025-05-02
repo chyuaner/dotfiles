@@ -20,8 +20,18 @@ if [ "$EUID" -ne 0 ]; then
 else
   apt install -y "${to_install_apt[@]}"
 fi
-{{ end -}}
 
+{{/* 手動安裝 neovim 0.11.1 */ -}}
+{{ if and (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.arch "amd64") }}
+curl -LO https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.appimage
+chmod u+x nvim-linux-x86_64.appimage
+./nvim-linux-x86_64.appimage --appimage-extract
+./squashfs-root/usr/bin/nvim
+cp -rf squashfs-root/usr/* /usr/
+rm -r nvim-linux-x86_64.appimage squashfs-root
+{{ end }}
+
+{{ end -}}
 
 {{/* ==== Arch Linux / Manjaro ========================================== */ -}}
 {{ if or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch") -}}
