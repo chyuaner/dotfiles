@@ -20,11 +20,11 @@ dconf.ini
 
 {{/* ---- 處理特定os專用  */ -}}
 {{ if ne .chezmoi.os "darwin" }}
-.chezmoiscripts/before_darwin-install-packages.sh
+.chezmoiscripts/darwin-install-packages.sh
 .config/iterm2
 {{ end }}
 {{ if ne .chezmoi.os "linux" }}
-.chezmoiscripts/before_linux-install-packages.sh
+.chezmoiscripts/linux-install-packages.sh
 .chezmoiscripts/linux-dconf-load.sh
 .local/share/konsole
 .config/konsolerc
