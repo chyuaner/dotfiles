@@ -96,6 +96,7 @@ Plug 'bryanmylee/vim-colorscheme-icons'
 
 Plug 'ctrlpvim/ctrlp.vim' " 模糊搜尋 Ctrl+P
 
+{{ if .enableYcm }}
 " YCM自動補齊
 function! BuildYCM(info)
   " info is a dictionary with 3 fields
@@ -132,21 +133,22 @@ let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 Plug 'mattn/emmet-vim' "Ctrl+Y ,
+{{ end }}
 
 Plug 'jiangmiao/auto-pairs' " 自動補全對稱符
 " 這是自訂括號的寫法
 au FileType ejs let b:AutoPairs = AutoPairsDefine({'<%': '%>', '<!--': '-->'})
 au FileType html let b:AutoPairs = AutoPairsDefine({'<!--': '-->'})
 
+" <F8> 看看你設定了哪些變數、函數，也可以快速跳轉
+Plug 'majutsushi/tagbar'
+nmap <F8> :TagbarToggle<CR>
+
 Plug 'editorconfig/editorconfig-vim'
 
 " 按 <F6> 可以回朔到開啟檔案以來的任何歷史，還會標出修改的地方，很酷
 Plug 'mbbill/undotree'
 nnoremap <F6> :UndotreeToggle<CR>
-
-" <F8> 看看你設定了哪些變數、函數，也可以快速跳轉
-Plug 'majutsushi/tagbar'
-nmap <F8> :TagbarToggle<CR>
 
 " 可以在文档中显示 git 信息
 Plug 'airblade/vim-gitgutter'
