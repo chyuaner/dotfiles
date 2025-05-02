@@ -2,9 +2,6 @@
 {{- $email := promptStringOnce . "email" "輸入您的Email地址" -}}
 sourceDir = "~/.local/share/chezmoi"
 
-[edit]
-    command = "vim"
-
 [data]
     name = {{ $name | quote }}
     email = {{ $email | quote }}

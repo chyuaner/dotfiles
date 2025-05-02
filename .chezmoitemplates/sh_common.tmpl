@@ -1,0 +1,21 @@
+
+{{- /* ---- 設定環境變數 -------------------------------------------------- */ -}}
+
+{{- /* 設定預設編輯器 */ -}}
+{{ if eq .chezmoi.os "linux" }}
+# linux config
+[ -n "$DISPLAY" ] && export EDITOR=kate|| export EDITOR=nvim
+{{ else }}
+export EDITOR=nvim
+# non-linux config
+{{ end }}
+
+export VISUAL=nvim
+
+{{- /* ---- 設定ailas ---------------------------------------------------- */ -}}
+
+## Alias section
+alias cp="cp -i"                          # Confirm before overwriting something
+alias df='df -h'                          # Human-readable sizes
+alias free='free -m'                      # Show sizes in MB
+alias gitu='git add . && git commit && git push'
