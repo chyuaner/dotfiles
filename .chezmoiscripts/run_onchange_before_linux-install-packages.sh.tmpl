@@ -8,9 +8,9 @@
 {{/* ---- 整理待安裝清單 -------------------------------------------------- */ -}}
 {{- $aptInstall := .packages.linux.debian.apt -}}
 {{- if eq .chezmoi.osRelease.versionCodename "trixie" -}}
-{{- $aptInstall := concat .packages.linux.debian.apt .packages.linux.debian.apt_13 -}}
+{{- $aptInstall = concat .packages.linux.debian.apt .packages.linux.debian.apt_13 -}}
 {{ else if and (eq .chezmoi.osRelease.id "debian") (hasKey .chezmoi.osRelease "versionID") (le .chezmoi.osRelease.versionID 12) }}
-{{- $aptInstall := concat .packages.linux.debian.apt .packages.linux.debian.apt_12 -}}
+{{- $aptInstall = concat .packages.linux.debian.apt .packages.linux.debian.apt_12 -}}
 {{- end -}}
 apt_packages=( {{ $aptInstall | quoteList | join " " }} )
 
