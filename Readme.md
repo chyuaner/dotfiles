@@ -20,6 +20,7 @@ Yuan dotfile 自用環境設定檔
 * macOS 15 Sequoia -主要桌面電腦工作開發用 -2025/5/2 測試過
 * Manjaro Linux -主要桌面電腦工作開發用 -2025/5/2 測試過
 * Debian (無GUI) -伺服器主機與Container執行環境用 -2025/5/2 測試過
+* Ubuntu 24.04.2 LTS (無GUI) -雲端主機執行環境用 -2025/5/4 測試過
 * Manjaro Linux (無GUI) - 2025/5/2 測試過
 * Arch Linux (無GUI) -2025/5/2 測試過
 

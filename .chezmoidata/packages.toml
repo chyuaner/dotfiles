@@ -27,7 +27,22 @@ casks = [
 #  'macvim',
 ]
 
+# Ubuntu -----------------------------------------------------------------------
+# Ubuntu 24.04.2 LTS 測試過
+# TODO: lazygit尚未處理
+[packages.linux.ubuntu]
+apt = [
+  'sudo',
+  'zsh',
+  'vim',
+  'git',
+  'gcc',
+  'eza',
+  'neovim',
+]
+
 # Debian -----------------------------------------------------------------------
+# Debian 12, Debian 13 測試過
 # 特別備註:
 #   Debain 12 (bookworm) 沒有eza，但是有exa
 #   Debain 12 (bookworm) 沒有ueberzugpp，但是有ueberzug
