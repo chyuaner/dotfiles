@@ -63,7 +63,7 @@ chezmoi update --apply
 
 ##### 2. 安裝主dotfiles包
 ```
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git --apply
+chezmoi init ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git --apply
 ```
 
 ##### 3. 安裝私人用的dotfiles包
