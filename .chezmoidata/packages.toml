@@ -75,10 +75,11 @@ pacman = [
   'grc',
   'zellij',
   'ranger',
-  'vim',
   'neovim',
 ]
-
+pacman_nogui = [
+  'vim',
+]
 pacman_gui = [
   'gvim',
   'neovide',
@@ -117,13 +118,15 @@ pacman = [
   'grc',
   'zellij',
   'ranger',
-  'vim',
   'neovim',
   'python',
   'go',
   'nodejs',
   'npm',
   'jdk-openjdk',
+]
+pacman_nogui = [
+  'vim',
 ]
 pacman_gui = [
   'gvim',
