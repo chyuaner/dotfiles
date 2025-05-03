@@ -255,6 +255,11 @@ To shutdown the Watchman server, run:
 watchman shutdown-server
 ```
 
+或是清除所有的watch
+```
+watchman watch-del-all
+```
+
 相關工具參考連結
 --------------------------------------------------------------------------------
 * <https://www.ditig.com/256-colors-cheat-sheet>
