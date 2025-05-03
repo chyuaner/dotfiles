@@ -1553,7 +1553,7 @@
 
   ###############################[ public_ip: public IP address ]###############################
   # Public IP color.
-  typeset -g POWERLEVEL9K_PUBLIC_IP_FOREGROUND=6
+  typeset -g POWERLEVEL9K_PUBLIC_IP_FOREGROUND=4
   # Custom icon.
   # typeset -g POWERLEVEL9K_PUBLIC_IP_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
@@ -1575,7 +1575,7 @@
 
   ###########[ ip: ip address and bandwidth usage for a specified network interface ]###########
   # IP color.
-  typeset -g POWERLEVEL9K_IP_FOREGROUND=4
+  typeset -g POWERLEVEL9K_IP_FOREGROUND=6
   # The following parameters are accessible within the expansion:
   #
   #   Parameter             | Meaning
