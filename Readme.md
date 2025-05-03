@@ -140,6 +140,41 @@ rm -rf ~/.config/alacritty ~/.config/zellij
 
 </details>
 
+擴充的小工具
+--------------------------------------------------------------------------------
+### git-pushmulti 同時上傳到多個git server
+* 本體在：`~/.local/bin/git-pushmulti`
+
+已經設定在 `.gitconfig` 裡面的alias，用法簡述：
+
+```
+git pushmulti "(origin,github)" master
+```
+
+範例中origin,github就是remote名。
+
+PS. 因為zsh與bash的限制，一旦用到`{}`符號，會跳脫在shell層處理，進不去執行檔腳本，所以權宜之計要用 `"()"`包起來
+
+### imgcat 直接 cat顯示圖片檔
+* 本體在：`~/.local/share/chezmoi/.chezmoitemplates/common.sh.tmpl`
+
+PS. 你的終端機程式要支援sixel，已知可用的： Konsole, iTerm2, Alacritty(非官方修改版)
+
+```
+imgcat /usr/share/wallpapers/Mountain/contents/images/1080x1920.png
+```
+
+### hex2xterm 色碼轉接近的xterm-256顏色數字編號
+* 本體在：`~/.local/bin/hex2xterm`
+
+用法範例：
+```
+hex2xterm "#FFFFFF"
+
+# Output:
+#    最接近的 Xterm 色碼為：231
+#    Xterm RGB：#FFFFFF
+```
 
 zsh
 --------------------------------------------------------------------------------

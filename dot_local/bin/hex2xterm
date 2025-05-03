@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+
+import sys
+
+# 取自 xterm 256 色表
+def xterm_colors():
+    colors = []
+
+    # 0-15: 系統顏色（略過）
+    for i in range(16):
+        colors.append((0, 0, 0))  # dummy
+
+    # 16–231: 6x6x6 color cube
+    levels = [0x00, 0x5f, 0x87, 0xaf, 0xd7, 0xff]
+    for r in levels:
+        for g in levels:
+            for b in levels:
+                colors.append((r, g, b))
+
+    # 232–255: grayscale ramp
+    for gray in range(8, 248, 10):
+        colors.append((gray, gray, gray))
+
+    return colors
+
+def hex_to_rgb(hexcode):
+    hexcode = hexcode.lstrip('#')
+    if len(hexcode) != 6:
+        raise ValueError("請輸入有效的 HEX 色碼，例如 #566177")
+    r = int(hexcode[0:2], 16)
+    g = int(hexcode[2:4], 16)
+    b = int(hexcode[4:6], 16)
+    return (r, g, b)
+
+def color_distance(c1, c2):
+    return sum((a - b) ** 2 for a, b in zip(c1, c2))
+
+def find_nearest_xterm_color(hexcode):
+    rgb = hex_to_rgb(hexcode)
+    colors = xterm_colors()
+
+    best_index = 16  # 開始於 16（跳過前 16 個）
+    best_distance = float('inf')
+
+    for i in range(16, 256):
+        dist = color_distance(rgb, colors[i])
+        if dist < best_distance:
+            best_index = i
+            best_distance = dist
+
+    return best_index, colors[best_index]
+
+def main():
+    if len(sys.argv) != 2:
+        print("使用方式：hex2xterm.py #RRGGBB")
+        return
+
+    hexcode = sys.argv[1]
+    try:
+        idx, rgb = find_nearest_xterm_color(hexcode)
+        print(f"最接近的 Xterm 色碼為：{idx}")
+        print(f"Xterm RGB：#{rgb[0]:02X}{rgb[1]:02X}{rgb[2]:02X}")
+    except Exception as e:
+        print(f"錯誤：{e}")
+
+if __name__ == "__main__":
+    main()
