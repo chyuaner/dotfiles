@@ -1589,7 +1589,7 @@
   #   P9K_IP_RX_RATE        | receive rate (since last prompt)
   #   P9K_IP_TX_RATE        | send rate (since last prompt)
   # 調整過
-  # typeset -g POWERLEVEL9K_IP_CONTENT_EXPANSION='$P9K_IP_IP${P9K_IP_RX_RATE:+ %70F⇣$P9K_IP_RX_RATE}${P9K_IP_TX_RATE:+ %215F⇡$P9K_IP_TX_RATE}'
+  # typeset -g POWERLEVEL9K_IP_CONTENT_EXPANSION='$P9K_IP_IP${P9K_IP_RX_RATE:+ %2F⇣$P9K_IP_RX_RATE}${P9K_IP_TX_RATE:+ %3F⇡$P9K_IP_TX_RATE}'
   typeset -g POWERLEVEL9K_IP_CONTENT_EXPANSION='$P9K_IP_IP$'
   # Show information for the first network interface whose name matches this regular expression.
   # Run `ifconfig` or `ip -4 a show` to see the names of all network interfaces.
@@ -1662,7 +1662,7 @@
   #
   # Type `p10k help segment` for documentation and a more sophisticated example.
   function prompt_example() {
-    p10k segment -f 208 -i '⭐' -t 'hello, %n'
+    p10k segment -f 2 -i '⭐' -t 'hello, %n'
   }
   # 調整過
   typeset -g POWERLEVEL9K_NETSPEED_FOREGROUND=250
@@ -1673,9 +1673,9 @@
     # p10k segment -f 208 -i '⭐' -t '${P9K_IP_RX_RATE:+ %70F⇣$P9K_IP_RX_RATE}${P9K_IP_TX_RATE:+ %215F⇡$P9K_IP_TX_RATE}'
     if [[ -n $P9K_IP_RX_RATE || -n $P9K_IP_TX_RATE ]]; then
       local rx tx
-      [[ -n $P9K_IP_RX_RATE ]] && rx="%70F⇣$P9K_IP_RX_RATE"
-      [[ -n $P9K_IP_TX_RATE ]] && tx="%215F⇡$P9K_IP_TX_RATE"
-      p10k segment -f 250 -i '⇄' -t "$rx $tx"
+      [[ -n $P9K_IP_RX_RATE ]] && rx="%2F⇣$P9K_IP_RX_RATE"
+      [[ -n $P9K_IP_TX_RATE ]] && tx="%3F⇡$P9K_IP_TX_RATE"
+      p10k segment -f 2 -i '⇄' -t "$rx $tx"
     fi
   }
 
