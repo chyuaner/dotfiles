@@ -18,7 +18,10 @@ export OSH='/home/yuan/.oh-my-bash'
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-bash is loaded.
-OSH_THEME="font"
+OSH_THEME="powerbash10k"
+__PB10K_TOP_LEFT="user_info dir scm"
+__PB10K_TOP_RIGHT="exitcode cmd_duration python ruby todo clock battery"
+__PB10K_BOTTOM="char"
 
 # If you set OSH_THEME to "random", you can ignore themes you don't like.
 # OMB_THEME_RANDOM_IGNORED=("powerbash10k" "wanelo")
@@ -33,7 +36,7 @@ OSH_THEME="font"
 # OMB_HYPHEN_SENSITIVE="false"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_OSH_DAYS=13
@@ -119,6 +122,8 @@ aliases=(
 plugins=(
   git
   bashmarks
+  sudo
+  chezmoi
 )
 
 # Which plugins would you like to conditionally load? (plugins can be found in ~/.oh-my-bash/plugins/*)
@@ -165,7 +170,58 @@ source "$OSH"/oh-my-bash.sh
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
 
+function __pb10k_top {
+    local seg segments info terminal_width filler_character cursor_adjust
+    local __TOP_LEFT="\n$_omb_prompt_black╭─ "
+    local __TOP_RIGHT=""
+    local __TOP_RIGHT_LEN=0
+    local __SEG_AT_RIGHT=0
+
+    IFS=" " read -ra segments <<< "$__PB10K_TOP_LEFT"
+    for seg in "${segments[@]}"; do
+        info="$(__pb10k_prompt_"$seg")"
+        [ "$info" != "" ] && __pb10k_top_left_parse "$info"
+    done
+
+    terminal_width=$(tput cols)
+    filler_character="─"
+    __TOP_LEFT+="$_omb_prompt_black"
+    __TOP_LEFT+="$(for ((i=0; i<"$terminal_width"; i++)); do printf "%s" "$filler_character"; done)"
+    __TOP_LEFT+="\033[${terminal_width}G\033[1K\033[1A"
+
+    IFS=" " read -ra segments <<< "$__PB10K_TOP_RIGHT"
+    for seg in "${segments[@]}"; do
+        info="$(__pb10k_prompt_"$seg")"
+        [ "$info" != "" ] && __pb10k_top_right_parse "$info"
+    done
+
+    [ "$__TOP_RIGHT_LEN" -gt 0 ] && __TOP_RIGHT_LEN=$(( __TOP_RIGHT_LEN - 1 ))
+    cursor_adjust="\033[${__TOP_RIGHT_LEN}D"
+    __TOP_LEFT+="$cursor_adjust"
+
+    printf "%s%s" "$__TOP_LEFT" "$__TOP_RIGHT"
+}
+
+function __pb10k_bottom {
+  local seg segments info
+  local __BOTTOM=""
+  _omb_util_split segments "$__PB10K_BOTTOM"
+  for seg in "${segments[@]}"; do
+    info=$(__pb10k_prompt_"$seg")
+    [[ $info ]] && __pb10k_bottom_parse "$info"
+  done
+  printf "\n$_omb_prompt_black╰─ %s" "$__BOTTOM"
+}
+
 # ----以下是我的自訂內容 ------------------------------------------------------
 export LANG=zh_TW.UTF-8 #macOS要手動指定，不然被ssh連入使用時會變亂碼
+
+# overwrite ls
+if  command -v eza &> /dev/null; then
+    alias ls='eza --color=always --icons=always'
+elif  command -v exa &> /dev/null; then
+    alias ls='exa --color=always --icons'
+fi
+
 {{ template "common.sh.tmpl" . }}
 
