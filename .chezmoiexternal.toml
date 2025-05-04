@@ -53,7 +53,12 @@
     type = "archive"
     url = "https://github.com/romkatv/zsh-bin/releases/download/v6.1.1/zsh-5.8-linux-x86_64.tar.gz"
     exact = true
-    include = ["share/zsh/**"]
+    include = ["./share/zsh/**"]
+[".local/share/terminfo"]
+    type = "archive"
+    url = "https://github.com/romkatv/zsh-bin/releases/download/v6.1.1/zsh-5.8-linux-x86_64.tar.gz"
+    exact = true
+    include = ["./share/terminfo/**"]
 
 {{/* 手動安裝 lazygit */ -}}
 {{ end }}
