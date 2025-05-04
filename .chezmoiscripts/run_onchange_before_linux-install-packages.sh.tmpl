@@ -1,12 +1,20 @@
 {{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
 
 {{/* **** unRoot Mode *************************************************** */ -}}
-{{ if .unRootMode -}}
+{{/* 如果強制設定unRoot， */}}
+{{/* 或是沒有.chezmoi.osRelease.id（因為環境有可能是Synology極精簡環境），直接視同unRoot Mode處理 */}}
+{{ if or .unRootMode (not (hasKey .chezmoi.osRelease "id")) -}}
+{{/* 部份已由.chezmoiexternal.toml處理了 */ -}}
+{{/* 其他自訂手動安裝腳本: */ -}}
 
+{{/* 手動安裝 eza */ -}}
+# if  command -v eza &> /dev/null; then
+#
+# fi
 
 {{/* **** Root Mode ***************************************************** */ -}}
 {{ else -}}
-#!/bin/bash
 
 {{/* ==== Debian ======================================================== */ -}}
 {{ if or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu") -}}
