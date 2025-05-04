@@ -28,7 +28,7 @@
 {{ $nvimVersion := "v0.11.1" -}}
 [".local"]
     type = "archive"
-    url = "https://github.com/neovim/neovim/releases/{{ $nvimVersion }}/download/nvim-{{ .chezmoi.os }}-x86_64.tar.gz"
+    url = "https://github.com/neovim/neovim/releases/download/{{ $nvimVersion }}/nvim-{{ .chezmoi.os }}-x86_64.tar.gz"
     exact = true
     stripComponents = 1
     path = "nvim-linux-x86_64"
