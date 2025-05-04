@@ -9,9 +9,9 @@
 {{/* 其他自訂手動安裝腳本: */ -}}
 
 {{/* 手動安裝 eza */ -}}
-# if  command -v eza &> /dev/null; then
-#
-# fi
+if  command -v zsh &> /dev/null; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/romkatv/zsh-bin/master/install)" -- -d ~/.local -e no
+fi
 
 {{/* **** Root Mode ***************************************************** */ -}}
 {{ else -}}

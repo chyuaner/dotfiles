@@ -44,6 +44,6 @@
     stripComponents = 1
     include = ["share/nvim/**"]
 
-{{/* 手動安裝 zsh */ -}}
+{{/* 手動安裝 zsh(已在install-packages.sh處理) */ -}}
 {{/* 手動安裝 lazygit */ -}}
 {{ end }}
