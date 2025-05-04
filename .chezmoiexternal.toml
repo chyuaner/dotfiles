@@ -22,18 +22,9 @@
 [".local/bin/eza"]
     type = "archive-file"
     url = "https://github.com/eza-community/eza/releases/download/{{ $ezaVersion }}/eza_x86_64-unknown-{{ .chezmoi.os }}-gnu.tar.gz"
-    path = "eza"
+    path = "./eza"
 
 {{/* 手動安裝 neovim */ -}}
-{{ $nvimVersion := "v0.11.1" -}}
-[".local"]
-    type = "archive"
-    url = "https://github.com/neovim/neovim/releases/download/{{ $nvimVersion }}/nvim-{{ .chezmoi.os }}-x86_64.tar.gz"
-    exact = true
-    stripComponents = 1
-    path = "nvim-linux-x86_64"
-
-
 {{/* 手動安裝 zsh */ -}}
 {{/* 手動安裝 lazygit */ -}}
 {{ end }}
