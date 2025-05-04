@@ -4,6 +4,10 @@ chezmoi.code-workspace
 
 dconf.ini
 
+{{ if not .enableSixel }}
+.config/nvim/lua/plugins/components/image.lua
+{{ end }}
+
 {{/* ---- 沒有圖形界面 ---------------------------------------------------- */ -}}
 {{ if .noGUI }}
 .config/iterm2/

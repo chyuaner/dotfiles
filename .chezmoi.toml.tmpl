@@ -1,6 +1,7 @@
 {{- $name := promptStringOnce . "name" "請輸入您的姓名" -}}
 {{- $email := promptStringOnce . "email" "輸入您的Email地址" -}}
 {{- $isServer := promptBoolOnce . "isServer" "Does this machine is Server" -}}
+{{- $enableSixel := promptBoolOnce . "enableSixel" "Is enable terminal output with sixel" -}}
 {{- $enableGUI := promptBoolOnce . "enableGUI" "Does this machine have a GUI" -}}
 {{- $enableYcm := promptBoolOnce . "enableYcm" "Is enable Vim YCM compatible (Will use 2.7GB)" -}}
 sourceDir = "~/.local/share/chezmoi"
@@ -9,5 +10,6 @@ sourceDir = "~/.local/share/chezmoi"
     name = {{ $name | quote }}
     email = {{ $email | quote }}
     serverStyle = {{ $isServer }}
+    enableSixel = {{ not $enableSixel }} {{/* TODO: packages.toml還沒處理 */}}
     noGUI = {{ not $enableGUI }}
     enableYcm = {{ $enableYcm }}
