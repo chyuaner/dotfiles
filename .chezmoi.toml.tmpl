@@ -10,6 +10,6 @@ sourceDir = "~/.local/share/chezmoi"
     name = {{ $name | quote }}
     email = {{ $email | quote }}
     serverStyle = {{ $isServer }}
-    enableSixel = {{ not $enableSixel }} {{/* TODO: packages.toml還沒處理 */}}
+    enableSixel = {{ $enableSixel }} {{/* TODO: packages.toml還沒處理 */}}
     noGUI = {{ not $enableGUI }}
     enableYcm = {{ $enableYcm }}
