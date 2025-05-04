@@ -27,4 +27,18 @@
 {{/* 手動安裝 neovim (已在install-packages.sh處理) */ -}}
 {{/* 手動安裝 zsh (已在install-packages.sh處理) */ -}}
 {{/* 手動安裝 lazygit */ -}}
+
+{{/* 手動安裝 fastfetch */ -}}
+[".local/bin/fastfetch"]
+    type = "archive-file"
+    url = "https://github.com/fastfetch-cli/fastfetch/releases/download/2.42.0/fastfetch-linux-amd64.tar.gz"
+    stripComponents = 1
+    path = "./usr/bin/fastfetch"
+[".local/share/fastfetch"]
+    type = "archive"
+    url = "https://github.com/fastfetch-cli/fastfetch/releases/download/2.42.0/fastfetch-linux-amd64.tar.gz"
+    exact = true
+    stripComponents = 1
+    include = ["./share/fastfetch/**"]
+
 {{ end }}
