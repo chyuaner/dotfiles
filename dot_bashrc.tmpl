@@ -183,11 +183,13 @@ function __pb10k_top {
         [ "$info" != "" ] && __pb10k_top_left_parse "$info"
     done
 
-    terminal_width=$(tput cols)
-    filler_character="─"
-    __TOP_LEFT+="$_omb_prompt_black"
-    __TOP_LEFT+="$(for ((i=0; i<"$terminal_width"; i++)); do printf "%s" "$filler_character"; done)"
-    __TOP_LEFT+="\033[${terminal_width}G\033[1K\033[1A"
+    if  command -v tput &> /dev/null; then
+        terminal_width=$(tput cols)
+        filler_character="─"
+        __TOP_LEFT+="$_omb_prompt_black"
+        __TOP_LEFT+="$(for ((i=0; i<"$terminal_width"; i++)); do printf "%s" "$filler_character"; done)"
+        __TOP_LEFT+="\033[${terminal_width}G\033[1K\033[1A"
+    fi
 
     IFS=" " read -ra segments <<< "$__PB10K_TOP_RIGHT"
     for seg in "${segments[@]}"; do
