@@ -1,9 +1,26 @@
 {{- $name := promptStringOnce . "name" "請輸入您的姓名" -}}
 {{- $email := promptStringOnce . "email" "輸入您的Email地址" -}}
-{{- $isServer := promptBoolOnce . "isServer" "Does this machine is Server" -}}
-{{- $enableSixel := promptBoolOnce . "enableSixel" "Is enable terminal output with sixel" -}}
-{{- $enableGUI := promptBoolOnce . "enableGUI" "Does this machine have a GUI" -}}
-{{- $enableYcm := promptBoolOnce . "enableYcm" "Is enable Vim YCM compatible (Will use 2.7GB)" -}}
+
+{{- $hosttype_choices := list "desktop" "server" "manual" -}}
+{{- $hosttype := promptChoice "What type of host are you on" $hosttype_choices -}}
+{{- $isServer := true -}}
+{{- $enableSixel := false -}}
+{{- $enableGUI := false -}}
+{{- $enableYcm := false -}}
+
+{{- if eq $hosttype "desktop" -}}
+{{- $isServer = false -}}
+{{- $enableSixel = true -}}
+{{- $enableGUI = true -}}
+{{- $enableYcm = true -}}
+
+{{- else if eq $hosttype "manual" -}}
+{{- $isServer = promptBool "Does this machine is Server" -}}
+{{- $enableSixel = promptBool "Is enable terminal output with sixel" -}}
+{{- $enableGUI = promptBool "Does this machine have a GUI" -}}
+{{- $enableYcm = promptBool "Is enable Vim YCM compatible (Will use 2.7GB)" -}}
+{{ end -}}
+
 sourceDir = "~/.local/share/chezmoi"
 
 [data]
