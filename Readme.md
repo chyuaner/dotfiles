@@ -29,16 +29,17 @@ Yuan dotfile 自用環境設定檔
 --------------------------------------------------------------------------------
 ### Linux / macOS
 #### 安裝主dotfiles包
-<details>
-  <summary>PS. 若是用Debian Slim 精簡版作業系統，要先安裝 curl</summary>
+若你是在以下環境，需要先做特殊處理
+* <details>
+      <summary>Debian Slim 精簡版作業系統，要先安裝 curl</summary>
+    
+      apt update && apt install curl -y
+    
+  </details>
+* Synology 主機，需要使用特殊的安裝方式，[詳情請直接跳去看最後面](#Synology的安裝方式)
 
-  ```
-  apt update && apt install curl -y
-  ```
 
-</details>
-
-安裝整包設定擋與執行相關腳本
+若無上述特殊環境或已經處理事先要做的事情以後，安裝整包設定擋與執行相關腳本：
 ```
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply chyuaner
 ```
@@ -83,14 +84,14 @@ $ xcode-select --install
 
 #### 若需要刪掉重來
 ```
-rm -rf ~/.local/share/chezmoi
-rm -rf ~/.local/share/chezmoi-private
+chezmoi purge
 ```
 
 可能會需要刪掉相關設定
 ```
 rm ~/.ssh/known_hosts
 rm -rf ~/.vimrc ~/.vim ~/.gvimrc
+rm -r ~/.config/nvim ~/.local/share/nvim
 rm ~/.zshrc
 rm -rf ~/.config/alacritty ~/.config/zellij
 ```
@@ -300,7 +301,7 @@ watchman shutdown-server
 watchman watch-del-all
 ```
 
-Synology內的安裝方式
+Synology的安裝方式
 --------------------------------------------------------------------------------
 
 因為Synology 預設使用的是 sh（通常是 BusyBox 版本），不是 GNU bash，會導致普通的方式會出錯。
