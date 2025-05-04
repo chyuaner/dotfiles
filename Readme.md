@@ -300,6 +300,42 @@ watchman shutdown-server
 watchman watch-del-all
 ```
 
+Synology內的安裝方式
+--------------------------------------------------------------------------------
+
+因為Synology 預設使用的是 sh（通常是 BusyBox 版本），不是 GNU bash，會導致普通的方式會出錯。
+
+### 1. 安裝指令
+```
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --exclude=scripts chyuaner
+```
+
+出現選項時，選擇 unRoot Mode （因為Synology環境很難處理軟體安裝，乾脆直接用unRoot模式）
+
+### 2. 設定zsh為預設shell環境
+```
+cat << EOF > ~/.profile
+if [[ -x /usr/local/bin/zsh ]]; then
+export SHELL=/usr/local/bin/zsh
+exec /usr/local/bin/zsh
+fi
+EOF
+```
+
+### 3. 手動安裝相關軟體
+因為Synology環境的限制，無法自動化執行腳本。
+請看 `.chezmoiscripts/run_onchange_before_linux-install-packages.sh.tmpl` 這份檔案，依照需求，手動複製執行需要的指令。
+
+### 後續如有更新
+```
+chezmoi update --apply --exclude=scripts
+```
+
+若要手動看執行內容:
+```
+chezmoi update --apply -v --dry-run
+```
+
 相關工具參考連結
 --------------------------------------------------------------------------------
 * <https://www.ditig.com/256-colors-cheat-sheet>
