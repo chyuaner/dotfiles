@@ -10,7 +10,7 @@ if  command -v nvim &> /dev/null; then
     nvim --headless "+Lazy! update" +qa
 fi
 
-{{ if not .noGUI }}
+{{ if and (not .noGUI) (hasKey .chezmoi.osRelease "id") }}
 {{ if and (eq .chezmoi.os "linux") (stat (print .chezmoi.homeDir "/.winscp")) }}
 {{ if or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch") }}
 mkdir -p ~/.winscp
