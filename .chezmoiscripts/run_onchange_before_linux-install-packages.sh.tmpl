@@ -1,5 +1,11 @@
 {{ if eq .chezmoi.os "linux" -}}
-{{/* ---- 安裝腳本 ------------------------------------------------------- */ -}}
+
+{{/* **** unRoot Mode *************************************************** */ -}}
+{{ if .unRootMode -}}
+
+
+{{/* **** Root Mode ***************************************************** */ -}}
+{{ else -}}
 #!/bin/bash
 
 {{/* ==== Debian ======================================================== */ -}}
@@ -57,7 +63,7 @@ fi
 rm -rf lazygit.tar.gz lazygit
 {{ end -}}
 
-{{ end }}
+{{ end }} {{/* if or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu") */}}
 
 {{/* ==== Arch Linux / Manjaro ========================================== */ -}}
 {{ if or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch") -}}
@@ -194,6 +200,8 @@ if [[ ${#to_install_aur[@]} -gt 0 ]]; then
   echo "  - Installing missing AUR packages via yay: ${to_install_aur[@]}"
   yay -S --noconfirm "${to_install_aur[@]}"
 fi
-{{ end -}}
+{{ end -}} {{/* if or (eq .chezmoi.osRelease.id "manjaro") (eq .chezmoi.osRelease.id "arch") */}}
 
-{{ end -}}
+{{ end -}} {{/* else .unRootMode */}}
+
+{{ end -}} {{/* if eq .chezmoi.os "linux" */}}

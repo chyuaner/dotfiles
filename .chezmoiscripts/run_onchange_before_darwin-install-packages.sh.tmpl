@@ -1,4 +1,4 @@
-{{ if eq .chezmoi.os "darwin" -}}
+{{ if and (not .unRootMode) (eq .chezmoi.os "darwin") -}}
 #!/bin/sh
 
 # Install Homebrew
