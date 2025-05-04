@@ -24,26 +24,7 @@
     url = "https://github.com/eza-community/eza/releases/download/{{ $ezaVersion }}/eza_x86_64-unknown-{{ .chezmoi.os }}-gnu.tar.gz"
     path = "./eza"
 
-{{/* 手動安裝 neovim */ -}}
-{{ $nvimVersion := "v0.11.1" -}}
-[".local/bin/nvim"]
-    type = "archive-file"
-    url = "https://github.com/neovim/neovim/releases/download/{{ $nvimVersion }}/nvim-{{ .chezmoi.os }}-x86_64.tar.gz"
-    stripComponents = 1
-    path = "bin/nvim"
-[".local/lib/nvim"]
-    type = "archive"
-    url = "https://github.com/neovim/neovim/releases/download/{{ $nvimVersion }}/nvim-{{ .chezmoi.os }}-x86_64.tar.gz"
-    exact = true
-    stripComponents = 1
-    include = ["lib/nvim/**"]
-[".local/share/nvim"]
-    type = "archive"
-    url = "https://github.com/neovim/neovim/releases/download/{{ $nvimVersion }}/nvim-{{ .chezmoi.os }}-x86_64.tar.gz"
-    exact = true
-    stripComponents = 1
-    include = ["share/nvim/**"]
-
-{{/* 手動安裝 zsh(已在install-packages.sh處理) */ -}}
+{{/* 手動安裝 neovim (已在install-packages.sh處理) */ -}}
+{{/* 手動安裝 zsh (已在install-packages.sh處理) */ -}}
 {{/* 手動安裝 lazygit */ -}}
 {{ end }}

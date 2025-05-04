@@ -13,6 +13,17 @@ if ! command -v zsh &> /dev/null; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/romkatv/zsh-bin/master/install)" -- -d ~/.local -e no
 fi
 
+{{/* 手動安裝 neovim 0.11.1 */ -}}
+{{ if eq .chezmoi.arch "amd64"}}
+if ! command -v zsh &> /dev/null; then
+  curl -LO https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.appimage
+  chmod u+x nvim-linux-x86_64.appimage
+  ./nvim-linux-x86_64.appimage --appimage-extract
+  cp -rf squashfs-root/usr/* ~/.local/
+  rm -r nvim-linux-x86_64.appimage squashfs-root
+fi
+{{ end }}
+
 {{/* **** Root Mode ***************************************************** */ -}}
 {{ else -}}
 
