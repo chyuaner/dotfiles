@@ -197,9 +197,11 @@ function __pb10k_top {
         [ "$info" != "" ] && __pb10k_top_right_parse "$info"
     done
 
-    [ "$__TOP_RIGHT_LEN" -gt 0 ] && __TOP_RIGHT_LEN=$(( __TOP_RIGHT_LEN - 1 ))
-    cursor_adjust="\033[${__TOP_RIGHT_LEN}D"
-    __TOP_LEFT+="$cursor_adjust"
+    if  command -v tput &> /dev/null; then
+      [ "$__TOP_RIGHT_LEN" -gt 0 ] && __TOP_RIGHT_LEN=$(( __TOP_RIGHT_LEN - 1 ))
+      cursor_adjust="\033[${__TOP_RIGHT_LEN}D"
+      __TOP_LEFT+="$cursor_adjust"
+    fi
 
     printf "%s%s" "$__TOP_LEFT" "$__TOP_RIGHT"
 }
