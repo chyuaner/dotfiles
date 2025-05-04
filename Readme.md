@@ -32,9 +32,9 @@ Yuan dotfile 自用環境設定檔
 若你是在以下環境，需要先做特殊處理
 * <details>
       <summary>Debian Slim 精簡版作業系統，要先安裝 curl</summary>
-    
+
       apt update && apt install curl -y
-    
+
   </details>
 * Synology 主機，需要使用特殊的安裝方式，[詳情請直接跳去看最後面](#Synology的安裝方式)
 
@@ -91,7 +91,7 @@ chezmoi purge
 ```
 rm ~/.ssh/known_hosts
 rm -rf ~/.vimrc ~/.vim ~/.gvimrc
-rm -rf ~/.config/nvim ~/.local/share/nvim
+rm -rf ~/.config/nvim ~/.local/share/nvim ~/.cache/nvim
 rm ~/.zshrc
 rm -rf ~/.config/alacritty ~/.config/zellij
 ```
@@ -177,6 +177,13 @@ hex2xterm "#FFFFFF"
 
 zsh
 --------------------------------------------------------------------------------
+有精心整理出兩個我常用的樣式配置：日常工作電腦用、伺服器用
+
+工作電腦用：
+![](.readme/Screenshot_20250504_101604.png)
+
+伺服器用：
+![](.readme/Screenshot_20250504_101539.png)
 
 ### 有用到的套件
 * colorls
@@ -201,6 +208,11 @@ zinit self-update
 # Plugin update
 zinit update
 ```
+
+bash
+--------------------------------------------------------------------------------
+雖然我會用到的機會比較少了，幾乎都被zsh取代，但是有部份我管理的伺服器主機不允許安裝zsh，所以bash有時候還會用到，就一起調整了
+![](.readme/Screenshot_20250504_102535.png)
 
 neovim
 --------------------------------------------------------------------------------
