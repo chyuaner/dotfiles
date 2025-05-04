@@ -45,5 +45,15 @@
     include = ["share/nvim/**"]
 
 {{/* 手動安裝 zsh(已在install-packages.sh處理) */ -}}
+[".local/bin/zsh"]
+    type = "archive-file"
+    url = "https://github.com/romkatv/zsh-bin/releases/download/v6.1.1/zsh-5.8-linux-x86_64.tar.gz"
+    path = "bin/zsh"
+[".local/share/zsh"]
+    type = "archive"
+    url = "https://github.com/romkatv/zsh-bin/releases/download/v6.1.1/zsh-5.8-linux-x86_64.tar.gz"
+    exact = true
+    include = ["share/zsh/**"]
+
 {{/* 手動安裝 lazygit */ -}}
 {{ end }}
