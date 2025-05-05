@@ -9,6 +9,8 @@ local on_attach = function(_, bufnr)
   map("n", "K", vim.lsp.buf.hover)
 end
 
+-- 程式語言所需要的與語言伺服器名稱對照表
+-- <https://wiki.archlinux.org/title/Language_Server_Protocol>
 local servers = {
   "phpactor", -- PHP
   "pyright",  -- Python
