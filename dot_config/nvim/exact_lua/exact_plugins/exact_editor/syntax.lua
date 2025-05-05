@@ -12,8 +12,16 @@ return {
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup({
-        ensure_installed = { "lua", "php", "python", "go", "html", "css", "javascript" },
-        -- ensure_installed = { "regex" }, -- 確保安裝 regex 支援
+        ensure_installed = {
+          "regex",
+          "lua",
+          "php",
+          "python",
+          "go",
+          "html",
+          "css",
+          "javascript"
+        },
         highlight = {
           enable = true, -- 啟用高亮
         },

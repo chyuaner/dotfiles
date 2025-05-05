@@ -22,3 +22,14 @@ vim.opt.colorcolumn = "80,120"  -- 顯示編輯器建議寬度
 vim.opt.scrolloff = 3       -- 捲動時保留 n 行彈性
 require("config.listchars") -- 顯示行尾符號
 vim.opt.list = true
+
+-- 設定正確的檔案類型對應
+vim.filetype.add({
+  pattern = {
+    [".+%.sh%.tmpl"] = "bash",
+    [".+%.zsh%.tmpl"] = "zsh",
+    [".+%.ps1%.tmpl"] = "powershell",
+    [".+%.py%.tmpl"] = "python",
+    [".+%.go%.tmpl"] = "go",
+  },
+})
