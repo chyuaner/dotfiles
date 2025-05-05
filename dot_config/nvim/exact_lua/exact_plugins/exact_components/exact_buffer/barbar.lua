@@ -5,24 +5,46 @@ return {
       -- 'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
       'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
     },
+    lazy = false,
     init = function() vim.g.barbar_auto_setup = false end,
-    -- opts = {
-    --   -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-    --   -- animation = false,
-    --   -- insert_at_start = true,
-    --   -- …etc.
-    -- },
-    config = function(_, opts)
-      require'bufferline'.setup {
-        -- animation = false, -- 禁用動畫效果
-        sidebar_filetypes = {
-          ['neo-tree'] = {event = 'BufWipeout'},
-          undotree = {
-            text = 'undotree',
-            align = 'center', -- *optionally* specify an alignment (either 'left', 'center', or 'right')
-          },
+    opts = {
+      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+      auto_hide = -1,
+      clickable = true,
+      icons = {
+        buffer_index = false,
+        buffer_number = false,
+        button = '',
+        diagnostics = {{enabled = true}, {enabled = true}},
+        filetype = {enabled = true},
+        separator = {left = '▎', right = ''},
+        -- separator = {left = '', right = ''},
+      },
+      sidebar_filetypes = {
+        ['neo-tree'] = {event = 'BufWipeout'},
+        undotree = {
+          text = 'undotree',
+          align = 'center', -- *optionally* specify an alignment (either 'left', 'center', or 'right')
         },
-      }
+      },
+      -- icons = {current = {filetype = {enabled = false}}},
+      -- maximum_padding = math.huge,
+      -- animation = false,
+      -- insert_at_start = true,
+      -- …etc.
+    },
+    config = function(_, opts)
+      -- require'bufferline'.setup {
+      --   -- animation = false, -- 禁用動畫效果
+      --   sidebar_filetypes = {
+      --     ['neo-tree'] = {event = 'BufWipeout'},
+      --     undotree = {
+      --       text = 'undotree',
+      --       align = 'center', -- *optionally* specify an alignment (either 'left', 'center', or 'right')
+      --     },
+      --   },
+      -- }
+      require('barbar').setup(opts)
 
       -- 重定義 :q 命令為僅關閉當前 Buffer
       vim.api.nvim_create_user_command('Q', function()
