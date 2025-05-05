@@ -2,18 +2,14 @@
 
 return {
   'dstein64/nvim-scrollview',
-  setup = function()
+  config = function()
     require('scrollview').setup({
-      -- Default options
-      current_only = true, -- Only show scroll indicator in current window
-      winblend = 0, -- Blend of the scroll indicator
-      -- base = 1, -- Base value for the scroll indicator
-      -- max_lines = 1000, -- Maximum number of lines to show the scroll indicator
-      excluded_filetypes = { 'help', 'neo-tree' }, -- Filetypes to exclude from showing the scroll indicator
-      base = 'buffer',
-      -- column = 80,
-      signs_on_startup = {'all'},
-      diagnostics_severities = {vim.diagnostic.severity.ERROR}
+      current_only = true,
+      -- base = 'buffer',
+      -- column = 80, -- 註解掉這行，讓它自己決定位置
+      -- excluded_filetypes = { 'neo-tree', 'help' },
+      signs_on_startup = { 'all' },
+      diagnostics_severities = { vim.diagnostic.severity.ERROR },
     })
   end,
 }
