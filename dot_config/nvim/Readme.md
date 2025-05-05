@@ -1,7 +1,8 @@
 Yuan Neovim 備忘
 ===
 ## 依賴的套件
-* tree-sitter
+* ripgrep 全文搜尋用
+* tree-sitter 快速且增量式的語法剖析器（parser）
 * tree-sitter-bash
 * tree-sitter-cli
 * imagemagick
