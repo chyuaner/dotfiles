@@ -151,6 +151,9 @@ zle -N my_paste_from_clipboard
 # bindkey '^O' my_paste_from_clipboard  # 例如 Ctrl+O
 bindkey '^P' my_paste_from_clipboard  # 例如 Ctrl+P
 
+# SSH 自動補齊
+zinit light sunlei/zsh-ssh
+
 # overwrite ls
 if  command -v colorls &> /dev/null; then
     alias ls='colorls'
