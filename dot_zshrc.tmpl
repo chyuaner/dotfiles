@@ -128,6 +128,21 @@ alias cp="cp -i"                          # Confirm before overwriting something
 alias df='df -h'                          # Human-readable sizes
 alias free='free -m'                      # Show sizes in MB
 
+# Zsh Shift Select Mode
+zinit light jirutka/zsh-shift-select
+# 定義 Ctrl+Y：複製選取的區塊
+function my_copy_region() {
+  zle copy-region-as-kill
+}
+zle -N my_copy_region
+bindkey '^Y' my_copy_region
+# 定義 Ctrl+P：貼上（yank）
+function my_paste() {
+  zle yank
+}
+zle -N my_paste
+bindkey '^P' my_paste
+
 # overwrite ls
 if  command -v colorls &> /dev/null; then
     alias ls='colorls'
