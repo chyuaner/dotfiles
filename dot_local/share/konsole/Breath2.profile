@@ -11,6 +11,7 @@ Name=Breath2
 Parent=FALLBACK/
 ShowTerminalSizeHint=true
 TerminalCenter=false
+TerminalMargin=0
 
 [Interaction Options]
 OpenLinksByDirectClickEnabled=true
