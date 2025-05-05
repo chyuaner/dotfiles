@@ -17,7 +17,7 @@ OpenLinksByDirectClickEnabled=true
 UnderlineFilesEnabled=false
 
 [Keyboard]
-KeyBindings=default
+KeyBindings=MyKeyBindings
 
 [Scrolling]
 HistoryMode=2
