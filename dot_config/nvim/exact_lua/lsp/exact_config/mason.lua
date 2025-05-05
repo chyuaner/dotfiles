@@ -1,21 +1,11 @@
+local lsp = require("lsp.config.lsp_servers")
+
 require("mason").setup()
 require("mason-lspconfig").setup {
   -- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "lua_ls" }
   -- This setting has no relation with the `automatic_installation` setting.
   ---@type string[]
-  ensure_installed = {
-    -- "lua_ls", "rust_analyzer" -- 官方範例
-    "phpactor",
-    "sqls",
-    "pyright",
-    "gopls",
-    "html",
-    "cssls",
-    "volar",
-    -- "ts_ls",
-    "marksman",
-    "yamlls",
-   },
+  ensure_installed = lsp.lsp_servers,
 
   -- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
   -- This setting has no relation with the `ensure_installed` setting.
