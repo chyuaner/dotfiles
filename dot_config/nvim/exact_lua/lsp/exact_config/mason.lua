@@ -6,11 +6,15 @@ require("mason-lspconfig").setup {
   ensure_installed = {
     -- "lua_ls", "rust_analyzer" -- 官方範例
     "phpactor",
+    "sqls",
     "pyright",
     "gopls",
     "html",
     "cssls",
-    "tsserver",
+    "volar",
+    -- "ts_ls",
+    "marksman",
+    "yamlls",
    },
 
   -- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.

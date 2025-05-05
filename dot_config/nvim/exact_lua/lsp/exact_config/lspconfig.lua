@@ -13,11 +13,15 @@ end
 -- <https://wiki.archlinux.org/title/Language_Server_Protocol>
 local servers = {
   "phpactor", -- PHP
+  "sqls",     -- SQL
   "pyright",  -- Python
   "gopls",    -- Go
   "html",     -- HTML
   "cssls",    -- CSS
+  "volar",    -- Vue3
   -- "ts_ls", -- TypeScript，目前暫時不需要，先註解掉
+  "marksman", -- Markdown
+  "yamlls",   -- YAML
 }
 
 -- 載入所有的對應的 LSP server 設定
