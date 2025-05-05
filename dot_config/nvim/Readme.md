@@ -63,6 +63,28 @@ dot_config/nvim
 └── Readme.md
 ```
 
+## LSP -Language Server Protocol
+因為設定方式與結構太過複雜，故獨立開
+
+### 和LSP有關的目錄結構
+```
+~/.config/nvim/
+├── lua/
+│   ├── plugins/
+│   │   ├── lsp.lua               <-- 所有 LSP / cmp 相關 plugin 定義
+│   ├── lsp/
+│   │   ├── init.lua              <-- 初始化 Mason / LSP 等
+│   │   ├── config/
+│   │   │   ├── mason.lua         <-- 1. Mason 設定，需要的程式語言安裝都在這定義
+│   │   │   ├── lspconfig.lua     <-- 2. 載入各語言的設定
+│   │   │   └── cmp.lua           <-- nvim-cmp 設定
+│   │   └── servers/
+│   │       ├── php.lua
+│   │       ├── pyright.lua
+│   │       └── ...
+│   └──（可另外有 config/、keymaps/ 等其他模組）
+```
+
 ## 代找外掛
  * Align
  *
