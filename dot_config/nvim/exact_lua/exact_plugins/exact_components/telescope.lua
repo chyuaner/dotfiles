@@ -7,6 +7,7 @@ return {
   lazy = false,
   keys = {
     { "<C-p>", "<cmd>Telescope find_files<cr>", desc = "Find files" },
+    { "<C-S-F>", "<cmd>Telescope live_grep<cr>", desc = "Grep" }, -- 僅限GUI
 
     { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
     { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Grep" },
