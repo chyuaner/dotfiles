@@ -10,12 +10,12 @@ local on_attach = function(_, bufnr)
 end
 
 local servers = {
-  "phpactor",
-  "pyright",
-  "gopls",
-  "html",
-  "cssls",
-  -- "tsserver", -- TODO: tsserver is deprecated, use ts_ls instead.
+  "phpactor", -- PHP
+  "pyright",  -- Python
+  "gopls",    -- Go
+  "html",     -- HTML
+  "cssls",    -- CSS
+  -- "ts_ls", -- TypeScript，目前暫時不需要，先註解掉
 }
 
 -- 載入所有的對應的 LSP server 設定
