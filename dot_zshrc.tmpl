@@ -130,18 +130,26 @@ alias free='free -m'                      # Show sizes in MB
 
 # Zsh Shift Select Mode
 zinit light jirutka/zsh-shift-select
-# 定義 Ctrl+Y：複製選取的區塊
+# Ctrl+Y 複製：複製到 zsh 與系統剪貼簿
 function my_copy_region() {
   zle copy-region-as-kill
+  print -rn -- "$CUTBUFFER" | clipcopy
 }
 zle -N my_copy_region
 bindkey '^Y' my_copy_region
-# 定義 Ctrl+P：貼上（yank）
-function my_paste() {
-  zle yank
+# Ctrl+P 貼上（zsh yank）
+# function my_paste() {
+#   zle yank
+# }
+# zle -N my_paste
+# bindkey '^P' my_paste
+# 貼上（clipboard-paste）
+function my_paste_from_clipboard() {
+  LBUFFER+=$(clippaste)
 }
-zle -N my_paste
-bindkey '^P' my_paste
+zle -N my_paste_from_clipboard
+# bindkey '^O' my_paste_from_clipboard  # 例如 Ctrl+O
+bindkey '^P' my_paste_from_clipboard  # 例如 Ctrl+P
 
 # overwrite ls
 if  command -v colorls &> /dev/null; then
