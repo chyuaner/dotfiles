@@ -1,3 +1,6 @@
+-- 如果nvim不在0.10以上，則不載入
+if not vim.fn.has("nvim-0.10") == 1 then return {} end
+
 -- 專責 LSP / 補全相關 plugin 定義
 return {
   -- 依照mason官方教學抄過來 https://github.com/williamboman/mason-lspconfig.nvim
