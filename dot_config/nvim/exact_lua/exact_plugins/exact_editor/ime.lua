@@ -1,7 +1,13 @@
 return {
+  -- {
+  --   "Freed-Wu/ime.nvim",
+  -- },
   {
-    "Freed-Wu/ime.nvim",
-  },
+    "keaising/im-select.nvim",
+    config = function()
+        require("im_select").setup({})
+    end,
+  }
   -- {
   --   "pysan3/fcitx5.nvim",
   --   cond = function()
