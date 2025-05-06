@@ -1,5 +1,9 @@
 # macOS ------------------------------------------------------------------------
 [packages.darwin]
+taps = [
+  'laishulu/homebrew',
+]
+
 brews = [
   'chezmoi',
   'git',
@@ -18,6 +22,7 @@ brews = [
   'nodejs',
   'java',
   'jstkdng/programs/ueberzugpp',
+  'macism',
 ]
 
 casks = [
