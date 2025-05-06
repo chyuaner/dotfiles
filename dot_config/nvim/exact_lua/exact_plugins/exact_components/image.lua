@@ -3,20 +3,7 @@ return {
     "3rd/image.nvim",
     build = false, -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
     -- cond = not vim.g.neovide and not vim.fn.has("goneovim") == 1 and not vim.fn.has("gui_running") == 1,
-    cond = function()
-      -- 如果是在 GUI（如 NeoVide、Goneovim）中，則不啟用插件
-      if vim.g.neovide or vim.fn.has("goneovim") == 1 or vim.fn.has("gui_running") == 1 then
-        return false
-      end
-
-      -- 獲取 TERM 環境變數
-      local term = vim.fn.getenv("TERM")
-      -- 檢查是否是常見的文字終端
-      local is_terminal = term and (term:match("xterm") or term:match("screen") or term:match("tmux") or term:match("linux"))
-
-      -- 如果是文字終端，則啟用插件
-      return is_terminal ~= nil
-    end,
+    cond = require("tools.gui").is_enable_sixel(),
     lazy = false,
     opts = {
       backend = "ueberzug",
