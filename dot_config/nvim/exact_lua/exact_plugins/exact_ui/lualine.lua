@@ -35,7 +35,7 @@ return {
           -- Check only the first three characters for 'rwx' to determine owner permissions
           local owner_permissions = permissions:sub(1, 3)
           -- Green for owner 'rwx', blue otherwise
-          return permissions, owner_permissions == "rwx" and "#97C378" or "#3B4252"
+          return permissions, owner_permissions == "rwx" and "#456d23" or "#3B4252"
         end
       end
 
