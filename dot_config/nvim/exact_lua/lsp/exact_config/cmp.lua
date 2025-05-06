@@ -39,7 +39,41 @@ cmp.setup({
     -- ["<C-f>"] = cmp.mapping.scroll_docs(4),  --已知會衝到，先關閉
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    -- ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ["<CR>"] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    },
+    -- ["<Tab>"] = cmp.mapping.confirm {
+    --   behavior = cmp.ConfirmBehavior.Insert,
+    --   select = true,
+    -- },
+
+    -- -- 取自 <https://github.com/NvChad/NvChad/blob/v2.5/lua/nvchad/configs/cmp.lua>
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.confirm {
+          behavior = cmp.ConfirmBehavior.Insert,
+          select = true,
+        }
+        -- cmp.select_next_item() -- NvChad原始作用
+      elseif require("luasnip").expand_or_jumpable() then
+        require("luasnip").expand_or_jump()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        fallback()
+        -- cmp.select_prev_item() -- NvChad原始作用
+      elseif require("luasnip").jumpable(-1) then
+        require("luasnip").jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
 
     -- AI範例:
     -- ["<Tab>"] = cmp.mapping.select_next_item(),
