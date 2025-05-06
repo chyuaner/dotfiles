@@ -18,6 +18,36 @@ cmp.setup({
       -- require("cmp.config").set_onetime({ sources = {} })
     end,
   },
+  -- 設定來源
+  -- <https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-add-custom-icons-for-any-source>
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    -- { name = 'vsnip' }, -- For vsnip users.
+    { name = 'luasnip' }, -- For luasnip users.
+    -- { name = 'ultisnips' }, -- For ultisnips users.
+    -- { name = 'snippy' }, -- For snippy users.
+  }, {
+    { name = 'buffer' },
+    { name = 'path' },
+  }),
+
+  -- 按鍵對應
+  mapping = cmp.mapping.preset.insert({
+    ["<C-p>"] = cmp.mapping.select_prev_item(),
+    ["<C-n>"] = cmp.mapping.select_next_item(),
+    -- ["<C-d>"] = cmp.mapping.scroll_docs(-4), --已知會衝到，先關閉
+    -- ["<C-f>"] = cmp.mapping.scroll_docs(4),  --已知會衝到，先關閉
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+
+    -- AI範例:
+    -- ["<Tab>"] = cmp.mapping.select_next_item(),
+    -- ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+    -- ["<CR>"] = cmp.mapping.confirm({ select = true }),
+  }),
+
+  -- 外觀設定
   window = {
     completion = {
       winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
@@ -36,30 +66,6 @@ cmp.setup({
       return kind
     end,
   },
-  mapping = cmp.mapping.preset.insert({
-    ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<C-n>"] = cmp.mapping.select_next_item(),
-    -- ["<C-d>"] = cmp.mapping.scroll_docs(-4), --已知會衝到，先關閉
-    -- ["<C-f>"] = cmp.mapping.scroll_docs(4),  --已知會衝到，先關閉
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-
-    -- AI範例:
-    -- ["<Tab>"] = cmp.mapping.select_next_item(),
-    -- ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-    -- ["<CR>"] = cmp.mapping.confirm({ select = true }),
-  }),
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    -- { name = 'vsnip' }, -- For vsnip users.
-    { name = 'luasnip' }, -- For luasnip users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
-    -- { name = 'snippy' }, -- For snippy users.
-  }, {
-    { name = 'buffer' },
-    { name = 'path' },
-  }),
 })
 
 -- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
