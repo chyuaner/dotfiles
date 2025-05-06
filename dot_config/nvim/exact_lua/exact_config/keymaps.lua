@@ -81,3 +81,7 @@ neomap('i', '<S-TAB>', '<C-d>', { noremap = true, silent = true }) -- Insert Mod
 -- 透過 v 選取整行縮排後，不取消選取整行
 neomap('v', '<', '<gv', { noremap = true, silent = true })
 neomap('v', '>', '>gv', { noremap = true, silent = true })
+
+-- 自動折行開關切換
+map("n", "<A-z>", "<cmd>set wrap!<CR>", { noremap = true, silent = true, desc = "Toggle Auto Wrap Line" })
+map("i", "<A-z>", "<Esc><cmd>set wrap!<CR>a", { noremap = true, silent = true, desc = "Toggle Auto Wrap Line" })
