@@ -43,10 +43,18 @@ return {
   { "hrsh7th/nvim-cmp" },
 
   -- " For luasnip users.
-  { "L3MON4D3/LuaSnip" },
+  {
+    "L3MON4D3/LuaSnip",
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+    },
+    config = function()
+      require("luasnip.loaders.from_vscode").lazy_load()
+    end,
+  },
   { "saadparwaiz1/cmp_luasnip" },
 
-  { "rafamadriz/friendly-snippets" },
+  -- { "rafamadriz/friendly-snippets" },
 
   { "onsails/lspkind.nvim",
     lazy = true,
