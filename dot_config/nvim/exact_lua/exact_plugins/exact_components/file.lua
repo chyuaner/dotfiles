@@ -8,6 +8,7 @@ return {
   -- vim.lsp.buf_get_clients() is deprecated. Run ":checkhealth vim.deprecated" for more information
   "Spelis/project.nvim",
   branch = "patch-1",
+  enable = vim.fn.has("nvim-0.10") == 1,
 
   config = function()
     require("project_nvim").setup {
