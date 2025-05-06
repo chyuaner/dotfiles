@@ -5,6 +5,8 @@ local neomap = vim.api.nvim_set_keymap
 
 -- 處理剪貼簿習慣對應（在Insert模式可使用慣用的快速鍵）
 vim.opt.keymodel = "startsel" -- 啟用 Shift + 方向鍵選取功能
+neomap('n', '<C-a>', 'ggVG', { noremap = true, silent = true })
+neomap('i', '<C-a>', '<Esc>ggVG', { noremap = true, silent = true })
 neomap('i', '<C-v>', '<Esc>"+pa', { noremap = true, silent = true }) -- Insert Mode 下的 Ctrl+V 貼上
 neomap('v', '<C-c>', '"+y', { noremap = true, silent = true }) -- Visual Mode 下的 Ctrl+C 複製
 neomap('v', '<C-x>', '"+d', { noremap = true, silent = true }) -- Visual Mode 下的 Ctrl+X 剪下
