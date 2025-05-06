@@ -107,7 +107,7 @@ chezmoi purge
 ```
 rm ~/.ssh/known_hosts
 rm -rf ~/.vimrc ~/.vim ~/.gvimrc
-rm -rf ~/.config/nvim ~/.local/share/nvim ~/.cache/nvim
+rm -rf ~/.config/nvim ~/.local/share/nvim ~/.cache/nvim ~/.local/state/nvim
 rm ~/.zshrc
 rm -rf ~/.config/alacritty ~/.config/zellij
 ```
