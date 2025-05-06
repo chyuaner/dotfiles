@@ -1,13 +1,18 @@
 return {
+  -- 測試狀況：Linux Fcitx5 Wayland 可用 / macOS 15 不可用
   -- {
   --   "Freed-Wu/ime.nvim",
   -- },
+
+  -- 測試狀況：Linux Fcitx5 Wayland 可用 / macOS 15 可用
   {
     "keaising/im-select.nvim",
     config = function()
         require("im_select").setup({})
     end,
   }
+
+  -- 測試狀況：Linux Fcitx5 Wayland 可用
   -- {
   --   "pysan3/fcitx5.nvim",
   --   cond = function()
