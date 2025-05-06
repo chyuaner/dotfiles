@@ -7,7 +7,6 @@ brews = [
   'zsh',
   'vim',
   'neovim',
-  'neovide',
   'lsix',
   'eza',
   'grc',
@@ -23,6 +22,7 @@ brews = [
 
 casks = [
   'iterm2',
+  'neovide',
 #  'alacritty',
 #  'macvim',
 ]
