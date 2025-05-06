@@ -1,5 +1,6 @@
 {{- $name := promptStringOnce . "name" "請輸入您的姓名" -}}
 {{- $email := promptStringOnce . "email" "輸入您的Email地址" -}}
+{{- $signingkey := promptStringOnce . "signingkey" "輸入您的GPG金鑰ID （可從 gpg --list-secret-keys --keyid-format=long 去找）" -}}
 
 {{- $hosttype_choices := list "desktop" "server" "unroot_server" "manual" -}}
 {{- $hosttype := promptChoice "What type of host are you on" $hosttype_choices -}}
@@ -32,6 +33,7 @@ sourceDir = "~/.local/share/chezmoi"
 [data]
     name = {{ $name | quote }}
     email = {{ $email | quote }}
+    signingkey = {{ $signingkey | quote }}
     serverStyle = {{ $isServer }}
     unRootMode = {{ $unRootMode }}
     enableSixel = {{ $enableSixel }} {{/* TODO: packages.toml還沒處理 */}}

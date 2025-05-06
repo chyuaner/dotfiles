@@ -3,9 +3,16 @@
 	smudge = git-media-smudge %f
 [user]
 	name = {{ .name | quote }}
-	email = {{ .email | quote }}
+	email = {{ .email | quote }}{{ if .signingkey }}
+	signingkey = {{ .signingkey | quote }}{{ end }}
+{{ if .signingkey }}
+[commit]
+  gpgsign = true
+
+[tag]
+  gpgSign = true
+{{ end }}
 [core]
-	editor = vim
 	excludesfile = {{ joinPath .chezmoi.homeDir ".gitignore_global" }}
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"

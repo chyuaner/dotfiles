@@ -189,6 +189,10 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 export PATH="$PATH:$HOME/bin"
 zinit light mass8326/zsh-chezmoi
 
+{{ if .signingkey }}
+export GPG_TTY=$TTY{{ end }}
+gpgconf --launch gpg-agent
+
 # 自動補上 noglob 並禁用 Zsh 的 globbing 解析
 function git_pushmulti() {
     # 手動處理方括號或括號內容，並進行推送
