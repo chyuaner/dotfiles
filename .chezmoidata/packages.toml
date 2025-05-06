@@ -18,7 +18,6 @@ brews = [
   'nodejs',
   'java',
   'jstkdng/programs/ueberzugpp',
-  'laishulu/homebrew/macism',
 ]
 
 casks = [
