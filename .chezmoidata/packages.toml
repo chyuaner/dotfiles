@@ -45,6 +45,8 @@ apt = [
   'eza',
   'neovim',
   'ueberzug',
+  'ripgrep',
+  'tree-sitter-cli',
 ]
 
 # Debian -----------------------------------------------------------------------
@@ -65,6 +67,8 @@ apt = [
   'vim',
   'git',
   'gcc',
+  'ripgrep',
+  'tree-sitter-cli',
 ]
 
 apt_13 = [
@@ -92,12 +96,15 @@ pacman = [
   'cmake',
   'zsh',
   'lsix',
+  'imagemagick',
   'ueberzugpp',
   'eza',
   'grc',
   'zellij',
   'ranger',
   'neovim',
+  'ripgrep',
+  'tree-sitter',
 ]
 pacman_nogui = [
   'vim',
@@ -135,6 +142,7 @@ pacman = [
   'cmake',
   'zsh',
   'lsix',
+  'imagemagick',
   'ueberzugpp',
   'eza',
   'grc',
@@ -146,6 +154,10 @@ pacman = [
   'nodejs',
   'npm',
   'jdk-openjdk',
+  'ripgrep',
+  'tree-sitter',
+  'tree-sitter-bash',
+  'tree-sitter-cli',
 ]
 pacman_nogui = [
   'vim',
