@@ -63,6 +63,7 @@ return {
 
   {
     "eero-lehtinen/oklch-color-picker.nvim",
+    enabled = require("tools.gui").is_graphical(),
     event = "VeryLazy",
     version = "*",
     keys = {
