@@ -22,6 +22,13 @@ cmp.setup({
     -- completion = cmp.config.window.bordered(),
     -- documentation = cmp.config.window.bordered(),
   },
+  formatting = {
+    format = require("lspkind").cmp_format {
+      mode = "symbol_text", -- 顯示圖示+文字
+      maxwidth = 50,
+      ellipsis_char = "...",
+    },
+  },
   mapping = cmp.mapping.preset.insert({
     ["<C-p>"] = cmp.mapping.select_prev_item(),
     ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -46,14 +53,6 @@ cmp.setup({
     { name = 'buffer' },
     { name = 'path' },
   }),
-
-  formatting = {
-    format = require("lspkind").cmp_format {
-      mode = "symbol_text", -- 顯示圖示+文字
-      maxwidth = 50,
-      ellipsis_char = "...",
-    },
-  },
 })
 
 -- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
