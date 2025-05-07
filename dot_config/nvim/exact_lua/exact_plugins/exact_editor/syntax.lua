@@ -1,4 +1,9 @@
 return {
+  { 'plasticboy/vim-markdown',
+    config = function()
+      vim.g.vim_markdown_folding_disabled = 1
+    end,
+  },
   {
     "nvim-treesitter/nvim-treesitter",
     cond = function()
@@ -15,18 +20,23 @@ return {
         -- <https://github.com/nvim-treesitter/nvim-treesitter#supported-languages>
         ensure_installed = {
           "regex",
+          "bash",
+          "html",
+          "javascript",
+          "json",
           "lua",
-          "php",
+          "markdown",
+          "markdown_inline",
           "python",
+          "php",
           "go",
           "html",
           "css",
-          "javascript"
         },
         highlight = {
           enable = true, -- 啟用高亮
         },
-        indent = { enable = true },
+        -- indent = { enable = true },
       })
     end,
   },
