@@ -2,7 +2,10 @@ return {
   { "nvzone/volt" , lazy = true },
   {
     "nvzone/menu",
-    dependencies = { "MunifTanjim/nui.nvim" },
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-neo-tree/neo-tree.nvim"
+    },
     event = "VeryLazy",
     config = function()
       -- Keyboard users
