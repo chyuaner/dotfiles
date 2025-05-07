@@ -1,6 +1,9 @@
 return {
   "lewis6991/gitsigns.nvim",
   opts = {
+    watch_index = {
+      interval = 1000, -- 設定更新的時間間隔
+    },
     signs = {
       add = { text = "▎" },
       change = { text = "▎" },
@@ -26,7 +29,7 @@ return {
       follow_files = true
     },
     auto_attach = true,
-    attach_to_untracked = false,
+    attach_to_untracked = true,
     current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
     current_line_blame_opts = {
       virt_text = true,
@@ -51,13 +54,13 @@ return {
     on_attach = function(buffer)
       -- 處理無狀態時的佔位符號
       vim.wo.signcolumn = "yes"
-      -- 添加一個空白占位符
-      vim.fn.sign_define("GitSignsPlaceholder", { text = " ", texthl = "NonText" })
-      -- 在沒有 Git 變更時手動放置占位符
-      local line_count = vim.api.nvim_buf_line_count(buffer)
-      for lnum = 1, line_count do
-        vim.fn.sign_place(0, "GitSignsPlaceholderGroup", "GitSignsPlaceholder", buffer, { lnum = lnum })
-      end
+      -- -- 添加一個空白占位符
+      -- vim.fn.sign_define("GitSignsPlaceholder", { text = " ", texthl = "NonText" })
+      -- -- 在沒有 Git 變更時手動放置占位符
+      -- local line_count = vim.api.nvim_buf_line_count(buffer)
+      -- for lnum = 1, line_count do
+      --   vim.fn.sign_place(0, "GitSignsPlaceholderGroup", "GitSignsPlaceholder", buffer, { lnum = lnum })
+      -- end
 
       -- 其他預設動作
       local gs = package.loaded.gitsigns
