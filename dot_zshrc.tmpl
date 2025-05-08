@@ -49,8 +49,9 @@ zinit snippet OMZ::lib/history.zsh
 zinit snippet OMZP::vscode
 zinit snippet OMZ::lib/key-bindings.zsh
 zinit snippet OMZ::lib/completion.zsh
-zinit snippet OMZ::plugins/sudo/sudo.plugin.zsh
+zinit snippet OMZP::sudo
 zinit snippet OMZ::lib/theme-and-appearance.zsh
+zinit snippet OMZP::laravel
 
 #zinit wait="1" lucid for \
 #    OMZL::clipboard.zsh \
@@ -153,6 +154,7 @@ bindkey '^P' my_paste_from_clipboard  # 例如 Ctrl+P
 
 # SSH 自動補齊
 zinit light sunlei/zsh-ssh
+
 
 # overwrite ls
 if  command -v colorls &> /dev/null; then

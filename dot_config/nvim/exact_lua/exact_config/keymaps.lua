@@ -3,6 +3,11 @@
 local map = vim.keymap.set
 local neomap = vim.api.nvim_set_keymap
 
+vim.keymap.set("n", "c", [["_c]], { noremap = true })
+vim.keymap.set("n", "C", [["_C]], { noremap = true })
+vim.keymap.set("n", "d", [["_d]], { noremap = true })
+vim.keymap.set("n", "x", [["_x]], { noremap = true })
+
 -- 處理剪貼簿習慣對應（在Insert模式可使用慣用的快速鍵）
 vim.opt.keymodel = "startsel" -- 啟用 Shift + 方向鍵選取功能
 neomap('n', '<C-a>', 'ggVG', { noremap = true, silent = true })

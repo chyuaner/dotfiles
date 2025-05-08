@@ -22,6 +22,7 @@ return {
           "regex",
           "bash",
           "html",
+          "blade",
           "javascript",
           "json",
           "lua",
@@ -30,7 +31,6 @@ return {
           "python",
           "php",
           "go",
-          "html",
           "css",
         },
         highlight = {
