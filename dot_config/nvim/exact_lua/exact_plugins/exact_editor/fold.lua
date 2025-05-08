@@ -44,8 +44,31 @@ return {
       vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
       vim.o.foldlevelstart = 99
       vim.o.foldenable = true
+      -- vim.o.statuscolumn = '%=%l%s%#FoldColumn#%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? " " : " ") : "  " }%*'
+      vim.o.statuscolumn = [[%=%l%s%#FoldColumn#%@v:lua.on_click@%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? " " : " ") : "  " }%X%*]]
     end,
     config = function(_, opts)
+      -- 折疊符號函數
+      function _G.fold_symbol()
+          local lnum = vim.fn.line(".")
+          if vim.fn.foldlevel(lnum) <= 0 then return "  " end
+          if vim.fn.foldclosed(lnum) ~= -1 then
+              return ">"  -- 已折疊顯示 >
+          else
+              return "v"  -- 展開顯示 v
+          end
+      end
+
+      -- 點擊事件函數
+      function _G.on_click()
+          local lnum = vim.fn.line(".")
+          if vim.fn.foldclosed(lnum) == -1 then
+              vim.cmd(lnum .. "foldclose")  -- 如果已展開則折疊
+          else
+              vim.cmd(lnum .. "foldopen")   -- 如果已折疊則展開
+          end
+      end
+
       local handler = function(virtText, lnum, endLnum, width, truncate)
           local newVirtText = {}
           local totalLines = vim.api.nvim_buf_line_count(0)
