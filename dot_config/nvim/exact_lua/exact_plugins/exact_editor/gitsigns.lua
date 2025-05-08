@@ -1,3 +1,4 @@
+-- if true then return {} end -- 暫時停用（不會用🫠）
 return {
   "lewis6991/gitsigns.nvim",
   opts = {
