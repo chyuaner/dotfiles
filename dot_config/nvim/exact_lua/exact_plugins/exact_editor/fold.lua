@@ -4,19 +4,47 @@ return {
     dependencies = {
       'kevinhwang91/promise-async'
     },
-    config = function()
+    event = "VeryLazy",
+    opts = {
+      open_fold_hl_timeout = 400,
+      provider_selector = function(bufnr, filetype, buftype)
+        return {'treesitter', 'indent'}
+      end,
+      close_fold_kinds_for_ft = {
+        default = {'imports', 'comment'}
+      },
+      fold_virt_text_handler = nil,
+      enable_get_fold_virt_text = false,
+      preview = {
+        win_config = {
+          border = 'rounded',
+          winblend = 12,
+          winhighlight = 'Normal:Normal',
+          maxheight = 20
+        },
+        mappings = {
+          -- 這裡你可以加上對應的快捷鍵，如：
+          -- scrollB = '<C-b>',
+          -- scrollF = '<C-f>',
+          -- 或留空（等你有需要再補）
+        }
+      }
+    },
+    init = function()
       vim.o.foldcolumn = '1' -- '0' is not bad
       vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
       vim.o.foldlevelstart = 99
       vim.o.foldenable = true
-
+    end,
+    config = function(_, opts)
+      -- ufo官方範例：
       -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
       vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
       vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
       -- Option 1: coc.nvim as LSP client
       -- use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
-      -- require('ufo').setup()
+      -- require('ufo').setup(opts)
       --
 
       -- Option 2: nvim lsp as LSP client
@@ -34,7 +62,7 @@ return {
               -- you can add other fields for setting up lsp server in this table
           })
       end
-      require('ufo').setup()
+      require('ufo').setup(opts)
       --
 
       -- Option 3: treesitter as a main provider instead
