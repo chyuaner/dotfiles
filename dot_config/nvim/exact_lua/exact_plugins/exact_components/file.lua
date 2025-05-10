@@ -33,4 +33,26 @@ return {
       }
     end
   },
+
+  {
+    'rmagatti/auto-session',
+    -- event = 'VeryLazy', -- 或者你選擇合適的時機載入
+    event = 'VimLeavePre', -- 插件只在關閉時載入以自動儲存
+    cmd = { "SessionRestore", "SessionSave", "SessionDelete" },
+    opts = {
+      log_level = 'error',
+      auto_session_enable = true,          -- ✅ 開啟 plugin 的 session 功能
+      auto_restore_enabled = false,        -- ❌ 禁止自動還原
+      auto_save_enabled = true,            -- ✅ 啟用自動儲存
+      auto_session_suppress_dirs = { '~/', '~/Downloads', '/' }, -- 可選
+    },
+    keys = {
+      { "<Leader>sr", "<cmd>SessionRestore<cr>", desc = "Restore Session" },
+      { "<Leader>ss", "<cmd>SessionSave<cr>", desc = "Save Session" },
+      { "<Leader>sd", "<cmd>SessionDelete<cr>", desc = "Delete Session" },
+    },
+    config = function(_, opts)
+      require("auto-session").setup(opts)
+    end,
+  },
 }
