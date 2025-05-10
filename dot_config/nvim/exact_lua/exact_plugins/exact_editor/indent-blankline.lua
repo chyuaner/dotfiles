@@ -10,9 +10,9 @@ return {
         -- require("ibl").setup(opts)
 
         local highlight = {
+          "RainbowYellow",
           "RainbowGreen",
           "RainbowCyan",
-          "RainbowYellow",
           "RainbowBlue",
           "RainbowOrange",
           "RainbowViolet",
