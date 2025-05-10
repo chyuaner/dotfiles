@@ -2,9 +2,9 @@
 return {
   "lewis6991/gitsigns.nvim",
   opts = {
-    watch_index = {
-      interval = 1000, -- 設定更新的時間間隔
-    },
+    -- watch_index = {
+    --   interval = 1000, -- 設定更新的時間間隔
+    -- },
     signs = {
       add = { text = "▎" },
       change = { text = "▎" },
