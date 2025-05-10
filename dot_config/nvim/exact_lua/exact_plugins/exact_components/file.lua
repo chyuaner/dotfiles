@@ -9,6 +9,7 @@ return {
     -- vim.lsp.buf_get_clients() is deprecated. Run ":checkhealth vim.deprecated" for more information
     "Spelis/project.nvim",
     branch = "patch-1",
+    dependencies = { "nvim-telescope/telescope.nvim" },
     enabled = vim.fn.has("nvim-0.10") == 1,
 
     config = function()
@@ -31,6 +32,8 @@ return {
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
       }
+
+      require('telescope').load_extension('projects')
     end
   },
 
@@ -55,4 +58,16 @@ return {
       require("auto-session").setup(opts)
     end,
   },
+  {
+    'rmagatti/session-lens',
+    dependencies = { 'rmagatti/auto-session', 'nvim-telescope/telescope.nvim' },
+    config = function()
+      require('session-lens').setup({
+        path_display = { 'shorten' },
+      })
+    end,
+    keys = {
+      { "<Leader>sl", "<cmd>Telescope session-lens search_session<cr>", desc = "Search Sessions" },
+    }
+  }
 }
