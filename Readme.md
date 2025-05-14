@@ -387,6 +387,14 @@ chezmoi update --apply --exclude=scripts
 chezmoi update --apply -v --dry-run
 ```
 
+待整理筆記
+--------------------------------------------------------------------------------
+### colorls安裝方式
+```
+sudo gem install --no-user-install colorls clocale filesize 
+sudo gem install --no-user-install unicode-display_width -v 2.6.0
+```
+
 相關工具參考連結
 --------------------------------------------------------------------------------
 * <https://www.ditig.com/256-colors-cheat-sheet>
