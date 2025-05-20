@@ -1,4 +1,5 @@
 return {
+  {'akinsho/git-conflict.nvim', version = "*", config = true},
   {
     "kdheepak/lazygit.nvim",
     lazy = true,
