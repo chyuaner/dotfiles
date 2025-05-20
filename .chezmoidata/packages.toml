@@ -68,12 +68,12 @@ apt = [
   'git',
   'gcc',
   'ripgrep',
-  'tree-sitter-cli',
 ]
 
 apt_13 = [
   'eza',
   'neovim',
+  'tree-sitter-cli',
   'lazygit',
 ]
 
