@@ -8,6 +8,13 @@ dconf.ini
 .config/nvim/lua/plugins/components/image.lua
 {{ end }}
 
+{{/* ---- 若不啟用AI Ollama伺服器 ----------------------------------------- */ -}}
+{{ if not .enableOllama }}
+.config/nvim/lua/plugins/components/ai.lua
+.continue/config.yaml
+{{ end }}
+
+
 {{/* ---- 沒有圖形界面 ---------------------------------------------------- */ -}}
 {{ if .noGUI }}
 .config/iterm2/

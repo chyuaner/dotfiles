@@ -1,6 +1,8 @@
 {{- $name := promptStringOnce . "name" "請輸入您的姓名" -}}
 {{- $email := promptStringOnce . "email" "輸入您的Email地址" -}}
-{{- $signingkey := promptStringOnce . "signingkey" "輸入您的GPG金鑰ID （可從 gpg --list-secret-keys --keyid-format=long 去找）" -}}
+{{- $signingkey := promptStringOnce . "signingkey" "輸入您的GPG金鑰ID （若不使用，直接留空。可從 gpg --list-secret-keys --keyid-format=long 去找）" -}}
+{{- $ollamaUrl := promptStringOnce . "ollamaUrl" "輸入您的Ollama URL (若不使用，直接留空)" -}}
+{{- $ollamaKey := promptStringOnce . "ollamaKey" "輸入您的Ollama ApiKey (若不使用，直接留空)" -}}
 
 {{- $hosttype_choices := list "desktop" "server" "unroot_server" "manual" -}}
 {{- $hosttype := promptChoice "What type of host are you on" $hosttype_choices -}}
@@ -39,3 +41,7 @@ sourceDir = "~/.local/share/chezmoi"
     enableSixel = {{ $enableSixel }} {{/* TODO: packages.toml還沒處理 */}}
     noGUI = {{ not $enableGUI }}
     enableYcm = {{ $enableYcm }}
+    enableOllama = {{ not (not $ollamaUrl) }}
+    ollamaUrl = {{ $ollamaUrl | quote }}
+    ollamaKey = {{ $ollamaKey | quote }}
+

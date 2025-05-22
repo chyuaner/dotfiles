@@ -1,0 +1,87 @@
+name: Local Assistant
+version: 1.0.0
+schema: v1
+models:
+  - name: qwen2.5-coder:7b
+    provider: ollama
+    model: qwen2.5-coder:7b
+    apiBase: {{ .ollamaUrl }}
+    apiKey: {{ .ollamaKey }}
+    roles:
+      - chat
+      - edit
+      - apply
+  - name: qwen2.5-coder:1.5b
+    provider: ollama
+    model: qwen2.5-coder:1.5b
+    apiBase: {{ .ollamaUrl }}
+    apiKey: {{ .ollamaKey }}
+    roles:
+      - autocomplete
+  - name: mxbai-embed-large
+    provider: ollama
+    model: mxbai-embed-large
+    apiBase: {{ .ollamaUrl }}
+    apiKey: {{ .ollamaKey }}
+    roles:
+      - embed
+  - name: codellama:13b
+    provider: ollama
+    model: codellama:13b
+    apiBase: {{ .ollamaUrl }}
+    apiKey: {{ .ollamaKey }}
+  - name: llama3.1-claude
+    provider: ollama
+    model: incept5/llama3.1-claude
+    apiBase: {{ .ollamaUrl }}/
+    apiKey: {{ .ollamaKey }}
+  # - name: deepseek-coder
+  #   provider: ollama
+  #   model: deepseek-coder
+  #   apiBase: {{ .ollamaUrl }}
+  #   apiKey: {{ .ollamaKey }}
+
+# tabAutocompleteModel:
+#   title: qwen2.5-coder:1.5b
+#   provider: ollama
+#   model: qwen2.5-coder:1.5b
+
+# embeddingsProvider:
+#   provider: ollama
+#   model: mxbai-embed-large
+
+context:
+  - provider: code
+  - provider: docs
+  - provider: diff
+  - provider: terminal
+  - provider: problems
+  - provider: folder
+  - provider: codebase
+
+# models:
+#   - name: Llama 3.1 8B
+#     provider: ollama
+#     model: llama3.1:8b
+#     roles:
+#       - chat
+#       - edit
+#       - apply
+#   - name: Qwen2.5-Coder 1.5B
+#     provider: ollama
+#     model: qwen2.5-coder:1.5b-base
+#     roles:
+#       - autocomplete
+#   - name: Nomic Embed
+#     provider: ollama
+#     model: nomic-embed-text:latest
+#     roles:
+#       - embed
+# context:
+#   - provider: code
+#   - provider: docs
+#   - provider: diff
+#   - provider: terminal
+#   - provider: problems
+#   - provider: folder
+#   - provider: codebase
