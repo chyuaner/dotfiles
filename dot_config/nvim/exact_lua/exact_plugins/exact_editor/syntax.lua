@@ -36,7 +36,7 @@ return {
         highlight = {
           enable = true, -- 啟用高亮
         },
-        -- indent = { enable = true },
+        indent = { enable = true },
       })
     end,
   },
