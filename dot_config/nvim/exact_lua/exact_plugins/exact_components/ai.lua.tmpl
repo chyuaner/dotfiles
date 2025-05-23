@@ -121,7 +121,8 @@ return {
       -- model = "qwen2.5-coder:1.5b", -- 實測發現不相容，先關掉
       -- model = "codellama:7b",
       -- model = "starcoder2:3b",
-      model = "starcoder:1b",
+      -- model = "starcoder:1b",
+      model = "stable-code:3b",
       url = {{ .ollamaUrl | quote }}, -- llm-ls uses "/api/generate"
       {{ if .ollamaKey }}api_token = {{ .ollamaKey | quote }},{{ end }}
       -- -- cf https://github.com/ollama/ollama/blob/main/docs/api.md#parametersu can set any field:value pair here it will be passed as is to the backend

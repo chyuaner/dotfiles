@@ -20,13 +20,20 @@ models:
       - chat
       - edit
       - apply
-  - name: starcoder:1b
+  - name: stable-code:3b
     provider: ollama
-    model: starcoder:1b
+    model: stable-code:3b
     apiBase: {{ .ollamaUrl }}
     apiKey: {{ .ollamaKey }}
     roles:
       - autocomplete
+  # - name: starcoder:1b
+  #   provider: ollama
+  #   model: starcoder:1b
+  #   apiBase: {{ .ollamaUrl }}
+  #   apiKey: {{ .ollamaKey }}
+  #   roles:
+  #     - autocomplete
   # - name: qwen2.5-coder:1.5b
   #   provider: ollama
   #   model: qwen2.5-coder:1.5b
