@@ -1,6 +1,7 @@
 -- if true then return {} end -- 暫時停用
 return {
   {
+    -- 呼叫AI聊天視窗用
     "yetone/avante.nvim",
 
     -- Key Bindings
@@ -29,22 +30,13 @@ return {
       { "<C-A-i>", "<cmd>AvanteToggle<cr>", desc = "Avante Chat Toggle" },
     },
     opts = {
-      provider = "openai",
-      openai = {
-        endpoint = {{ print .ollamaUrl "/v1" | quote }},
-        model = "qwen2.5-coder:7b", -- your desired model (or use gpt-4o, etc.)
-        timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
-        -- temperature = 0,
-        -- max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-        -- reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
-        disable_tools = true, -- Open-source models often do not support tools.
-      },
-
-      auto_suggestions_provider = "ollama",
+      provider = "ollama",
       ollama = {
+        {{ if .ollamaKey -}}
         api_key_name = "OLLAMA_API_KEY",
+        {{ end -}}
         endpoint = {{ .ollamaUrl | quote }},
-        model = "qwen2.5-coder:1.5b",
+        model = "qwen2.5-coder:7b",
         disable_tools = true, -- Open-source models often do not support tools.
       },
 
@@ -56,6 +48,15 @@ return {
         support_paste_from_clipboard = false,
         minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
         enable_token_counting = true, -- Whether to enable token counting. Default to true.
+      },
+      mappings = {
+        --- @class AvanteConflictMappings
+        suggestion = {
+          accept = "<C-l>",
+          next = "<C-]>",
+          prev = "<C-[>",
+          dismiss = "<C-'>",
+        },
       },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
@@ -101,8 +102,7 @@ return {
     },
     config = function(_, opts)
       -- 這裡動態設定 Neovim 的環境變數（不會傳給 shell）
-      vim.env.OPENAI_API_KEY = {{ .ollamaKey | quote }}
-      vim.env.OLLAMA_API_KEY = {{ .ollamaKey | quote }}
+      {{ if .ollamaKey }}vim.env.OLLAMA_API_KEY = {{ .ollamaKey | quote }}{{ end }}
       require("avante").setup(opts)
 
       -- -- 配置 Copilot
@@ -111,22 +111,30 @@ return {
   },
 
   {
+    -- 自動補全用
     'huggingface/llm.nvim',
     dependencies = { 'kevinhwang91/nvim-ufo' }, -- 確保 ufo 先載入
     event = 'VeryLazy', -- 啟動後自動載入
     opts = {
-      model = "qwen2.5-coder:1.5b",
       backend = "openai",
+      -- chat_mode = true,
+      -- model = "qwen2.5-coder:1.5b", -- 實測發現不相容，先關掉
+      -- model = "codellama:7b",
+      -- model = "starcoder2:3b",
+      model = "starcoder:1b",
       url = {{ .ollamaUrl | quote }}, -- llm-ls uses "/api/generate"
-      api_token = {{ .ollamaKey | quote }},
-      -- -- cf https://github.com/ollama/ollama/blob/main/docs/api.md#parameters
+      {{ if .ollamaKey }}api_token = {{ .ollamaKey | quote }},{{ end }}
+      -- -- cf https://github.com/ollama/ollama/blob/main/docs/api.md#parametersu can set any field:value pair here it will be passed as is to the backend
       request_body = {
         -- Modelfile options for the model you use
         options = {
           temperature = 0.2,
           top_p = 0.95,
         }
-      }
-    }
+      },
+      -- on_response = function(output)
+      --   return output:gsub("^```[%w]*\n?", ""):gsub("```$", "")
+      -- end,
+    },
   },
 }
