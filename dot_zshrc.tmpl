@@ -159,6 +159,16 @@ zinit light sunlei/zsh-ssh
 zinit light ocodo/ollama_zsh_completion
 # zinit snippet https://gist.github.com/obeone/9313811fd61a7cbb843e0001a4434c58/raw/5a6a44efc6a07b6f937dbc596d9d7385b297dda8/_ollama.zsh
 
+# Kollzsh zsh命令行直接輸入模糊語意用途，按下ctrl+o以後，會連線到API伺服器取出正確指令下法
+zinit light chyuaner/kollzsh
+KOLLZSH_MODEL="qwen2.5-coder:7b"
+KOLLZSH_HOTKEY="^o"
+KOLLZSH_COMMAND_COUNT=5
+KOLLZSH_URL={{ .ollamaUrl | quote }}
+KOLLZSH_APIKEY={{ .ollamaKey | quote }}
+KOLLZSH_KEEP_ALIVE="1h"
+KOLLZSH_PYTHON3="python3"
+
 # overwrite ls
 if  command -v colorls &> /dev/null; then
     alias ls='colorls'

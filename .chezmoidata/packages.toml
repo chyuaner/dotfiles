@@ -1,4 +1,5 @@
 # macOS ------------------------------------------------------------------------
+# TODO: python-ollama尚未處理
 [packages.darwin]
 taps = [
   'laishulu/homebrew',
@@ -34,7 +35,7 @@ casks = [
 
 # Ubuntu -----------------------------------------------------------------------
 # Ubuntu 24.04.2 LTS 測試過
-# TODO: lazygit, chezmoi尚未處理
+# TODO: lazygit, chezmoi, python-ollama尚未處理
 [packages.linux.ubuntu]
 apt = [
   'sudo',
@@ -51,7 +52,7 @@ apt = [
 
 # Debian -----------------------------------------------------------------------
 # Debian 12, Debian 13 測試過
-# TODO: chezmoi尚未處理
+# TODO: chezmoi, python-ollama尚未處理
 # 特別備註:
 #   Debain 12 (bookworm) 沒有eza，但是有exa
 #   Debain 12 (bookworm) 沒有ueberzugpp，但是有ueberzug
@@ -115,6 +116,7 @@ pacman_gui = [
 ]
 
 aur = [
+  'python-ollama',
 ]
 
 aur_gui = [
@@ -168,6 +170,7 @@ pacman_gui = [
 ]
 
 aur = [
+  'python-ollama',
 ]
 
 aur_gui = [
