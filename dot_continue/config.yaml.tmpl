@@ -2,6 +2,15 @@ name: Local Assistant
 version: 1.0.0
 schema: v1
 models:
+  - name: qwen2.5-coder:14b
+    provider: ollama
+    model: qwen2.5-coder:14b
+    apiBase: {{ .ollamaUrl }}
+    apiKey: {{ .ollamaKey }}
+    roles:
+      - chat
+      - edit
+      - apply
   - name: qwen2.5-coder:7b
     provider: ollama
     model: qwen2.5-coder:7b
@@ -11,13 +20,20 @@ models:
       - chat
       - edit
       - apply
-  - name: qwen2.5-coder:1.5b
+  - name: starcoder:1b
     provider: ollama
-    model: qwen2.5-coder:1.5b
+    model: starcoder:1b
     apiBase: {{ .ollamaUrl }}
     apiKey: {{ .ollamaKey }}
     roles:
       - autocomplete
+  # - name: qwen2.5-coder:1.5b
+  #   provider: ollama
+  #   model: qwen2.5-coder:1.5b
+  #   apiBase: {{ .ollamaUrl }}
+  #   apiKey: {{ .ollamaKey }}
+  #   roles:
+  #     - autocomplete
   - name: mxbai-embed-large
     provider: ollama
     model: mxbai-embed-large
@@ -34,6 +50,11 @@ models:
     provider: ollama
     model: incept5/llama3.1-claude
     apiBase: {{ .ollamaUrl }}/
+    apiKey: {{ .ollamaKey }}
+  - name: starcoder2:7b
+    provider: ollama
+    model: starcoder2:7b
+    apiBase: {{ .ollamaUrl }}
     apiKey: {{ .ollamaKey }}
   # - name: deepseek-coder
   #   provider: ollama
