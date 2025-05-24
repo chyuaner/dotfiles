@@ -75,6 +75,7 @@ apt_13 = [
   'eza',
   'neovim',
   'tree-sitter-cli',
+  'python3-ollama',
   'lazygit',
 ]
 
