@@ -16,6 +16,14 @@ neomap('i', '<C-v>', '<Esc>"+pa', { noremap = true, silent = true }) -- Insert M
 neomap('v', '<C-c>', '"+y', { noremap = true, silent = true }) -- Visual Mode 下的 Ctrl+C 複製
 neomap('v', '<C-x>', '"+d', { noremap = true, silent = true }) -- Visual Mode 下的 Ctrl+X 剪下
 neomap('v', '<C-v>', '"+p', { noremap = true, silent = true }) -- Visual Mode 下的 Ctrl+V 貼上
+-- 給GUI用的
+-- Normal mode: Ctrl+Shift+V 貼上系統剪貼簿
+vim.keymap.set('n', '<C-S-v>', '"+p', { noremap = true, silent = true })
+-- Insert mode: Ctrl+Shift+V 插入系統剪貼簿內容
+vim.keymap.set('i', '<C-S-v>', '<C-r><C-o>+', { noremap = true, silent = true })
+-- Terminal mode: Ctrl+Shift+V 回 normal mode，貼上剪貼簿，再進入 insert 模式
+vim.keymap.set('t', '<C-S-v>', [[<C-\><C-n>"+pi]], { noremap = true, silent = true })
+
 
 -- 單字的左右移動
 neomap('n', '<C-Right>', 'w', { noremap = true, silent = true })
