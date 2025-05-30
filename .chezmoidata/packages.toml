@@ -28,7 +28,7 @@ brews = [
 
 casks = [
   'iterm2',
-  'neovide',
+#  'neovide',
 #  'alacritty',
 #  'macvim',
 ]
@@ -113,7 +113,7 @@ pacman_nogui = [
 ]
 pacman_gui = [
   'gvim',
-  'neovide',
+#  'neovide',
 ]
 
 aur = [
@@ -167,6 +167,7 @@ pacman_nogui = [
 ]
 pacman_gui = [
   'gvim',
+#  'neovide',
   'foot',
 ]
 
