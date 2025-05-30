@@ -1,7 +1,7 @@
 return {
   -- { "psliwka/vim-smoothie" },
   { "karb94/neoscroll.nvim",
-    cond = require("tools.gui").is_enable_sixel(),
+    cond = require("tools.gui").is_enable_smoothscroll(),
     opts = {
       mappings = {                 -- Keys to be mapped to their corresponding default scrolling animation
         '<C-u>', '<C-d>',

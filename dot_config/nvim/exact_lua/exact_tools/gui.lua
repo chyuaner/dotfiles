@@ -16,6 +16,17 @@ function M.is_graphical()
   return term_program or display or wayland and true or false
 end
 
+function M.is_enable_smoothscroll()
+  if vim.fn.has("glrnvim_gui") == 1 then
+    return true
+  -- 如果是在 GUI（如 NeoVide、Goneovim）中，則不啟用插件
+  elseif vim.g.neovide or vim.fn.has("goneovim") == 1 then
+    return false
+  else
+    return true
+  end
+end
+
 --- 當前終端機環境是否在圖形環境裡面，並不使用專用GUI APP(NeoVide)
 --- @return boolean is_enable_sixel
 function M.is_enable_sixel()
