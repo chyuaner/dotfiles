@@ -507,10 +507,12 @@ return {
       -- 自動命令：啟動時自動顯示 Neo-tree
       vim.api.nvim_create_autocmd("VimEnter", {
         callback = function()
-          if vim.fn.winheight(0) > 20 and vim.fn.winwidth(0) > 140 then
-            vim.cmd("Neotree show")
-            vim.cmd("Neotree reveal")
-          end
+          vim.defer_fn(function()
+            if vim.fn.winheight(0) > 20 and vim.fn.winwidth(0) > 140 then
+              vim.cmd("Neotree show")
+              vim.cmd("Neotree reveal")
+            end
+          end, 0)
         end,
       })
 

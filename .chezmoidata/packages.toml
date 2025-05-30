@@ -167,7 +167,7 @@ pacman_nogui = [
 ]
 pacman_gui = [
   'gvim',
-  'neovide',
+  'foot',
 ]
 
 aur = [
@@ -175,6 +175,7 @@ aur = [
 ]
 
 aur_gui = [
+  'glrnvim',
   'alacritty-sixel-git',
   'winscp',
 ]
