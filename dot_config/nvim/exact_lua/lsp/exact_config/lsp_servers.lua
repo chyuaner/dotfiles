@@ -15,7 +15,7 @@ M.lsp_servers = {
   has_go and "gopls" or nil, -- Go
   "html",                    -- HTML
   "cssls",                   -- CSS
-  "vue-language-server",     -- Vue3
+  -- "vue-language-server",     -- Vue3
   -- "ts_ls",                -- TypeScript，目前暫時不需要，先註解掉
   "marksman",                -- Markdown
   "yamlls",                  -- YAML
