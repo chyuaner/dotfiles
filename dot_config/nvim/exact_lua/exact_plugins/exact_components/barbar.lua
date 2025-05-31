@@ -49,11 +49,21 @@ return {
       -- }
       require('barbar').setup(opts)
 
+      -- 修正neo-tree的winbar開啟後，切換winbat tab會導致barbar offset跑掉的問題
+      -- <https://chatgpt.com/share/683aa9e0-6214-800f-96f9-df29d366ad2a>
+      local function neo_tree_is_visible()
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          if vim.bo[buf].filetype == "neo-tree" then
+            return true
+          end
+        end
+        return false
+      end
       vim.api.nvim_create_autocmd("BufEnter", {
         pattern = "*",
         callback = function()
-          local ft = vim.bo.filetype
-          if ft == "neo-tree" then
+          if vim.bo.filetype == "neo-tree" then
             for _, win in ipairs(vim.api.nvim_list_wins()) do
               local buf = vim.api.nvim_win_get_buf(win)
               if vim.bo[buf].filetype == "neo-tree" then
@@ -68,9 +78,12 @@ return {
       vim.api.nvim_create_autocmd("BufLeave", {
         pattern = "*",
         callback = function()
-          if vim.bo.filetype == "neo-tree" then
-            require("barbar.api").set_offset(0)
-          end
+          -- ⚠️ 只有在「沒有任何 neo-tree 視窗」時才清除 offset
+          vim.defer_fn(function()
+            if not neo_tree_is_visible() then
+              require("barbar.api").set_offset(0)
+            end
+          end, 10)  -- 使用 defer 確保事件序列完成
         end,
       })
 
