@@ -22,7 +22,9 @@ return {
       },
       sidebar_filetypes = {
         ['neo-tree'] = {
-          event = 'BufWipeout'
+          event = 'BufWipeout',
+          text = ' Explorer',
+          align = 'left',
           -- event = 'BufWinEnter'
         },
         undotree = {
@@ -68,7 +70,7 @@ return {
               local buf = vim.api.nvim_win_get_buf(win)
               if vim.bo[buf].filetype == "neo-tree" then
                 local width = vim.api.nvim_win_get_width(win)
-                require("barbar.api").set_offset(width, "")
+                require("barbar.api").set_offset(width, " Explorer")
                 break
               end
             end
