@@ -475,8 +475,8 @@ return {
 
       -- 自行加入的
       source_selector = {
-        winbar = false,
-        statusline = false
+        winbar = true,
+        statusline = true
       }
     },
     config = function(_, opts)
@@ -501,6 +501,17 @@ return {
       -- vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
 
       require("neo-tree").setup(opts)
+
+      -- 打Patch：暫時解決winbar與nui.nvim 不完全兼容錯誤
+      -- [Neo-tree ERROR] debounce  neo-tree-follow  error:  ~/.local/share/nvim/lazy/nui.nvim/lua/nui/tree/init.lua:261: Invalid 'window': Expected Lua number
+      local Tree = require("nui.tree")
+      local old_set_win = Tree.set_win
+      Tree.set_win = function(self, window)
+        if type(window) ~= "number" or not vim.api.nvim_win_is_valid(window) then
+          return
+        end
+        return old_set_win(self, window)
+      end
 
       -- vim.keymap.set("n", "<leader>e", "<Cmd>Neotree reveal<CR>")
 
