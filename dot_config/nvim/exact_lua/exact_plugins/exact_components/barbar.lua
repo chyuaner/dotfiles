@@ -21,7 +21,10 @@ return {
         -- separator = {left = '', right = ''},
       },
       sidebar_filetypes = {
-        ['neo-tree'] = {event = 'BufWipeout'},
+        ['neo-tree'] = {
+          event = 'BufWipeout'
+          -- event = 'BufWinEnter'
+        },
         undotree = {
           text = 'undotree',
           align = 'center', -- *optionally* specify an alignment (either 'left', 'center', or 'right')
@@ -45,6 +48,31 @@ return {
       --   },
       -- }
       require('barbar').setup(opts)
+
+      vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "*",
+        callback = function()
+          local ft = vim.bo.filetype
+          if ft == "neo-tree" then
+            for _, win in ipairs(vim.api.nvim_list_wins()) do
+              local buf = vim.api.nvim_win_get_buf(win)
+              if vim.bo[buf].filetype == "neo-tree" then
+                local width = vim.api.nvim_win_get_width(win)
+                require("barbar.api").set_offset(width, "")
+                break
+              end
+            end
+          end
+        end,
+      })
+      vim.api.nvim_create_autocmd("BufLeave", {
+        pattern = "*",
+        callback = function()
+          if vim.bo.filetype == "neo-tree" then
+            require("barbar.api").set_offset(0)
+          end
+        end,
+      })
 
       -- 重定義 :q 命令為僅關閉當前 Buffer
       vim.api.nvim_create_user_command('Q', function()
