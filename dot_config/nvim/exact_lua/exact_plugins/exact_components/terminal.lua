@@ -15,7 +15,9 @@ return {
       end
 
       require("toggleterm").setup {
-        open_mapping = [[<C-\>]],
+        open_mapping = [[<C-\>]], -- 設定開關快速鍵
+
+        -- on_open時，以Neotree當Offset
         on_open = function(_)
           if is_neo_tree_open() then
             vim.defer_fn(function()
@@ -26,6 +28,7 @@ return {
             end, 100)
           end
         end,
+
         hide_numbers = true,
         shade_filetypes = {},
         shade_terminals = true,
@@ -47,5 +50,22 @@ return {
       -- 添加Alt+Esc鍵離開終端模式，回到Normal Mode
       vim.api.nvim_set_keymap('t', '<A-Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
     end,
+  },
+
+  -- 在nvim內的Terminal用 `nvim Readme.md` 開啟檔案，會在當前nvim以新Buffer開啟
+  {
+    "willothy/flatten.nvim",
+    -- config = true,
+    -- or pass configuration with
+    opts = {
+      window = {
+        open = "alternate",
+        diff = "tab_vsplit",
+        focus = "first",
+      },
+    },
+    -- Ensure that it runs first to minimize delay when opening file from terminal
+    lazy = false,
+    priority = 1001,
   },
 }
