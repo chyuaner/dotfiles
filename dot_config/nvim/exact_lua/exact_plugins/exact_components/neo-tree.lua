@@ -513,6 +513,11 @@ return {
         return old_set_win(self, window)
       end
 
+      -- 調整展開後tree線條顏色
+      vim.api.nvim_set_hl(0, "NeoTreeIndentMarker", { fg = "#3c3c3c" })
+      -- vim.api.nvim_set_hl(0, "NeoTreeExpander", { fg = "#00FF00" })
+      -- vim.api.nvim_set_hl(0, "NeoTreeNormal", { fg = "#FFFFFF" })
+
       -- vim.keymap.set("n", "<leader>e", "<Cmd>Neotree reveal<CR>")
 
       -- 自動命令：啟動時自動顯示 Neo-tree
