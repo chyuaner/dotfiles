@@ -24,6 +24,8 @@ brews = [
   'java',
   'jstkdng/programs/ueberzugpp',
   'macism',
+  'htop',
+  'bmon',
 ]
 
 casks = [
@@ -48,6 +50,8 @@ apt = [
   'ueberzug',
   'ripgrep',
   'tree-sitter-cli',
+  'htop',
+  'bmon',
 ]
 
 # Debian -----------------------------------------------------------------------
@@ -69,6 +73,8 @@ apt = [
   'git',
   'gcc',
   'ripgrep',
+  'htop',
+  'bmon',
 ]
 
 apt_13 = [
@@ -107,6 +113,8 @@ pacman = [
   'neovim',
   'ripgrep',
   'tree-sitter',
+  'htop',
+  'bmon',
 ]
 pacman_nogui = [
   'vim',
@@ -161,6 +169,8 @@ pacman = [
   'tree-sitter',
   'tree-sitter-bash',
   'tree-sitter-cli',
+  'htop',
+  'bmon',
 ]
 pacman_nogui = [
   'vim',
