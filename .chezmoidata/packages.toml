@@ -24,6 +24,7 @@ brews = [
   'java',
   'jstkdng/programs/ueberzugpp',
   'macism',
+  'tmux',
   'htop',
   'bmon',
 ]
@@ -50,6 +51,7 @@ apt = [
   'ueberzug',
   'ripgrep',
   'tree-sitter-cli',
+  'tmux',
   'htop',
   'bmon',
 ]
@@ -73,6 +75,7 @@ apt = [
   'git',
   'gcc',
   'ripgrep',
+  'tmux',
   'htop',
   'bmon',
 ]
@@ -113,6 +116,7 @@ pacman = [
   'neovim',
   'ripgrep',
   'tree-sitter',
+  'tmux',
   'htop',
   'bmon',
 ]
@@ -169,6 +173,7 @@ pacman = [
   'tree-sitter',
   'tree-sitter-bash',
   'tree-sitter-cli',
+  'tmux',
   'htop',
   'bmon',
 ]
