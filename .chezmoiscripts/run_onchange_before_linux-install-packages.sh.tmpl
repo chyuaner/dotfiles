@@ -13,6 +13,19 @@ if ! command -v zsh &> /dev/null; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/romkatv/zsh-bin/master/install)" -- -d ~/.local -e no
 fi
 
+{{/* 手動安裝 tmux */ -}}
+if ! command -v tmux &> /dev/null; then
+  curl -s https://api.github.com/repos/nelsonenzo/tmux-appimage/releases/latest \
+  | grep "browser_download_url.*appimage" \
+  | cut -d : -f 2,3 \
+  | tr -d \" \
+  | wget -qi - \
+  && chmod +x tmux.appimage
+
+  ## optionaly, move it into your $PATH
+  mv tmux.appimage ~/.local/bin/tmux
+fi
+
 {{/* 手動安裝 neovim 0.11.1 */ -}}
 {{ if eq .chezmoi.arch "amd64"}}
 if ! command -v nvim &> /dev/null; then
