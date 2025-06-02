@@ -19,6 +19,7 @@ M.lsp_servers = {
   -- "ts_ls",                -- TypeScript，目前暫時不需要，先註解掉
   "marksman",                -- Markdown
   "yamlls",                  -- YAML
+  "lua_ls",     -- LUA
 }
 
 -- 過濾 nil 值
