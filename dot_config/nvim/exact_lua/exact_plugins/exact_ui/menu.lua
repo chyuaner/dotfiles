@@ -23,9 +23,11 @@ return {
         -- clicked buf
         local mouse = vim.fn.getmousepos()
         local buf = vim.api.nvim_win_get_buf(mouse.winid)
+        local name = vim.api.nvim_buf_get_name(buf)
         local ft = vim.bo[buf].ft
         local gitsigns = require("gitsigns")
         local hunks = gitsigns.get_hunks and gitsigns.get_hunks(buf)
+        local lsp = vim.lsp.get_clients({ bufnr = buf })
 
         local in_signcolumn = mouse.wincol <= vim.fn.getwininfo(mouse.winid)[1].textoff
         local is_git_buf = vim.b[buf].gitsigns_head ~= nil
