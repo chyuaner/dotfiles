@@ -21,14 +21,12 @@ return {
         vim.cmd.exec '"normal! \\<RightMouse>"'
 
         -- clicked buf
-        local buf = vim.api.nvim_win_get_buf(vim.fn.getmousepos().winid)
+        local mouse = vim.fn.getmousepos()
+        local buf = vim.api.nvim_win_get_buf(mouse.winid)
         local ft = vim.bo[buf].ft
-
-        -- 處理選單內容判斷邏輯
         local gitsigns = require("gitsigns")
         local hunks = gitsigns.get_hunks and gitsigns.get_hunks(buf)
 
-        local mouse = vim.fn.getmousepos()
         local in_signcolumn = mouse.wincol <= vim.fn.getwininfo(mouse.winid)[1].textoff
         local is_git_buf = vim.b[buf].gitsigns_head ~= nil
         local has_hunks = hunks and #hunks > 0
