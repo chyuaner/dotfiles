@@ -34,7 +34,7 @@ return {
         local options
         if ft == "neo-tree" then
           options = "neo-tree"
-        elseif in_signcolumn and is_git_buf and has_hunks then
+        elseif in_signcolumn and is_git_buf then
           options = "gitsigns"
         else
           options = "default"
