@@ -1,7 +1,7 @@
 Yuan dotfile 自用環境設定檔
 ================================================================================
 來放個調了很久的做事環境... 其實是最近有轉移多臺電腦的需求😅，想說就把我的設定整理起來，之後換電腦換機器的時候，我習慣的環境可以方便一點這樣帶著走🚗。
-![](.readme/Screenshot_20250424_013628.png)
+![](.readme/Screenshot_20250602_011037.png)
 
 主要是chezmoi用來統整這些dotfiles檔案，常用作業系統是Manjaro (Arch Linux) 和 macOS，有針對這兩個作業系統調整過了，也寫好Script盡量可以一兩行指令直接懶人安裝到好。
 
@@ -275,6 +275,39 @@ winget install -e GoLang.Go OpenJS.NodeJS
 mkdir -p vimfiles\autoload
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" -OutFile "vimfiles\autoload\plug.vim"
 ```
+
+tmux
+--------------------------------------------------------------------------------
+![](.readme/Screenshot_20250602_012927-text.png)
+
+主要以TPM來管理套件
+
+### statusbar設計
+* 全組件支援滑鼠點選（大量採用`#[range=user|xxx]`的寫法）
+	* 甚至原本在瀏覽器開分頁操作的習慣方式也可以直接套用，點選新增分頁和關閉分頁
+	* 可以用點選右邊系統資訊快速開啟相關工具
+* 採用標準8色配置，保有相容性與可隨終端程式主題變換的彈性
+* 不使用Theme框架，直接用tmux原生的 status-left, status-right 手工刻出來
+* 盡量用空隔補齊，來維持滑鼠精準點選按鈕
+    * 不過右側網路資訊就不處理了，反正右側組件視覺範圍大，不須點選位置精細也能正常操作。而且處理後會造成擠壓到window list的區域空間。
+    * 後來發現 tmux-plugins/tmux-net-speed 執行時會把原本喬好的所有空隔都改寫掉（好像有用到類似trim的用法），對策是需要空隔補填的部份改用全形空隔
+
+### 已知副作用強烈的plugin
+* tmux-plugins/tmux-net-speed：造成 anghootys/tmux-ip-address 顯示錯亂，以及我原本喬好的空隔直接被trim掉
+
+### tmux-mode-indicator
+我有操作vim的習慣，而且都習慣會把mode狀態放在最左邊的位置，讓我隨時知道
+
+MunifTanjim/tmux-mode-indicator 提供的雖然主功能有達到需求，但無法個別自訂start/end_prompt等控制左右兩側字元的彈性。
+因為我想和powerline主題風格整合，整合的實做方式就是控制組件左右側的特殊圖形字元和fg/bg顏色來做到視覺上的整合流暢感。
+
+後來找到fork出來的版本 aacebedo/tmux-mode-indicator ，直接解決這個問題。
+
+### 原本考慮用的佈景主題包，但最後不採用
+* oh-my-tmux
+* erikw/tmux-powerline
+
+簡單講就是一旦採用就會與其他plugin衝突，這兩套比較偏向「一整包用到底」的模式。如其中的組件我有特殊需求，很難疊加其他plugin來整合。
 
 Konsole
 --------------------------------------------------------------------------------
