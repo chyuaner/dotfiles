@@ -38,36 +38,68 @@ return {
   },
 
   {
-    'rmagatti/auto-session',
-    -- event = 'VeryLazy', -- 或者你選擇合適的時機載入
-    event = 'VimLeavePre', -- 插件只在關閉時載入以自動儲存
-    cmd = { "SessionRestore", "SessionSave", "SessionDelete" },
-    opts = {
-      log_level = 'error',
-      auto_session_enable = true,          -- ✅ 開啟 plugin 的 session 功能
-      auto_restore_enabled = false,        -- ❌ 禁止自動還原
-      auto_save_enabled = true,            -- ✅ 啟用自動儲存
-      auto_session_suppress_dirs = { '~/', '~/Downloads', '/' }, -- 可選
-    },
-    keys = {
-      { "<Leader>sr", "<cmd>SessionRestore<cr>", desc = "Restore Session" },
-      { "<Leader>ss", "<cmd>SessionSave<cr>", desc = "Save Session" },
-      { "<Leader>sd", "<cmd>SessionDelete<cr>", desc = "Delete Session" },
+    'stevearc/resession.nvim',
+    dependencies = {
+      'romgrk/barbar.nvim',
     },
     config = function(_, opts)
-      require("auto-session").setup(opts)
-    end,
-  },
-  {
-    'rmagatti/session-lens',
-    dependencies = { 'rmagatti/auto-session', 'nvim-telescope/telescope.nvim' },
-    config = function()
-      require('session-lens').setup({
-        path_display = { 'shorten' },
+      local resession = require("resession")
+
+      resession.setup({
+        autosave = {
+          enabled = true,
+          interval = 60,
+          notify = true,
+        },
+        extensions = {
+          barbar = {},
+        },
+      })
+
+      -- Resession does NOTHING automagically, so we have to set up some keymaps
+      vim.keymap.set("n", "<leader>ss", resession.save)
+      vim.keymap.set("n", "<leader>sr", resession.load)
+      vim.keymap.set("n", "<leader>sd", resession.delete)
+
+      vim.api.nvim_create_autocmd("VimLeavePre", {
+        callback = function()
+          -- Always save a special session named "last"
+          resession.save("last")
+        end,
       })
     end,
-    keys = {
-      { "<Leader>sl", "<cmd>Telescope session-lens search_session<cr>", desc = "Search Sessions" },
-    }
   }
+  -- {
+  --   'rmagatti/auto-session',
+  --   -- event = 'VeryLazy', -- 或者你選擇合適的時機載入
+  --   event = 'VimLeavePre', -- 插件只在關閉時載入以自動儲存
+  --   cmd = { "SessionRestore", "SessionSave", "SessionDelete" },
+  --   opts = {
+  --     log_level = 'error',
+  --     auto_session_enable = true,          -- ✅ 開啟 plugin 的 session 功能
+  --     auto_restore_enabled = false,        -- ❌ 禁止自動還原
+  --     auto_save_enabled = true,            -- ✅ 啟用自動儲存
+  --     auto_session_suppress_dirs = { '~/', '~/Downloads', '/' }, -- 可選
+  --   },
+  --   keys = {
+  --     { "<Leader>sr", "<cmd>SessionRestore<cr>", desc = "Restore Session" },
+  --     { "<Leader>ss", "<cmd>SessionSave<cr>", desc = "Save Session" },
+  --     { "<Leader>sd", "<cmd>SessionDelete<cr>", desc = "Delete Session" },
+  --   },
+  --   config = function(_, opts)
+  --     require("auto-session").setup(opts)
+  --   end,
+  -- },
+  -- {
+  --   'rmagatti/session-lens',
+  --   dependencies = { 'rmagatti/auto-session', 'nvim-telescope/telescope.nvim' },
+  --   config = function()
+  --     require('session-lens').setup({
+  --       path_display = { 'shorten' },
+  --     })
+  --   end,
+  --   keys = {
+  --     { "<Leader>sl", "<cmd>Telescope session-lens search_session<cr>", desc = "Search Sessions" },
+  --   }
+  -- }
 }
