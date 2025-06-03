@@ -30,16 +30,23 @@ return {
       { "<C-A-i>", "<cmd>AvanteToggle<cr>", desc = "Avante Chat Toggle" },
     },
     opts = {
-      provider = "ollama",
-      ollama = {
-        {{ if .ollamaKey -}}
-        api_key_name = "OLLAMA_API_KEY",
-        {{ end -}}
-        endpoint = {{ .ollamaUrl | quote }},
-        model = "qwen2.5-coder:7b",
-        disable_tools = true, -- Open-source models often do not support tools.
+      providers = {
+        ollama = {
+          {{ if .ollamaKey -}}
+          api_key_name = "OLLAMA_API_KEY",
+          {{ end -}}
+          endpoint = {{ .ollamaUrl | quote }},
+          model = "qwen2.5-coder:7b",
+          disable_tools = true, -- Open-source models often do not support tools.
+
+          -- Fix: Always show `ollama: API key not set, continuing without authentication`
+          parse_api_key = function()
+            return vim.env.OLLAMA_API_KEY
+          end,
+        },
       },
 
+      provider = "ollama",
       behaviour = {
         auto_suggestions = false, -- Experimental stage
         auto_set_highlight_group = true,
