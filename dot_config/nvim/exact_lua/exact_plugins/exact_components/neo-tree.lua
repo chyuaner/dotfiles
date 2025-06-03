@@ -476,7 +476,7 @@ return {
       -- 自行加入的
       source_selector = {
         winbar = true,
-        statusline = true
+        statusline = false,
       }
     },
     config = function(_, opts)
@@ -538,6 +538,7 @@ return {
         local state = require("neo-tree.sources.manager").get_state("document_symbols")
         if state and state.winid and vim.api.nvim_win_is_valid(state.winid) then
           vim.api.nvim_win_set_option(state.winid, "winbar", "")
+          vim.api.nvim_win_set_option(state.winid, "statusline", "")
         end
         vim.defer_fn(keep_clear_winbar, 100)  -- 300ms 後再執行自己一次
       end
