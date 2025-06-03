@@ -513,12 +513,36 @@ return {
         return old_set_win(self, window)
       end
 
+
       -- 調整展開後tree線條顏色
       vim.api.nvim_set_hl(0, "NeoTreeIndentMarker", { fg = "#3c3c3c" })
       -- vim.api.nvim_set_hl(0, "NeoTreeExpander", { fg = "#00FF00" })
       -- vim.api.nvim_set_hl(0, "NeoTreeNormal", { fg = "#FFFFFF" })
 
       -- vim.keymap.set("n", "<leader>e", "<Cmd>Neotree reveal<CR>")
+
+
+      -- 讓document_symbols不要出現winbar
+      -- vim.api.nvim_create_autocmd("WinNew", {
+      --   callback = function(args)
+      --     vim.defer_fn(function()
+      --       local state = require("neo-tree.sources.manager").get_state("document_symbols")
+      --       if state and state.winid and vim.api.nvim_win_is_valid(state.winid) then
+      --         vim.api.nvim_win_set_option(state.winid, "winbar", "")
+      --       end
+      --     end, 100)
+      --   end,
+      -- })
+
+      local function keep_clear_winbar()
+        local state = require("neo-tree.sources.manager").get_state("document_symbols")
+        if state and state.winid and vim.api.nvim_win_is_valid(state.winid) then
+          vim.api.nvim_win_set_option(state.winid, "winbar", "")
+        end
+        vim.defer_fn(keep_clear_winbar, 100)  -- 300ms 後再執行自己一次
+      end
+      keep_clear_winbar() -- 啟動
+
 
       -- 自動命令：啟動時自動顯示 Neo-tree
       vim.api.nvim_create_autocmd("VimEnter", {
