@@ -21,12 +21,12 @@ return {
         -- separator = {left = '', right = ''},
       },
       sidebar_filetypes = {
-        ['neo-tree'] = {
-          event = 'BufWipeout',
-          text = ' Explorer',
-          align = 'left',
-          -- event = 'BufWinEnter'
-        },
+        -- ['neo-tree'] = {
+        --   event = 'BufWipeout',
+        --   -- text = ' Explorer',
+        --   align = 'left',
+        --   -- event = 'BufWinEnter'
+        -- },
         undotree = {
           text = 'undotree',
           align = 'center', -- *optionally* specify an alignment (either 'left', 'center', or 'right')
