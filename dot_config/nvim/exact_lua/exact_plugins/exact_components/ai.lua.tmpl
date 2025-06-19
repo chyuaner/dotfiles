@@ -117,32 +117,32 @@ return {
     end,
   },
 
-  {
-    -- 自動補全用
-    'huggingface/llm.nvim',
-    dependencies = { 'kevinhwang91/nvim-ufo' }, -- 確保 ufo 先載入
-    event = 'VeryLazy', -- 啟動後自動載入
-    opts = {
-      backend = "openai",
-      -- chat_mode = true,
-      -- model = "qwen2.5-coder:1.5b", -- 實測發現不相容，先關掉
-      -- model = "codellama:7b",
-      -- model = "starcoder2:3b",
-      -- model = "starcoder:1b",
-      model = "stable-code:3b",
-      url = {{ .ollamaUrl | quote }}, -- llm-ls uses "/api/generate"
-      {{ if .ollamaKey }}api_token = {{ .ollamaKey | quote }},{{ end }}
-      -- -- cf https://github.com/ollama/ollama/blob/main/docs/api.md#parametersu can set any field:value pair here it will be passed as is to the backend
-      request_body = {
-        -- Modelfile options for the model you use
-        options = {
-          temperature = 0.2,
-          top_p = 0.95,
-        }
-      },
-      -- on_response = function(output)
-      --   return output:gsub("^```[%w]*\n?", ""):gsub("```$", "")
-      -- end,
-    },
-  },
+  -- {
+  --   -- 自動補全用
+  --   'huggingface/llm.nvim',
+  --   dependencies = { 'kevinhwang91/nvim-ufo' }, -- 確保 ufo 先載入
+  --   event = 'VeryLazy', -- 啟動後自動載入
+  --   opts = {
+  --     backend = "openai",
+  --     -- chat_mode = true,
+  --     -- model = "qwen2.5-coder:1.5b", -- 實測發現不相容，先關掉
+  --     -- model = "codellama:7b",
+  --     -- model = "starcoder2:3b",
+  --     -- model = "starcoder:1b",
+  --     model = "stable-code:3b",
+  --     url = {{ .ollamaUrl | quote }}, -- llm-ls uses "/api/generate"
+  --     {{ if .ollamaKey }}api_token = {{ .ollamaKey | quote }},{{ end }}
+  --     -- -- cf https://github.com/ollama/ollama/blob/main/docs/api.md#parametersu can set any field:value pair here it will be passed as is to the backend
+  --     request_body = {
+  --       -- Modelfile options for the model you use
+  --       options = {
+  --         temperature = 0.2,
+  --         top_p = 0.95,
+  --       }
+  --     },
+  --     -- on_response = function(output)
+  --     --   return output:gsub("^```[%w]*\n?", ""):gsub("```$", "")
+  --     -- end,
+  --   },
+  -- },
 }
