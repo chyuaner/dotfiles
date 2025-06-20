@@ -13,9 +13,6 @@
 *.log.*
 *.sig
 
-pkg/
-src/
-
 ### Linux ###
 *~
 *.swp
