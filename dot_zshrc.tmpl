@@ -76,8 +76,12 @@ setopt AUTO_LIST
 setopt AUTO_MENU
 setopt MENU_COMPLETE
 
-autoload -U compinit
-compinit
+# # 自動補齊初始化
+# autoload -U compinit
+# compinit
+# 自動補齊初始化 （使用快取）
+autoload -Uz compinit
+compinit -C   # 使用快取，不檢查安全性
 
 # Completion caching
 #zstyle ':completion::complete:*' use-cache on
