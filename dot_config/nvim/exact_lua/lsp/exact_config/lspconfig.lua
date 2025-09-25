@@ -1,6 +1,5 @@
 local servers = require("lsp.config.lsp_servers").lsp_servers
 
-local lspconfig = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local on_attach = function(_, bufnr)
@@ -20,5 +19,12 @@ for _, name in ipairs(servers) do
   if not ok then config = {} end
   config.capabilities = capabilities
   config.on_attach = on_attach
-  lspconfig[name].setup(config)
+
+  if vim.lsp.config then
+    -- Neovim 0.11+
+    vim.lsp.config(name, config)
+  else
+    -- Neovim 0.10.x 與舊版 nvim-lspconfig
+    require("lspconfig")[name].setup(config)
+  end
 end
