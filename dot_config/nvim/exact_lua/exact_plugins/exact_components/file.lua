@@ -52,7 +52,7 @@ return {
           notify = true,
         },
         extensions = {
-          barbar = {},
+          -- barbar = {},
         },
       })
 
