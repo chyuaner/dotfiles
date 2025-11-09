@@ -181,7 +181,7 @@ if  command -v colorls &> /dev/null; then
 elif  command -v eza &> /dev/null; then
     zinit ice as"completion"
     zinit snippet https://github.com/eza-community/eza/blob/main/completions/zsh/_eza
-    alias ls='eza --color=always --icons=always'
+    alias ls='eza --color=always --group --icons=always'
     #zinit light 'eza-community/eza'
 elif  command -v exa &> /dev/null; then
     compdef exa='ls'
