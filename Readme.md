@@ -424,7 +424,7 @@ chezmoi update --apply -v --dry-run
 --------------------------------------------------------------------------------
 ### colorls安裝方式
 ```
-sudo gem install --no-user-install colorls clocale filesize 
+sudo gem install --no-user-install colorls clocale filesize
 sudo gem install --no-user-install unicode-display_width -v 2.6.0
 ```
 
