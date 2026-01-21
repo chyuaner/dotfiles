@@ -1,4 +1,4 @@
-#!/bin/bash
+#!{{ lookPath "bash" }}
 
 # --------------------------
 # 擷取 remote list

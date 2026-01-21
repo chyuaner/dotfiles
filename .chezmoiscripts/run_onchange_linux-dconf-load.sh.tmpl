@@ -1,5 +1,5 @@
 {{ if eq .chezmoi.os "linux" -}}
-#!/bin/bash
+#!{{ lookPath "bash" }}
 
 # dconf.ini hash: {{ include "dconf.ini" | sha256sum }}
 dconf load / < {{ joinPath .chezmoi.sourceDir "dconf.ini" | quote }}

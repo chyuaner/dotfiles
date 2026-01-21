@@ -1,4 +1,4 @@
-#!/bin/sh
+#!{{ lookPath "sh" }}
 
 {{ if eq .chezmoi.os "darwin" -}}
 defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/.config/iterm2"
