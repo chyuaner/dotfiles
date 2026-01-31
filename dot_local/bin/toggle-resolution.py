@@ -10,59 +10,104 @@ def notify(title, message):
     except:
         pass
 
+def strip_ansi(text):
+    """移除 ANSI 顏色跳脫字元"""
+    ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+    return ansi_escape.sub('', text)
+
 # 1. 取得 kscreen-doctor 輸出
 try:
-    output = subprocess.check_output(["kscreen-doctor", "-o"], text=True)
+    raw_output = subprocess.check_output(["kscreen-doctor", "-o"], text=True)
+    output = strip_ansi(raw_output)
 except Exception as e:
     print(f"執行失敗: {e}")
     sys.exit(1)
 
-# 2. 取得螢幕名稱與目前狀態
+# 2. 取得螢幕名稱
 try:
-    # 取得第一行第三個單字作為螢幕名稱 (例如 eDP-1)
     screen = output.split('\n')[0].split()[2].strip()
-except Exception as e:
-    print(f"失敗: 無法解析螢幕名稱\n{output}")
-    sys.exit(1)
+except Exception:
+    screen = "eDP-1"
 
-# 3. 解析所有模式與目前狀態
-# 3. 解析模式與目前狀態
-# 取得目前使用的 ID 與解析度 (最後帶有 *)
-curr_match = re.search(r"(\d+):(\d+x\d+)@[^*]*\*", output)
-if not curr_match:
+# 3. 解析模式與狀態
+res_map = {}
+curr_res = None
+
+for part in output.split():
+    if ":" in part and "@" in part:
+        try:
+            # 移除符號
+            clean_part = part.replace("!", "").replace("*", "")
+            mid_res_part = clean_part.split("@")[0]
+            mid = mid_res_part.split(":")[0]
+            res = mid_res_part.split(":")[1]
+            
+            if res not in res_map:
+                res_map[res] = mid
+            
+            if "*" in part:
+                curr_res = res
+        except:
+            continue
+
+# 備援：若沒抓到目前的模式，嘗試從 Geometry 抓
+if not curr_res:
+    geo_match = re.search(r"Geometry: \d+,\d+ (\d+x\d+)", output)
+    curr_res = geo_match.group(1) if geo_match else None
+
+if not curr_res:
     print("失敗: 無法辨識目前解析度模式")
     sys.exit(1)
 
-curr_id, curr_res = curr_match.groups()
-
-# 取得 4K 與 1200p 的模式 ID
-id_4k = None
-id_1200p = None
-
-for mid, res in re.findall(r"(\d+):(\d+x\d+)@", output):
-    if res == "3840x2400":
-        id_4k = mid
-    if res == "1920x1200":
-        id_1200p = mid
-
-# 4. 切換邏輯
-# 如果目前解析度是 4K (3840x2400)，則切換往 1200p
-if curr_res == "3840x2400" and id_1200p:
-    target, scale, msg = id_1200p, "1", "1200p (100%)"
+# 4. 判斷切換目標 (家族規則)
+target_res = None
+if curr_res == "3840x2400":
+    target_res = "1920x1200"
+elif curr_res == "1920x1200":
+    target_res = "3840x2400"
+elif curr_res == "3200x1800":
+    target_res = "1920x1080"
+elif curr_res == "1920x1080":
+    target_res = "3200x1800"
 else:
-    # 否則（目前在 1200p 或其他模式）切換往 4K
-    target, scale, msg = id_4k, "2", "4K (200%)"
+    # Fallback 到 16:9
+    target_res = "3200x1800" if not curr_res.startswith("3840") else "1920x1080"
 
-if not target:
-    print(f"失敗: 找不到目標模式 (3840x2400={id_4k}, 1920x1200={id_1200p})")
+target_id = res_map.get(target_res)
+
+# 如果找不到目標，嘗試在家族內尋找替代品
+if not target_id:
+    fallback_order = ["1920x1200", "3840x2400", "3200x1800", "1920x1080"]
+    for res in fallback_order:
+        if res in res_map and res != curr_res:
+            target_res = res
+            target_id = res_map[res]
+            break
+
+if not target_id:
+    print(f"失敗: 在系統中找不到解析度 {target_res}")
     sys.exit(1)
 
-# 5. 執行指令
-subprocess.run([
-    "kscreen-doctor", 
-    f"output.{screen}.mode.{target}", 
-    f"output.{screen}.scale.{scale}"
-])
+# 5. 決定比例
+if target_res == "3840x2400":
+    target_scale = "2"
+    percent = "200%"
+elif target_res == "3200x1800":
+    target_scale = "1.6666666666666667"
+    percent = "167%"
+else:
+    target_scale = "1"
+    percent = "100%"
 
-# 6. 顯示通知
-notify("解析度切換完成", f"已切換至 {msg}")
+msg = f"{target_res} ({percent})"
+
+# 6. 執行
+cmd = ["kscreen-doctor", f"output.{screen}.mode.{target_id}", f"output.{screen}.scale.{target_scale}"]
+result = subprocess.run(cmd, capture_output=True, text=True)
+
+if result.returncode != 0:
+    # 修復驅動相衝：嘗試僅切換解析度
+    subprocess.run(["kscreen-doctor", f"output.{screen}.mode.{target_id}"])
+    notify("解析度切換成功 (排除比例)", msg)
+else:
+    notify("解析度切換成功", msg)
