@@ -1,41 +1,68 @@
 #!/usr/bin/env python3
 import subprocess
 import re
+import sys
 
 def notify(title, message):
     """呼叫 notify-send 顯示桌面通知"""
-    subprocess.run(["notify-send", title, message])
+    try:
+        subprocess.run(["notify-send", title, message])
+    except:
+        pass
 
-# 取得 kscreen-doctor 輸出
-output = subprocess.check_output(["kscreen-doctor", "-o"], text=True)
+# 1. 取得 kscreen-doctor 輸出
+try:
+    output = subprocess.check_output(["kscreen-doctor", "-o"], text=True)
+except Exception as e:
+    print(f"執行失敗: {e}")
+    sys.exit(1)
 
-# 取得主螢幕名稱
-match_output = re.search(r"Output: \d+ (\S+)", output)
-screen = match_output.group(1) if match_output else "eDP-1"
+# 2. 取得螢幕名稱與目前狀態
+try:
+    # 取得第一行第三個單字作為螢幕名稱 (例如 eDP-1)
+    screen = output.split('\n')[0].split()[2].strip()
+except Exception as e:
+    print(f"失敗: 無法解析螢幕名稱\n{output}")
+    sys.exit(1)
 
-# 取得帶 * 的模式（當前模式）
-match_mode = re.search(r"(\d+x\d+@\d+\*)", output)
-current_mode = match_mode.group(1) if match_mode else ""
+# 3. 解析所有模式與目前狀態
+# 3. 解析模式與目前狀態
+# 取得目前使用的 ID 與解析度 (最後帶有 *)
+curr_match = re.search(r"(\d+):(\d+x\d+)@[^*]*\*", output)
+if not curr_match:
+    print("失敗: 無法辨識目前解析度模式")
+    sys.exit(1)
 
-# 取得 Geometry（邏輯解析度）
-match_geom = re.search(r"Geometry: \S+ (\d+)x(\d+)", output)
-geom_width, geom_height = (int(match_geom.group(1)), int(match_geom.group(2))) if match_geom else (0,0)
+curr_id, curr_res = curr_match.groups()
 
-# 計算縮放
-mode_width = int(current_mode.split('x')[0]) if current_mode else geom_width
-current_scale = mode_width // geom_width if geom_width else 1
+# 取得 4K 與 1200p 的模式 ID
+id_4k = None
+id_1200p = None
 
-print(f"偵測：目前模式={current_mode}, Geometry={geom_width}x{geom_height}, 縮放={current_scale}")
+for mid, res in re.findall(r"(\d+):(\d+x\d+)@", output):
+    if res == "3840x2400":
+        id_4k = mid
+    if res == "1920x1200":
+        id_1200p = mid
 
-# 切換解析度/縮放
-if current_mode.startswith("3840x2400") and current_scale == 2:
-    new_mode = "1920x1200"
-    new_scale = 1
-    subprocess.run(["kscreen-doctor", f"output.{screen}.mode.7", f"output.{screen}.scale.{new_scale}"])
+# 4. 切換邏輯
+# 如果目前解析度是 4K (3840x2400)，則切換往 1200p
+if curr_res == "3840x2400" and id_1200p:
+    target, scale, msg = id_1200p, "1", "1200p (100%)"
 else:
-    new_mode = "3840x2400"
-    new_scale = 2
-    subprocess.run(["kscreen-doctor", f"output.{screen}.mode.1", f"output.{screen}.scale.{new_scale}"])
+    # 否則（目前在 1200p 或其他模式）切換往 4K
+    target, scale, msg = id_4k, "2", "4K (200%)"
 
-# 顯示通知
-notify("解析度切換完成", f"目前模式: {new_mode}, 縮放: {new_scale * 100}%")
+if not target:
+    print(f"失敗: 找不到目標模式 (3840x2400={id_4k}, 1920x1200={id_1200p})")
+    sys.exit(1)
+
+# 5. 執行指令
+subprocess.run([
+    "kscreen-doctor", 
+    f"output.{screen}.mode.{target}", 
+    f"output.{screen}.scale.{scale}"
+])
+
+# 6. 顯示通知
+notify("解析度切換完成", f"已切換至 {msg}")
