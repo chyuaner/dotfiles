@@ -9,6 +9,12 @@ fi
 # 設定#開頭一定就判定為註解
 setopt interactivecomments
 
+# 核心按鍵預定義：確保在 Instant Prompt 出現前，Zsh 就知道如何處理 Backspace 與方向鍵
+# 這能解決啟動瞬間輸入會出現 ^? 或 ^[[D 的 Zsh 原始行為
+bindkey '^?' backward-delete-char
+bindkey '^[[D' backward-char
+bindkey '^[[C' forward-char
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -30,13 +36,15 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
+# Load a few important annexes and core plugins synchronously
 zinit light-mode for \
     zdharma-continuum/zinit-annex-as-monitor \
     zdharma-continuum/zinit-annex-bin-gem-node \
     zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
+    zdharma-continuum/zinit-annex-rust \
+    OMZ::lib/history.zsh \
+    OMZ::lib/key-bindings.zsh \
+    OMZP::sudo
 
 ### End of Zinit's installer chunk
 
@@ -50,12 +58,6 @@ zinit wait="0a" lucid for \
 
 # 停用 Oh My Zsh 的 ls alias 設定，避免延遲載入時覆寫我們自訂的 colorls/eza
 DISABLE_LS_COLORS="true"
-
-# Oh My Zsh 核心功能 (影響輸入習慣與快捷鍵的，改為同步載入，效能影響趨近於 0)
-zinit light-mode for \
-    OMZ::lib/history.zsh \
-    OMZ::lib/key-bindings.zsh \
-    OMZP::sudo
 
 # Oh My Zsh 附屬功能 (延遲載入)
 zinit wait="0b" lucid for \
