@@ -41,20 +41,26 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 # zsh 套件四天王
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-zinit light zsh-users/zsh-history-substring-search
-zinit light zdharma-continuum/fast-syntax-highlighting
+zinit light zsh-users/zsh-completions # 補齊模組需在 compinit 之前載入
+# 其他輔助功能可使用 Turbo mode (延遲載入)，不卡畫面，即使失敗也不影響 shell
+zinit wait="0a" lucid for \
+    zsh-users/zsh-autosuggestions \
+    zsh-users/zsh-history-substring-search \
+    zdharma-continuum/fast-syntax-highlighting
 
-# Oh My Zsh 功能
-zinit snippet OMZ::lib/clipboard.zsh
-zinit snippet OMZ::lib/history.zsh
-zinit snippet OMZP::vscode
-zinit snippet OMZ::lib/key-bindings.zsh
-zinit snippet OMZ::lib/completion.zsh
-zinit snippet OMZP::sudo
-zinit snippet OMZ::lib/theme-and-appearance.zsh
-zinit snippet OMZP::laravel
+# 停用 Oh My Zsh 的 ls alias 設定，避免延遲載入時覆寫我們自訂的 colorls/eza
+DISABLE_LS_COLORS="true"
+
+# Oh My Zsh 功能 (延遲載入)
+zinit wait="0b" lucid for \
+    OMZ::lib/clipboard.zsh \
+    OMZ::lib/history.zsh \
+    OMZP::vscode \
+    OMZ::lib/key-bindings.zsh \
+    OMZ::lib/completion.zsh \
+    OMZP::sudo \
+    OMZ::lib/theme-and-appearance.zsh \
+    OMZP::laravel
 
 #zinit wait="1" lucid for \
 #    OMZL::clipboard.zsh \
@@ -184,7 +190,40 @@ bindkey '^X' create_completion
 if  command -v colorls &> /dev/null; then
     alias ls='colorls'
     compdef colorls='ls'
-    source $(dirname $(gem which colorls))/tab_complete.sh
+    
+    # 優化：建立常見路徑名單，避免執行耗時的 gem which
+    colorls_tab_complete=""
+    possible_paths=(
+        "/usr/lib/ruby/gems/3.4.0/gems/colorls-1.5.0/tab_complete.sh"
+        "/usr/lib/ruby/gems/3.3.0/gems/colorls-1.4.6/tab_complete.sh"
+        "/usr/local/lib/ruby/gems/3.4.0/gems/colorls-1.5.0/tab_complete.sh"
+        "/usr/local/lib/ruby/gems/3.3.0/gems/colorls-1.4.6/tab_complete.sh"
+        "$HOME/.local/share/gem/ruby/3.4.0/gems/colorls-1.5.0/tab_complete.sh"
+        "$HOME/.local/share/gem/ruby/3.3.0/gems/colorls-1.4.6/tab_complete.sh"
+    )
+    for p in "${possible_paths[@]}"; do
+        if [[ -f "$p" ]]; then
+            colorls_tab_complete="$p"
+            break
+        fi
+    done
+    
+    # 若常見路徑找不到，且有 gem 環境時，才 fallback 回 gem which
+    if [[ -z "$colorls_tab_complete" ]] && command -v gem &> /dev/null; then
+        colorls_path=$(gem which colorls 2>/dev/null)
+        if [[ -n "$colorls_path" ]]; then
+            # gem which 回傳的通常是 .../lib/colorls.rb，而 tab_complete.sh 在往上一層
+            colorls_tab_complete="$(dirname "$(dirname "$colorls_path")")/tab_complete.sh"
+            # 兼容：如果剛好就在 lib 內
+            if [[ ! -f "$colorls_tab_complete" ]]; then
+                colorls_tab_complete="$(dirname "$colorls_path")/tab_complete.sh"
+            fi
+        fi
+    fi
+    
+    if [[ -n "$colorls_tab_complete" && -f "$colorls_tab_complete" ]]; then
+        source "$colorls_tab_complete"
+    fi
 elif  command -v eza &> /dev/null; then
     zinit ice as"completion"
     zinit snippet https://github.com/eza-community/eza/blob/main/completions/zsh/_eza
@@ -217,7 +256,8 @@ zinit light mass8326/zsh-chezmoi
 
 {{ if .signingkey }}
 export GPG_TTY=$TTY{{ end }}
-gpgconf --launch gpg-agent
+# 在背景靜默喚醒 gpg-agent，確保可用且不阻塞終端機啟動
+gpgconf --launch gpg-agent &!
 
 # 自動補上 noglob 並禁用 Zsh 的 globbing 解析
 function git_pushmulti() {
