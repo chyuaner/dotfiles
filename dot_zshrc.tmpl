@@ -103,9 +103,9 @@ setopt MENU_COMPLETE
 # # 自動補齊初始化
 # autoload -U compinit
 # compinit
-# 自動補齊初始化 （使用快取）
+# 自動補齊初始化 （使用快取，並隱藏破損失效的補齊檔錯誤）
 autoload -Uz compinit
-compinit -C   # 使用快取，不檢查安全性
+compinit -C 2>/dev/null
 
 # Completion caching
 #zstyle ':completion::complete:*' use-cache on
