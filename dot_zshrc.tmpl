@@ -49,6 +49,7 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-rust \
     OMZ::lib/history.zsh \
     OMZ::lib/key-bindings.zsh \
+    OMZ::lib/completion.zsh \
     OMZP::sudo
 
 ### End of Zinit's installer chunk
@@ -59,8 +60,11 @@ zinit light zsh-users/zsh-completions # 補齊模組需在 compinit 之前載入
 zinit wait="0c" lucid atload"_zsh_autosuggest_start" for \
     zsh-users/zsh-autosuggestions
 
+# 延遲載入 history-substring-search 時，必須在載入後手動綁定按鍵
+zinit wait="0c" lucid atload'bindkey "$terminfo[kcuu1]" history-substring-search-up; bindkey "$terminfo[kcud1]" history-substring-search-down; bindkey "^[[A" history-substring-search-up; bindkey "^[[B" history-substring-search-down' for \
+    zsh-users/zsh-history-substring-search
+
 zinit wait="0c" lucid for \
-    zsh-users/zsh-history-substring-search \
     zdharma-continuum/fast-syntax-highlighting
 
 # 停用 Oh My Zsh 的 ls alias 設定，避免延遲載入時覆寫我們自訂的 colorls/eza
@@ -70,7 +74,6 @@ DISABLE_LS_COLORS="true"
 zinit wait="0b" lucid for \
     OMZ::lib/clipboard.zsh \
     OMZP::vscode \
-    OMZ::lib/completion.zsh \
     OMZ::lib/theme-and-appearance.zsh \
     OMZP::laravel
 
