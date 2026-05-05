@@ -22,6 +22,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# 雙重保險：在 Instant Prompt 啟動後再次定義按鍵，防止被其重置行為覆寫
+bindkey '^?' backward-delete-char
+bindkey '^[[D' backward-char
+bindkey '^[[C' forward-char
+
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -50,9 +55,11 @@ zinit light-mode for \
 
 # zsh 套件四天王
 zinit light zsh-users/zsh-completions # 補齊模組需在 compinit 之前載入
-# 其他輔助功能可使用 Turbo mode (延遲載入)，不卡畫面，即使失敗也不影響 shell
-zinit wait="0a" lucid for \
-    zsh-users/zsh-autosuggestions \
+# zinit 官方推薦：延遲載入 autosuggestions 必須手動觸發啟動函數
+zinit wait="0c" lucid atload"_zsh_autosuggest_start" for \
+    zsh-users/zsh-autosuggestions
+
+zinit wait="0c" lucid for \
     zsh-users/zsh-history-substring-search \
     zdharma-continuum/fast-syntax-highlighting
 
