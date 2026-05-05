@@ -51,14 +51,17 @@ zinit wait="0a" lucid for \
 # 停用 Oh My Zsh 的 ls alias 設定，避免延遲載入時覆寫我們自訂的 colorls/eza
 DISABLE_LS_COLORS="true"
 
-# Oh My Zsh 功能 (延遲載入)
+# Oh My Zsh 核心功能 (影響輸入習慣與快捷鍵的，改為同步載入，效能影響趨近於 0)
+zinit light-mode for \
+    OMZ::lib/history.zsh \
+    OMZ::lib/key-bindings.zsh \
+    OMZP::sudo
+
+# Oh My Zsh 附屬功能 (延遲載入)
 zinit wait="0b" lucid for \
     OMZ::lib/clipboard.zsh \
-    OMZ::lib/history.zsh \
     OMZP::vscode \
-    OMZ::lib/key-bindings.zsh \
     OMZ::lib/completion.zsh \
-    OMZP::sudo \
     OMZ::lib/theme-and-appearance.zsh \
     OMZP::laravel
 
