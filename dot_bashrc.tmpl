@@ -183,11 +183,10 @@ function __pb10k_top {
         [ "$info" != "" ] && __pb10k_top_left_parse "$info"
     done
 
-    if  command -v tput &> /dev/null; then
-        terminal_width=$(tput cols)
+    if terminal_width=$(tput cols 2>/dev/null) && [ -n "$terminal_width" ]; then
         filler_character="─"
         __TOP_LEFT+="$_omb_prompt_black"
-        __TOP_LEFT+="$(for ((i=0; i<"$terminal_width"; i++)); do printf "%s" "$filler_character"; done)"
+        __TOP_LEFT+="$(for ((i=0; i<terminal_width; i++)); do printf "%s" "$filler_character"; done)"
         __TOP_LEFT+="\033[${terminal_width}G\033[1K\033[1A"
     fi
 
@@ -197,7 +196,7 @@ function __pb10k_top {
         [ "$info" != "" ] && __pb10k_top_right_parse "$info"
     done
 
-    if  command -v tput &> /dev/null; then
+    if tput cols &>/dev/null; then
       [ "$__TOP_RIGHT_LEN" -gt 0 ] && __TOP_RIGHT_LEN=$(( __TOP_RIGHT_LEN - 1 ))
       cursor_adjust="\033[${__TOP_RIGHT_LEN}D"
       __TOP_LEFT+="$cursor_adjust"
