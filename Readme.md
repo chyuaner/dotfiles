@@ -155,6 +155,44 @@ rm -rf ~/.config/alacritty ~/.config/zellij
 
 </details>
 
+常見問題
+--------------------------------------------------------------------------------
+### 出現 compinit:527: 沒有此一檔案或目錄 錯誤
+
+若出現以下錯誤：
+```
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_android
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_artisan
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_console
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_drush
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_emacsclient
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_fleetctl
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_google
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_homestead
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_knife
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_pgsql_utils
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_play
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_rkt
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_rsvm
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_sfdx
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_stack
+compinit:527: 沒有此一檔案或目錄: /home/yuan/.local/share/zinit/completions/_supervisorctl
+```
+![](.readme/Screenshot_20260506_040244c.png)
+
+請嘗試用以下指令解決
+
+```zsh
+# 1. 清除 Zinit 的補齊快取（它會重新掃描並建立正確的連結）
+zinit cclear
+
+# 2. 刪除 Zsh 原生的補齊快取檔（避免 compinit 繼續抓舊資料）
+rm -f ~/.zcompdump*
+
+# 3. 重新啟動 Zsh
+exec zsh
+```
+
 擴充的小工具
 --------------------------------------------------------------------------------
 ### git-pushmulti 同時上傳到多個git server
