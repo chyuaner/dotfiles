@@ -85,3 +85,18 @@ ex ()
 
 # Oracle Cloud Cli
 [[ -e "$HOME/lib/oracle-cli/lib/python3.12/site-packages/oci_cli/bin/oci_autocomplete.sh" ]] && source "$HOME/lib/oracle-cli/lib/python3.12/site-packages/oci_cli/bin/oci_autocomplete.sh"
+
+{{/* ---- 輸出顯示 ------------------------------------------- */ -}}
+# --- Tmux Session 登入提醒 (Bash/Zsh 通用) ---
+if command -v tmux &> /dev/null && \
+   [[ -z "$TMUX" ]] && \
+   [[ "$SHLVL" -eq 1 ]] && \
+   tmux has-session 2>/dev/null; then
+
+    # 使用 printf 替代 echo -e 以獲得最佳相容性
+    printf "\033[1;32m󱫋 Detected active tmux sessions:\033[0m\n"
+
+    tmux list-sessions -F "  ▶ #S (#{session_windows} windows)"
+
+    printf "\033[1;34mTip: Use 'tmux attach -t [name]' to jump back.\033[0m\n\n"
+fi
