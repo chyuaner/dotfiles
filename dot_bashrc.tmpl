@@ -218,6 +218,7 @@ function __pb10k_bottom {
 }
 
 # ----以下是我的自訂內容 ------------------------------------------------------
+{{ template "tmux_reminder.sh.tmpl" . }}
 export LANG=zh_TW.UTF-8 #macOS要手動指定，不然被ssh連入使用時會變亂碼
 
 {{ if .signingkey }}
