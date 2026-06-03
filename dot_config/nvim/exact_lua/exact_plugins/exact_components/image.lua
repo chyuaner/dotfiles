@@ -3,7 +3,8 @@ return {
     "3rd/image.nvim",
     build = false, -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
     -- cond = not vim.g.neovide and not vim.fn.has("goneovim") == 1 and not vim.fn.has("gui_running") == 1,
-    cond = require("tools.gui").is_enable_sixel(),
+    -- cond = require("tools.gui").is_enable_sixel(),
+    cond = false,
     lazy = false,
     opts = {
       backend = "ueberzug",
