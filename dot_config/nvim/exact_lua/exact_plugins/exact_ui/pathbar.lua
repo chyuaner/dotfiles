@@ -1,6 +1,7 @@
 return {
   {
     'Bekaboo/dropbar.nvim',
+    cond = vim.fn.has('nvim-0.11') == 1,
     -- optional, but required for fuzzy finder support
     dependencies = {
       'nvim-telescope/telescope-fzf-native.nvim',
