@@ -36,6 +36,7 @@ return {
   {
     "Isrothy/neominimap.nvim",
     version = "v3.x.x",
+    cond = vim.fn.has("nvim-0.10") == 1,
     lazy = false, -- NOTE: NO NEED to Lazy load
     -- Optional. You can alse set your own keybindings
     keys = {
