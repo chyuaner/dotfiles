@@ -89,6 +89,44 @@ return {
         end,
       })
 
+      -- 自動關閉機制：當分頁中只剩下特殊視窗時，自動退出 Neovim 或關閉分頁
+      local function close_if_only_special_windows()
+        local wins = vim.api.nvim_tabpage_list_wins(0)
+        local has_normal_win = false
+        for _, win in ipairs(wins) do
+          if vim.api.nvim_win_is_valid(win) then
+            local buf = vim.api.nvim_win_get_buf(win)
+            local buftype = vim.bo[buf].buftype
+            local filetype = vim.bo[buf].filetype
+            
+            -- 定義排除在外的特殊/輔助視窗類型
+            local is_special = vim.tbl_contains({
+              "neo-tree", "toggleterm", "qf", "notify", "trouble", "lazy", "mason", "noice"
+            }, filetype)
+
+            if buftype == "" and not is_special then
+              has_normal_win = true
+              break
+            end
+          end
+        end
+
+        if not has_normal_win then
+          if #vim.api.nvim_list_tabpages() == 1 then
+            pcall(vim.cmd, "quitall")
+          else
+            pcall(vim.cmd, "tabclose")
+          end
+        end
+      end
+
+      vim.api.nvim_create_autocmd("BufEnter", {
+        group = vim.api.nvim_create_augroup("AutoCloseSpecialWindows", { clear = true }),
+        callback = function()
+          vim.schedule(close_if_only_special_windows)
+        end,
+      })
+
       -- 智慧型關閉行為：如果還有其他檔案，僅關閉當前分頁；若是最後一個檔案則關閉 Neovim。若在特殊/側邊欄視窗，則直接關閉視窗。
       local function smart_close()
         local buftype = vim.bo.buftype
