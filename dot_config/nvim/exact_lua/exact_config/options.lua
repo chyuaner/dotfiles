@@ -23,6 +23,8 @@ vim.opt.colorcolumn = "80,120"  -- 顯示編輯器建議寬度
 vim.opt.scrolloff = 3           -- 捲動時保留 n 行彈性
 require("config.listchars")     -- 顯示行尾符號
 vim.opt.list = true
+vim.opt.splitkeep = "screen"    -- 保持視窗分割比例穩定
+
 
 -- 設定正確的檔案類型對應
 vim.filetype.add({

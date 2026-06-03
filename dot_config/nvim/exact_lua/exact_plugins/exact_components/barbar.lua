@@ -54,7 +54,7 @@ return {
       -- 修正neo-tree的winbar開啟後，切換winbat tab會導致barbar offset跑掉的問題
       -- <https://chatgpt.com/share/683aa9e0-6214-800f-96f9-df29d366ad2a>
       local function neo_tree_is_visible()
-        for _, win in ipairs(vim.api.nvim_list_wins()) do
+        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
           local buf = vim.api.nvim_win_get_buf(win)
           if vim.bo[buf].filetype == "neo-tree" then
             return true
@@ -66,7 +66,7 @@ return {
         pattern = "*",
         callback = function()
           if vim.bo.filetype == "neo-tree" then
-            for _, win in ipairs(vim.api.nvim_list_wins()) do
+            for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
               local buf = vim.api.nvim_win_get_buf(win)
               if vim.bo[buf].filetype == "neo-tree" then
                 local width = vim.api.nvim_win_get_width(win)
@@ -89,16 +89,46 @@ return {
         end,
       })
 
-      -- 重定義 :q 命令為僅關閉當前 Buffer
-      vim.api.nvim_create_user_command('Q', function()
-        vim.cmd('BufferClose') -- 使用 barbar.nvim 的 BufferClose 呀命
+      -- 智慧型關閉行為：如果還有其他檔案，僅關閉當前分頁；若是最後一個檔案則關閉 Neovim。若在特殊/側邊欄視窗，則直接關閉視窗。
+      local function smart_close()
+        local buftype = vim.bo.buftype
+        local filetype = vim.bo.filetype
+
+        -- 如果是特殊/輔助視窗（如 neo-tree, toggleterm 等），直接關閉視窗本身
+        local is_special = vim.tbl_contains({
+          "neo-tree", "toggleterm", "qf", "notify", "trouble", "lazy", "mason", "noice"
+        }, filetype) or buftype ~= ""
+
+        if is_special then
+          vim.cmd('quit')
+          return
+        end
+
+        -- 獲取所有載入且列出在 tabline 上的緩衝區數量
+        local buffers = vim.tbl_filter(function(buf)
+          return vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted
+        end, vim.api.nvim_list_bufs())
+
+        -- 如果只剩下一個（或更少）一般檔案 Buffer，直接退出
+        if #buffers <= 1 then
+          vim.cmd('quit')
+        else
+          vim.cmd('BufferClose')
+        end
+      end
+
+      -- 重定義 :Q 與 :WQ 命令
+      vim.api.nvim_create_user_command('Q', smart_close, {})
+      vim.api.nvim_create_user_command('WQ', function()
+        vim.cmd('write')
+        smart_close()
       end, {})
 
-      -- 重定義 :wq 命令為保存後僅關閉當前 Buffer
-      vim.api.nvim_create_user_command('WQ', function()
-        vim.cmd('write') -- 保存文件
-        vim.cmd('BufferClose') -- 使用 barbar.nvim 的 BufferClose 命令
-      end, {})
+      -- 將命令列中的 q/wq 用智慧型的 Q/WQ 替換
+      vim.cmd([[
+        cnoreabbrev <expr> q ((getcmdtype() is# ':' && getcmdline() is# 'q') ? 'Q' : 'q')
+        cnoreabbrev <expr> wq ((getcmdtype() is# ':' && getcmdline() is# 'wq') ? 'WQ' : 'wq')
+      ]])
 
       -- 設定快速鍵
       -- vim.api.nvim_set_keymap('t', '<A-Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
