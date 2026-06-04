@@ -295,6 +295,21 @@ neovim
 
 ![](.readme/Screenshot_20250503_031321.png)
 
+### 🔧 Neovim 套件日常維護與全新重裝
+當同步設定到新電腦，或者套件因版本衝突需要排錯時，可使用以下指令：
+#### 一鍵同步與更新所有套件 (無介面背景執行)
+這會啟動 `lazy.nvim` 自動下載缺失套件、更新已有套件，並清理已移除的套件：
+```bash
+nvim --headless "+Lazy! sync" +qa
+```
+
+#### 強制更新並重新編譯所有 Treesitter 語法解析器
+如果 Treesitter 發生 API 不相容或語法高亮失效，可以使用此指令強制更新所有 parser：
+
+```bash
+nvim --headless "+Lazy! sync" "+TSUpdate" +qa
+```
+
 vim
 --------------------------------------------------------------------------------
 ![](.readme/Screenshot_20250424_012703.png)
