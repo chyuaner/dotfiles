@@ -55,7 +55,8 @@ if is_ssh then
     if vim.env.TMUX then
       osc = string.format("\x1bPtmux;\x1b%s\x1b\\", osc:gsub("\x1b", "\x1b\x1b"))
     end
-    pcall(vim.api.nvim_out_write, osc)
+    io.stderr:write(osc)
+    io.stderr:flush()
   end
 
   vim.api.nvim_create_autocmd("TextYankPost", {
