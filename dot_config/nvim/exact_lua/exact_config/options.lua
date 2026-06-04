@@ -1,3 +1,63 @@
+-- Polyfills for compatibility with older Neovim versions (< 0.10)
+if not vim.fs then
+  vim.fs = {}
+end
+if not vim.fs.joinpath then
+  vim.fs.joinpath = function(...)
+    return table.concat({...}, "/")
+  end
+end
+if not vim.list_contains then
+  vim.list_contains = function(t, value)
+    for _, v in ipairs(t) do
+      if v == value then
+        return true
+      end
+    end
+    return false
+  end
+end
+
+-- SSH / TMUX 剪貼簿共享 (OSC 52)
+if vim.fn.has("nvim-0.10") == 1 then
+  vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+      ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+    },
+    paste = {
+      ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+    },
+  }
+else
+  local function osc52_copy(lines, _)
+    if not vim.base64 then return end
+    local text = table.concat(lines, "\n")
+    local status, encoded = pcall(vim.base64.encode, text)
+    if not status then return end
+    local osc = string.format("\x1b]52;c;%s\x07", encoded)
+    if vim.env.TMUX then
+      osc = string.format("\x1bPtmux;\x1b%s\x1b\\", osc:gsub("\x1b", "\x1b\x1b"))
+    end
+    io.stdout:write(osc)
+    io.stdout:flush()
+  end
+
+  vim.g.clipboard = {
+    name = 'OSC 52 Fallback',
+    copy = {
+      ['+'] = osc52_copy,
+      ['*'] = osc52_copy,
+    },
+    paste = {
+      ['+'] = function() return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')} end,
+      ['*'] = function() return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')} end,
+    },
+  }
+end
+
 -- 編輯器行為設定
 vim.api.nvim_set_option("clipboard", "unnamedplus") -- 使用系統剪貼簿（nvim Wayland有直接支援，不須依賴vim-wayland-clipboard）
 vim.opt.confirm = true          -- 操作過程有衝突時，以明確的文字來詢問
