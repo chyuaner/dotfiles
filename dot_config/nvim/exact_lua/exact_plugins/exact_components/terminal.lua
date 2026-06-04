@@ -3,8 +3,31 @@ return {
     'akinsho/toggleterm.nvim',
     version = "*",
     config = function()
+      local function is_neo_tree_open()
+        -- 遍歷當前分頁的所有視窗，檢查是否有 NeoTree 視窗
+        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          if vim.bo[buf].filetype == "neo-tree" then
+            return true
+          end
+        end
+        return false
+      end
+
       require("toggleterm").setup {
         open_mapping = [[<C-\>]], -- 設定開關快速鍵
+
+        -- on_open 時，以 Neotree 當作 Offset (強制 Neotree 重構排版在最左側)
+        on_open = function(_)
+          if is_neo_tree_open() then
+            vim.defer_fn(function()
+              local cmd = string.format("Neotree toggle")
+              vim.cmd(cmd)
+              vim.cmd(cmd)
+              vim.cmd("wincmd p")
+            end, 100)
+          end
+        end,
 
         hide_numbers = true,
         shade_filetypes = {},
