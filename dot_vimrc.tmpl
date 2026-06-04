@@ -29,8 +29,92 @@ set colorcolumn=80    " 顯示編輯器建議寬度
 set scrolloff=3               " 捲動時保留n行彈性
 set laststatus=2
 
-" 使用作業系統剪貼簿
-set clipboard=unnamedplus " 共用系統剪貼簿 (Wayland有額外用套件處理，請見下方plug)
+" SSH / TMUX 剪貼簿共享 (OSC 52)
+let s:is_ssh = !empty($SSH_CLIENT) || !empty($SSH_TTY) || !empty($SSH_CONNECTION)
+
+if s:is_ssh
+  " 純 Vimscript Base64 編碼器（高度相容，無外部依賴，相容 Vim 7.0+）
+  function! s:base64_encode(str) abort
+    let l:b = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    let l:out = []
+    let l:len = strlen(a:str)
+    let l:padding = (3 - l:len % 3) % 3
+    let l:s = a:str . repeat("\<Nul>", l:padding)
+    
+    let l:i = 0
+    let l:slen = strlen(l:s)
+    while l:i < l:slen
+      let l:v1 = char2nr(strpart(l:s, l:i, 1))
+      let l:v2 = char2nr(strpart(l:s, l:i+1, 1))
+      let l:v3 = char2nr(strpart(l:s, l:i+2, 1))
+      let l:n = l:v1 * 65536 + l:v2 * 256 + l:v3
+      
+      let l:n1 = (l:n / 262144) % 64
+      let l:n2 = (l:n / 4096) % 64
+      let l:n3 = (l:n / 64) % 64
+      let l:n4 = l:n % 64
+      
+      call add(l:out, strpart(l:b, l:n1, 1))
+      call add(l:out, strpart(l:b, l:n2, 1))
+      call add(l:out, strpart(l:b, l:n3, 1))
+      call add(l:out, strpart(l:b, l:n4, 1))
+      let l:i += 3
+    endwhile
+    
+    let l:res = join(l:out, '')
+    if l:padding > 0
+      let l:res = strpart(l:res, 0, strlen(l:res) - l:padding) . repeat('=', l:padding)
+    endif
+    return l:res
+  endfunction
+
+  " 快速編碼與降級偵測
+  function! s:get_base64(str) abort
+    if executable('base64')
+      let l:b64 = system('echo -n ' . shellescape(a:str) . ' | base64 | tr -d "\n"')
+      if v:shell_error == 0 && strlen(l:b64) > 0
+        return l:b64
+      endif
+    endif
+    return s:base64_encode(a:str)
+  endfunction
+
+  " 輸出 OSC 52 逸出碼到 /dev/tty (繞過 Vim 內部快取)
+  function! s:osc52_copy(str) abort
+    let l:b64 = s:get_base64(a:str)
+    let l:osc = "\<Esc>]52;c;" . l:b64 . "\007"
+    if !empty($TMUX)
+      let l:osc = "\<Esc>Ptmux;\<Esc>" . substitute(l:osc, "\<Esc>", "\<Esc>\<Esc>", "g") . "\<Esc>\\"
+    endif
+    try
+      call writefile([l:osc], '/dev/tty', 'b')
+    catch
+      " 如果 /dev/tty 不可寫，嘗試使用 echoraw (Vim 8.2+)
+      if exists('*echoraw')
+        call echoraw(l:osc)
+      endif
+    endtry
+  endfunction
+
+  " 監聽複製事件 (Vim 8.0.1394+ 支援 TextYankPost)
+  if exists('##TextYankPost')
+    function! s:on_yank() abort
+      let l:event = v:event
+      if l:event.regname == '' || l:event.regname == '+' || l:event.regname == '*'
+        let l:text = join(l:event.regcontents, "\n")
+        call s:osc52_copy(l:text)
+      endif
+    endfunction
+
+    augroup VimSSHOSC52Copy
+      autocmd!
+      autocmd TextYankPost * call s:on_yank()
+    augroup END
+  endif
+else
+  " 使用作業系統剪貼簿
+  set clipboard=unnamedplus " 共用系統剪貼簿 (Wayland有額外用套件處理，請見下方plug)
+endif
 "set statusline=%4*%<\%m%<[%f\%r%h%w]\ [%{&ff},%{&fileencoding},%Y]%=\[Position=%l,%v,%p%%]
 
 " 縮排設定
