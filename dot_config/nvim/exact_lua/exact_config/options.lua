@@ -19,68 +19,39 @@ if not vim.list_contains then
 end
 
 -- SSH / TMUX 剪貼簿共享 (OSC 52)
-local function osc52_copy(lines, _)
-  local text = table.concat(lines, "\n")
-  local status, encoded
-  if vim.base64 then
-    status, encoded = pcall(vim.base64.encode, text)
-  end
-  if not status or not encoded then return end
-  local osc = string.format("\x1b]52;c;%s\x07", encoded)
-  if vim.env.TMUX then
-    osc = string.format("\x1bPtmux;\x1b%s\x1b\\", osc:gsub("\x1b", "\x1b\x1b"))
-  end
-  io.stdout:write(osc)
-  io.stdout:flush()
-end
+local is_ssh = vim.env.SSH_CLIENT ~= nil or vim.env.SSH_TTY ~= nil or vim.env.SSH_CONNECTION ~= nil
 
-local in_paste = false
-local function osc52_paste()
-  if in_paste then
-    return { {""}, "v" }
+if is_ssh then
+  -- 處於 SSH 遠端連線環境下：使用 TextYankPost 自動發送 OSC 52 逸出碼到本機剪貼簿
+  -- 避免啟用 unnamedplus 觸發舊版 Neovim 的 clipboard provider 遞迴與超時錯誤
+  local function osc52_copy(lines)
+    local text = table.concat(lines, "\n")
+    local status, encoded
+    if vim.base64 then
+      status, encoded = pcall(vim.base64.encode, text)
+    end
+    if not status or not encoded then return end
+    local osc = string.format("\x1b]52;c;%s\x07", encoded)
+    if vim.env.TMUX then
+      osc = string.format("\x1bPtmux;\x1b%s\x1b\\", osc:gsub("\x1b", "\x1b\x1b"))
+    end
+    pcall(vim.api.nvim_out_write, osc)
   end
-  in_paste = true
-  local ok, lines = pcall(vim.fn.getreg, '"')
-  local ok_type, regtype = pcall(vim.fn.getregtype, '"')
-  in_paste = false
-  if not ok or not lines then
-    return { {""}, "v" }
-  end
-  local list = vim.fn.split(lines, "\n")
-  if #list == 0 then
-    list = {""}
-  end
-  return { list, ok_type and regtype or "v" }
-end
 
-if vim.fn.has("nvim-0.10") == 1 then
-  vim.g.clipboard = {
-    name = 'OSC 52',
-    copy = {
-      ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-      ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-    },
-    paste = {
-      ['+'] = osc52_paste,
-      ['*'] = osc52_paste,
-    },
-  }
+  vim.api.nvim_create_autocmd("TextYankPost", {
+    group = vim.api.nvim_create_augroup("SSHOSC52Copy", { clear = true }),
+    callback = function()
+      local event = vim.v.event
+      -- 複製/刪除/剪下到無名暫存器或系統剪貼簿暫存器時，同步到本地剪貼簿
+      if event.regname == "" or event.regname == "+" or event.regname == "*" then
+        osc52_copy(event.regcontents)
+      end
+    end,
+  })
 else
-  vim.g.clipboard = {
-    name = 'OSC 52 Fallback',
-    copy = {
-      ['+'] = osc52_copy,
-      ['*'] = osc52_copy,
-    },
-    paste = {
-      ['+'] = osc52_paste,
-      ['*'] = osc52_paste,
-    },
-  }
+  -- 本地環境：使用系統預設的剪貼簿連通
+  vim.api.nvim_set_option("clipboard", "unnamedplus") -- 使用系統剪貼簿（nvim Wayland有直接支援，不須依賴vim-wayland-clipboard）
 end
-
--- 編輯器行為設定
-vim.api.nvim_set_option("clipboard", "unnamedplus") -- 使用系統剪貼簿（nvim Wayland有直接支援，不須依賴vim-wayland-clipboard）
 vim.opt.confirm = true          -- 操作過程有衝突時，以明確的文字來詢問
 vim.opt.history = 10000         -- 設定命令歷史記錄數量為 10000
 -- vim.opt.directory = "."         -- 將暫存檔存放在當前資料夾中
