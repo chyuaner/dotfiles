@@ -27,6 +27,17 @@ if vim.version and not vim.version.ge then
   vim.version.eq = function(v1, v2) return vim.version.cmp(v1, v2) == 0 end
 end
 
+-- Polyfill for vim.api.nvim_get_hl (< 0.10)
+if vim.fn.has("nvim-0.10") == 0 then
+  local orig_get_hl = vim.api.nvim_get_hl
+  vim.api.nvim_get_hl = function(ns_id, opts)
+    if opts then
+      opts.create = nil
+    end
+    return orig_get_hl(ns_id, opts)
+  end
+end
+
 -- SSH / TMUX 剪貼簿共享 (OSC 52)
 local is_ssh = vim.env.SSH_CLIENT ~= nil or vim.env.SSH_TTY ~= nil or vim.env.SSH_CONNECTION ~= nil
 
