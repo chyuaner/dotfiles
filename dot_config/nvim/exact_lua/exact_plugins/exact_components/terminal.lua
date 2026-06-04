@@ -55,6 +55,7 @@ return {
   -- 在nvim內的Terminal用 `nvim Readme.md` 開啟檔案，會在當前nvim以新Buffer開啟
   {
     "willothy/flatten.nvim",
+    cond = vim.fn.has("nvim-0.10") == 1,
     -- config = true,
     -- or pass configuration with
     opts = {
