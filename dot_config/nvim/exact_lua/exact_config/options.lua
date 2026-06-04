@@ -38,19 +38,55 @@ if vim.fn.has("nvim-0.10") == 0 then
   end
 end
 
+-- Polyfill for vim.keycode (< 0.10)
+if not vim.keycode then
+  vim.keycode = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+  end
+end
+
 -- SSH / TMUX 剪貼簿共享 (OSC 52)
 local is_ssh = vim.env.SSH_CLIENT ~= nil or vim.env.SSH_TTY ~= nil or vim.env.SSH_CONNECTION ~= nil
 
 if is_ssh then
+  -- 純 Lua Base64 編碼器（用於 Neovim < 0.10 無 vim.base64 的舊版環境）
+  local function base64_encode(data)
+    local b = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    local out = {}
+    local len = #data
+    local padding = (3 - len % 3) % 3
+    local s = data .. string.rep('\0', padding)
+    for i = 1, #s, 3 do
+      local v1, v2, v3 = s:byte(i, i+2)
+      local n = v1 * 65536 + v2 * 256 + v3
+      local n1 = math.floor(n / 262144) % 64
+      local n2 = math.floor(n / 4096) % 64
+      local n3 = math.floor(n / 64) % 64
+      local n4 = n % 64
+      table.insert(out, b:sub(n1 + 1, n1 + 1))
+      table.insert(out, b:sub(n2 + 1, n2 + 1))
+      table.insert(out, b:sub(n3 + 1, n3 + 1))
+      table.insert(out, b:sub(n4 + 1, n4 + 1))
+    end
+    local res = table.concat(out)
+    if padding > 0 then
+      res = res:sub(1, -padding - 1) .. string.rep('=', padding)
+    end
+    return res
+  end
+
   -- 處於 SSH 遠端連線環境下：使用 TextYankPost 自動發送 OSC 52 逸出碼到本機剪貼簿
   -- 避免啟用 unnamedplus 觸發舊版 Neovim 的 clipboard provider 遞迴與超時錯誤
   local function osc52_copy(lines)
     local text = table.concat(lines, "\n")
-    local status, encoded
+    local encoded
     if vim.base64 then
+      local status
       status, encoded = pcall(vim.base64.encode, text)
+    else
+      encoded = base64_encode(text)
     end
-    if not status or not encoded then return end
+    if not encoded then return end
     local osc = string.format("\x1b]52;c;%s\x07", encoded)
     if vim.env.TMUX then
       osc = string.format("\x1bPtmux;\x1b%s\x1b\\", osc:gsub("\x1b", "\x1b\x1b"))
