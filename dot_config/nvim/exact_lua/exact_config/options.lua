@@ -19,6 +19,28 @@ if not vim.list_contains then
 end
 
 -- SSH / TMUX 剪貼簿共享 (OSC 52)
+local function osc52_copy(lines, _)
+  local text = table.concat(lines, "\n")
+  local status, encoded
+  if vim.base64 then
+    status, encoded = pcall(vim.base64.encode, text)
+  end
+  if not status or not encoded then return end
+  local osc = string.format("\x1b]52;c;%s\x07", encoded)
+  if vim.env.TMUX then
+    osc = string.format("\x1bPtmux;\x1b%s\x1b\\", osc:gsub("\x1b", "\x1b\x1b"))
+  end
+  io.stdout:write(osc)
+  io.stdout:flush()
+end
+
+local function osc52_paste()
+  return {
+    vim.fn.split(vim.fn.getreg(""), "\n"),
+    vim.fn.getregtype(""),
+  }
+end
+
 if vim.fn.has("nvim-0.10") == 1 then
   vim.g.clipboard = {
     name = 'OSC 52',
@@ -27,24 +49,11 @@ if vim.fn.has("nvim-0.10") == 1 then
       ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
     },
     paste = {
-      ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-      ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+      ['+'] = osc52_paste,
+      ['*'] = osc52_paste,
     },
   }
 else
-  local function osc52_copy(lines, _)
-    if not vim.base64 then return end
-    local text = table.concat(lines, "\n")
-    local status, encoded = pcall(vim.base64.encode, text)
-    if not status then return end
-    local osc = string.format("\x1b]52;c;%s\x07", encoded)
-    if vim.env.TMUX then
-      osc = string.format("\x1bPtmux;\x1b%s\x1b\\", osc:gsub("\x1b", "\x1b\x1b"))
-    end
-    io.stdout:write(osc)
-    io.stdout:flush()
-  end
-
   vim.g.clipboard = {
     name = 'OSC 52 Fallback',
     copy = {
@@ -52,8 +61,8 @@ else
       ['*'] = osc52_copy,
     },
     paste = {
-      ['+'] = function() return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')} end,
-      ['*'] = function() return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')} end,
+      ['+'] = osc52_paste,
+      ['*'] = osc52_paste,
     },
   }
 end
