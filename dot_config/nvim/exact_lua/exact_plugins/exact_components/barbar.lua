@@ -128,7 +128,7 @@ return {
       })
 
       -- 智慧型關閉行為：如果還有其他檔案，僅關閉當前分頁；若是最後一個檔案則關閉 Neovim。若在特殊/側邊欄視窗，則直接關閉視窗。
-      local function smart_close()
+      local function smart_close(bang)
         local buftype = vim.bo.buftype
         local filetype = vim.bo.filetype
 
@@ -138,7 +138,7 @@ return {
         }, filetype) or buftype ~= ""
 
         if is_special then
-          vim.cmd('quit')
+          vim.cmd('quit' .. (bang and '!' or ''))
           return
         end
 
@@ -149,18 +149,20 @@ return {
 
         -- 如果只剩下一個（或更少）一般檔案 Buffer，直接退出
         if #buffers <= 1 then
-          vim.cmd('quit')
+          vim.cmd('quit' .. (bang and '!' or ''))
         else
-          vim.cmd('BufferClose')
+          vim.cmd('BufferClose' .. (bang and '!' or ''))
         end
       end
 
-      -- 重定義 :Q 與 :WQ 命令
-      vim.api.nvim_create_user_command('Q', smart_close, {})
-      vim.api.nvim_create_user_command('WQ', function()
-        vim.cmd('write')
-        smart_close()
-      end, {})
+      -- 重定義 :Q 與 :WQ 命令 (支援 bang 參數，即 Q! / WQ!)
+      vim.api.nvim_create_user_command('Q', function(opts)
+        smart_close(opts.bang)
+      end, { bang = true })
+      vim.api.nvim_create_user_command('WQ', function(opts)
+        vim.cmd('write' .. (opts.bang and '!' or ''))
+        smart_close(opts.bang)
+      end, { bang = true })
 
       -- 將命令列中的 q/wq 用智慧型的 Q/WQ 替換
       vim.cmd([[
