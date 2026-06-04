@@ -34,11 +34,23 @@ local function osc52_copy(lines, _)
   io.stdout:flush()
 end
 
+local in_paste = false
 local function osc52_paste()
-  return {
-    vim.fn.split(vim.fn.getreg(""), "\n"),
-    vim.fn.getregtype(""),
-  }
+  if in_paste then
+    return { {""}, "v" }
+  end
+  in_paste = true
+  local ok, lines = pcall(vim.fn.getreg, '"')
+  local ok_type, regtype = pcall(vim.fn.getregtype, '"')
+  in_paste = false
+  if not ok or not lines then
+    return { {""}, "v" }
+  end
+  local list = vim.fn.split(lines, "\n")
+  if #list == 0 then
+    list = {""}
+  end
+  return { list, ok_type and regtype or "v" }
 end
 
 if vim.fn.has("nvim-0.10") == 1 then
