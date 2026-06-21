@@ -111,8 +111,8 @@ else
 end
 vim.opt.confirm = true          -- 操作過程有衝突時，以明確的文字來詢問
 vim.opt.history = 10000         -- 設定命令歷史記錄數量為 10000
--- vim.opt.directory = "."         -- 將暫存檔存放在當前資料夾中
--- require("tools.swap")           -- 將暫存檔存放置位置另外做邏輯
+vim.opt.directory = "."         -- 將暫存檔存放在當前資料夾中
+require("tools.swap")           -- 將暫存檔存放置位置另外做邏輯
 vim.opt.mouse = "a"             -- 啟用滑鼠支援
 
 -- 編碼設定
@@ -144,4 +144,37 @@ vim.filetype.add({
     [".+%.py%.tmpl"] = "python",
     [".+%.go%.tmpl"] = "go",
   },
+})
+
+-- 啟用持久化復原（就算重開 Neovim，依然能按 u 還原上一次的歷史記錄）
+vim.opt.undofile = true
+
+-- 啟用 Swap 暫存功能（預設即為 true，此處確保開啟）
+vim.opt.swapfile = true
+
+-- 崩潰還原：當偵測到有 swap 暫存檔時，自動載入暫存內容（恢復為未存檔 dirty 狀態），不跳出擾人的詢問視窗
+vim.api.nvim_create_autocmd("SwapExists", {
+  callback = function()
+    vim.v.swapchoice = "r"
+  end,
+})
+
+-- 方案 B：未命名文件自動生成暫存檔
+local scratch_dir = vim.fn.stdpath("data") .. "/scratch"
+if vim.fn.isdirectory(scratch_dir) == 0 then
+  vim.fn.mkdir(scratch_dir, "p")
+end
+
+vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+  callback = function()
+    local buf = vim.api.nvim_get_current_buf()
+    -- 僅針對已被修改、一般緩衝區、且完全沒有檔名的 buffer
+    if vim.bo[buf].modified and vim.bo[buf].buftype == "" and vim.fn.expand("%") == "" then
+      -- 自動命名為 scratch_年月日_時分秒_bufid.md
+      local filename = scratch_dir .. "/scratch_" .. os.date("%Y%m%d_%H%M%S") .. "_" .. buf .. ".md"
+      vim.api.nvim_buf_set_name(buf, filename)
+      -- 寫入暫存檔以確保 session 可以追蹤此實體檔案
+      vim.cmd("silent! write")
+    end
+  end,
 })

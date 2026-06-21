@@ -49,22 +49,49 @@ return {
         autosave = {
           enabled = true,
           interval = 60,
-          notify = true,
+          notify = false, -- 關閉定時儲存的通知，避免干擾
         },
         extensions = {
           -- barbar = {},
         },
       })
 
-      -- Resession does NOTHING automagically, so we have to set up some keymaps
-      vim.keymap.set("n", "<leader>ss", resession.save)
-      vim.keymap.set("n", "<leader>sr", resession.load)
-      vim.keymap.set("n", "<leader>sd", resession.delete)
+      -- 取得基於當前工作目錄的 session 名稱
+      local function get_session_name()
+        local cwd = vim.fn.getcwd()
+        return cwd:gsub("[^A-Za-z0-9]", "_")
+      end
 
+      -- 綁定快速鍵（手動備用）
+      vim.keymap.set("n", "<leader>ss", function() resession.save(get_session_name(), { dir = "dirsession" }) end, { desc = "Save Session" })
+      vim.keymap.set("n", "<leader>sr", function() resession.load(get_session_name(), { dir = "dirsession" }) end, { desc = "Restore Session" })
+      vim.keymap.set("n", "<leader>sd", function() resession.delete(get_session_name(), { dir = "dirsession" }) end, { desc = "Delete Session" })
+
+      -- 1. 當開啟 Neovim 且沒有指定開啟特定檔案時 (argc == 0 或參數是目錄，如 nvim .)，自動載入該目錄的 Session
+      vim.api.nvim_create_autocmd("VimEnter", {
+        callback = function()
+          local should_load = false
+          if vim.fn.argc(-1) == 0 then
+            should_load = true
+          elseif vim.fn.argc(-1) == 1 then
+            local arg = vim.fn.argv(0)
+            if vim.fn.isdirectory(arg) == 1 then
+              vim.fn.chdir(arg)
+              should_load = true
+            end
+          end
+
+          if should_load then
+            resession.load(get_session_name(), { dir = "dirsession", silence_errors = true })
+          end
+        end,
+        nested = true,
+      })
+
+      -- 2. 離開 Neovim 前，自動將當前工作狀態儲存至目錄 Session
       vim.api.nvim_create_autocmd("VimLeavePre", {
         callback = function()
-          -- Always save a special session named "last"
-          resession.save("last")
+          resession.save(get_session_name(), { dir = "dirsession", notify = false })
         end,
       })
     end,

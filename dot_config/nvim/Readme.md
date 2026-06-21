@@ -101,3 +101,19 @@ dot_config/nvim
 
 在當前NeoTree視窗
 * `P`: 預覽開關
+
+## 工作階段還原與防當機暫存機制 (VS Code Session Restore & Hot Exit)
+
+我們實作了類似 VS Code 的工作區與未存檔暫存還原機制，包含以下特點：
+
+*   **專案工作區自動還原 (Auto Session)**：
+    使用 `resession.nvim` 插件。當您在終端機輸入 `nvim`、`nvim .` 或指定目錄路徑開啟 Neovim 時，系統會自動載入該目錄前一次關閉時的工作階段（包含視窗分割 layout 與已開啟檔案）。退出時會自動存檔。
+    *   手動儲存 Session：`<leader>ss`
+    *   手動載入 Session：`<leader>sr`
+    *   手動刪除 Session：`<leader>sd`
+*   **防崩潰 Swap 暫存自動還原**：
+    啟用 `undofile` (持久化復原歷史) 與 `swapfile`。當您編輯檔案但尚未儲存時，暫存會寫入 `.swp` 檔案（所有暫存檔均統一存放於獨立目錄，避免污染您的專案資料夾）。
+    若 Neovim 或系統突然崩潰，重開 Neovim 時會**自動偵測並套用暫存檔（Recover），且讓檔案保持未存檔 (dirty `[+]`) 狀態**。您的原始檔案不會被任意覆寫，隨時可以使用 `u` 復原或 `:w` 存檔。
+*   **未命名檔案自動備份還原 (方案 B)**：
+    當新建未命名 Buffer（例如 `:enew`）並輸入文字時，自動在背景將檔案實體化，生成路徑為 `~/.local/share/nvim/scratch/scratch_*.md`（存放於 `~/.local/share/nvim/scratch/`）。
+    這可確保未命名文件能被工作階段完美追蹤，即使當機或正常關閉，重開時仍能完美還原該暫存檔。

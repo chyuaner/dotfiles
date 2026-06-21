@@ -310,6 +310,13 @@ nvim --headless "+Lazy! sync" +qa
 nvim --headless "+Lazy! sync" "+TSUpdate" +qa
 ```
 
+### 💾 工作階段還原與防當機暫存機制 (VS Code Session Restore & Hot Exit)
+實作了類似 VS Code 的工作區與未存檔暫存還原機制，包含以下特點：
+*   **專案工作區自動還原**：使用 `resession.nvim` 插件。當以 `nvim`、`nvim .` 或指定目錄路徑開啟 Neovim 時，系統會自動載入並還原該目錄的工作階段（視窗分割與開啟檔案）。退出時自動儲存。
+    *   快速鍵：儲存 `<leader>ss` / 載入 `<leader>sr` / 刪除 `<leader>sd`
+*   **防當機 Swap 暫存自動還原**：啟用 `undofile` 與 `swapfile`（暫存統一存放於獨立目錄）。當系統崩潰時，重開 Neovim 將**自動套用 swap 暫存並保持未存檔 (dirty `[+]`) 狀態**，確保原始檔案不被覆寫。
+*   **未命名檔案自動備份**：當新建未命名 Buffer 並輸入文字時，自動在背景命名並存檔於 `~/.local/share/nvim/scratch/scratch_*.md`（存放於 `~/.local/share/nvim/scratch/`）。這可確保無名文件能被工作階段正常追蹤與還原。
+
 vim
 --------------------------------------------------------------------------------
 ![](.readme/Screenshot_20250424_012703.png)
