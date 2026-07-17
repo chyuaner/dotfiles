@@ -70,12 +70,12 @@ chezmoi update --apply
 
 ##### 2. 安裝主dotfiles包
 ```
-chezmoi init ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git --apply
+chezmoi init ssh://git@s.git.yuaner.tw:10022/yuan/dotfiles.git --apply
 ```
 
 ##### 3. 安裝私人用的dotfiles包
 ```
-chezmoi init --source ~/.local/share/chezmoi-private --config ~/.config/chezmoi-private/chezmoi.toml ssh://git@git.yuaner.tw:10022/yuan/dotfiles-private.git --apply
+chezmoi init --source ~/.local/share/chezmoi-private --config ~/.config/chezmoi-private/chezmoi.toml ssh://git@s.git.yuaner.tw:10022/yuan/dotfiles-private.git --apply
 chezmoi apply
 ```
 </details>
@@ -119,7 +119,7 @@ rm -rf ~/.config/alacritty ~/.config/zellij
   With chezmoi, pronounced /ʃeɪ mwa/ (shay-mwa), you can install chezmoi and your dotfiles from your GitHub dotfiles repo on a new, empty machine with asingle command:
 
   ```
-  sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git
+  sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ssh://git@s.git.yuaner.tw:10022/yuan/dotfiles.git
   ```
 
   As well as the curl | sh installation, you can install chezmoi with your favorite package manager.
@@ -137,7 +137,7 @@ rm -rf ~/.config/alacritty ~/.config/zellij
   You can install your dotfiles on new machine with a single command:
 
   ```
-  chezmoi init --apply ssh://git@git.yuaner.tw:10022/yuan/dotfiles.git
+  chezmoi init --apply ssh://git@s.git.yuaner.tw:10022/yuan/dotfiles.git
   ```
 
   #### To force a refresh the downloaded archives
