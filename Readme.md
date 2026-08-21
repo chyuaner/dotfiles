@@ -193,6 +193,27 @@ rm -f ~/.zcompdump*
 exec zsh
 ```
 
+### 出現 GPG相關問題
+
+```
+/home/yuan/.zshrc:286: command not found: gpgconf
+```
+
+```
+gpgconf: error running '/usr/bin/gpg-agent': probably not installed
+gpgconf: Configuration file of component GPG Agent is broken
+gpgconf: Note: Use the command "gpg-agent --gpgconf-test" to get details.
+```
+
+請嘗試安裝 `gnupg` `gpg-agent` 之後，再嘗試修正相關檔案權限
+
+```bash
+# 建立目錄並設定專屬權限 (700 / 600)
+mkdir -p -m 700 ~/.gnupg
+find ~/.gnupg -type d -exec chmod 700 {} +
+find ~/.gnupg -type f -exec chmod 600 {} +
+```
+
 擴充的小工具
 --------------------------------------------------------------------------------
 ### git-pushmulti 同時上傳到多個git server
