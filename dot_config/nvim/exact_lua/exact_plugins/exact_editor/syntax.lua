@@ -35,6 +35,7 @@ return {
           "markdown_inline",
           "python",
           "php",
+          "twig",
           "go",
           "css",
         }
@@ -80,6 +81,7 @@ return {
             "markdown_inline",
             "python",
             "php",
+            "twig",
             "go",
             "css",
           },
