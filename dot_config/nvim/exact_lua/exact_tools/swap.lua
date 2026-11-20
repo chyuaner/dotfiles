@@ -24,8 +24,10 @@ local function set_swap_directory()
     vim.opt.directory = current_dir -- 成功，將暫存檔存放在當前資料夾
   else
     -- 無法建立測試檔案，回退到 Neovim 預設位置
-    vim.opt.directory = vim.fn.stdpath("data") .. "/swap//"
-    vim.notify("無法在當前資料夾建立暫存檔，改用預設位置: " .. vim.opt.directory:get(), vim.log.levels.WARN)
+    local fallback_dir = vim.fn.stdpath("data") .. "/swap//"
+    pcall(vim.fn.mkdir, vim.fn.stdpath("data") .. "/swap", "p")
+    vim.opt.directory = fallback_dir
+    vim.notify("無法在當前資料夾建立暫存檔，改用預設位置: " .. fallback_dir, vim.log.levels.WARN)
   end
 end
 
