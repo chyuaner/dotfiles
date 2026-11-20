@@ -45,6 +45,26 @@ if not vim.keycode then
   end
 end
 
+-- Polyfill for vim.validate (< 0.11)
+if vim.fn.has("nvim-0.11") == 0 then
+  local orig_validate = vim.validate
+  vim.validate = function(opt, ...)
+    if type(opt) == "string" then
+      local val, validator, opt_or_msg, msg = ...
+      local optional, message
+      if type(opt_or_msg) == "boolean" then
+        optional = opt_or_msg
+        message = msg
+      elseif type(opt_or_msg) == "string" then
+        optional = false
+        message = opt_or_msg
+      end
+      return orig_validate({ [opt] = { val, validator, optional, message } })
+    end
+    return orig_validate(opt, ...)
+  end
+end
+
 -- SSH / TMUX 剪貼簿共享 (OSC 52)
 local is_ssh = vim.env.SSH_CLIENT ~= nil or vim.env.SSH_TTY ~= nil or vim.env.SSH_CONNECTION ~= nil
 
