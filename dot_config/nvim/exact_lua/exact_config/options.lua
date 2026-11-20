@@ -7,6 +7,68 @@ if not vim.fs.joinpath then
     return table.concat({...}, "/")
   end
 end
+if not vim.fs.abspath then
+  vim.fs.abspath = function(path)
+    if not path then return nil end
+    local p = vim.fn.fnamemodify(path, ":p")
+    if vim.fs.normalize then
+      p = vim.fs.normalize(p)
+    end
+    return p
+  end
+end
+if not vim.fs.relpath then
+  vim.fs.relpath = function(base, target)
+    if not base or not target then
+      return nil
+    end
+    local function to_abs_norm(p)
+      if vim.fs.abspath then
+        p = vim.fs.abspath(p)
+      else
+        p = vim.fn.fnamemodify(p, ":p")
+      end
+      if vim.fs.normalize then
+        p = vim.fs.normalize(p)
+      else
+        p = p:gsub("\\", "/")
+      end
+      if #p > 1 and p:sub(-1) == "/" then
+        p = p:sub(1, -2)
+      end
+      return p
+    end
+
+    local b = to_abs_norm(base)
+    local t = to_abs_norm(target)
+    if b == t then
+      return "."
+    end
+    local prefix = b .. "/"
+    if vim.startswith and vim.startswith(t, prefix) then
+      return t:sub(#prefix + 1)
+    elseif t:sub(1, #prefix) == prefix then
+      return t:sub(#prefix + 1)
+    end
+    return nil
+  end
+end
+if not vim.fs.root then
+  vim.fs.root = function(source, marker)
+    local path
+    if type(source) == "number" then
+      path = vim.api.nvim_buf_get_name(source)
+    else
+      path = source
+    end
+    if not path or path == "" then
+      path = vim.fn.getcwd()
+    end
+    local markers = type(marker) == "table" and marker or { marker }
+    local match = vim.fs.find(markers, { path = path, upward = true })[1]
+    return match and vim.fs.dirname(match) or nil
+  end
+end
 if not vim.list_contains then
   vim.list_contains = function(t, value)
     for _, v in ipairs(t) do
